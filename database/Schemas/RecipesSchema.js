@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 
 const RecipesSchema = mongoose.Schema({
 
-  userId: Number,
+  userId: String,
   userName: String,
   name: String,
   private: Boolean,

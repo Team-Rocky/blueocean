@@ -1,7 +1,9 @@
-const mongoose = require('mongoose');
-const mongoUri = 'mongodb://localhost/blueocean'
 
-mongoose.connect(mongoUri, {
+const mongoose = require('mongoose');
+require('dotenv').config();
+// console.log('this is process.env:', process.env.MONGOURI)
+
+mongoose.connect(process.env.MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true

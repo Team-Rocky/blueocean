@@ -2,11 +2,11 @@
 const fs = require('fs');
 var tempArray = []
 const db = require('../database/index')
-const Users = require('../database/Schemas/UsersSchema.js')
+const Users = require('../database/Schemas/UsersSchemas.js')
 
 var namesArray = [
   "Jordan Hamsey",
-  "Marco Pierre Black",
+  "Marco Pierre Aight",
   "Billie Flay",
   "Girl Fiery",
   "Luigi Batali",
