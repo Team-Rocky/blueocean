@@ -9,6 +9,29 @@
 <body>
   <div id="app"></div>
   <script type="text/javascript" src="bundle.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyA3uyVb5zjX6t7K7iwcpH6j4bjv_JYQLd8",
+    authDomain: "blue-ocean-71002.firebaseapp.com",
+    projectId: "blue-ocean-71002",
+    storageBucket: "blue-ocean-71002.appspot.com",
+    messagingSenderId: "116239881286",
+    appId: "1:116239881286:web:c528c398e75c5d11106647",
+    measurementId: "G-GHBJCZ443N"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </body>
 
 </html>
