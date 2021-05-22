@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import config from "../../../config.js";
 import firebase from 'firebase';
 import "firebase/auth";
@@ -12,8 +12,8 @@ import {
 firebase.initializeApp(config);
 var db = firebase.firestore();
 
-const Auth = () => {
-  return (
+const Auth = (props) => {
+return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div>
         <button
@@ -24,22 +24,14 @@ const Auth = () => {
         >
           Sign In with Google
         </button>
-        <button
+        {/* <button
           onClick={() => {
             const emailProvider = new firebase.auth.EmailAuthProvider();
             firebase.auth().signInWithPopup(emailProvider);
           }}
         >
           Sign In with Email
-        </button>
-        <button
-          data-testid="signin-anon"
-          onClick={() => {
-            firebase.auth().signInAnonymously();
-          }}
-        >
-          Sign In Anonymously
-        </button>
+        </button> */}
         <button
           onClick={() => {
             firebase.auth().signOut();
@@ -49,11 +41,8 @@ const Auth = () => {
         </button>
         <FirebaseAuthConsumer>
           {({ isSignedIn, user, providerId }) => {
-            return (
-              <pre style={{ height: 300, overflow: "auto" }}>
-                {JSON.stringify({ isSignedIn, user, providerId }, null, 2)}
-              </pre>
-            );
+            if (isSignedIn === true) {
+            }
           }}
         </FirebaseAuthConsumer>
         <div>

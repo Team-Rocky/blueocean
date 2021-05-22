@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 import Auth from './Auth.jsx';
 
 const App = (props) => {
+
+
 return(
   <div>
-    <Auth />
+    hello
+    {/* <Auth updateUser={updateUser}/> */}
   </div>
   )
 }
