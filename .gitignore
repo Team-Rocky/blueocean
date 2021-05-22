@@ -1,2 +1,5 @@
+server/auth
+server/logs
 package-lock.json
 node_modules
+.env
