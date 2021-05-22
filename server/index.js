@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const pug = require('pug');
 const chalk = require('chalk');
 
@@ -28,7 +29,11 @@ app.use((req, res, next) => {
     if (res.statusCode >= 400) { status = chalk.yellow(res.statusCode); }
     if (res.statusCode >= 500) { status = chalk.red(res.statusCode); }
     const duration = getDuration(start);
-    console.log(`${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`);
+    let log = `${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
+    console.log(log);
+    fs.appendFile(`./server/logs/${date}.log`, log, (err) => {
+      if (err) throw err;
+    });
   });
   next();
 });
@@ -45,8 +50,13 @@ app.use('/api/recipes', require('./routes/recipes.js'));
 app.set('view engine', 'pug')
 app.set('views', './server/views');
 app.use(function(req, res) {
- res.status(404);
- res.render('404.pug', {title: '404: File Not Found'});
+  res.status(404);
+  res.render('404.pug', {title: '404: File Not Found'});
+});
+
+app.use(function(err, req, res, next) {
+  res.status(500);
+  res.render('500.pug', { title: '500: Internal Server error', error: err });
 });
 
 /*
