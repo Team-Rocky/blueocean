@@ -3,7 +3,6 @@ import Auth from './Auth.jsx';
 
 const App = (props) => {
 
-
 return(
   <div>
     hello
