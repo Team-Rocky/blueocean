@@ -1,8 +1,9 @@
-// Recipes ROUTEs ============================================================ //
+// Recipes ROUTEs =========================================================== //
 const express = require('express');
 const router = express.Router();
 
 
+// /api/recipes/
 router.route('/')
   .get((req, res) => {
     // get all public recipes
@@ -24,7 +25,7 @@ router.route('/top10')
     res.send('GET to /api/recipes/top10 successful!');
   });
 
-// /api/recipes/recipe/recipeID
+// /api/recipes/recipe/:recipeID
 router.route('/recipe/:recipeID')
   .get((req,res) => {
     res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);

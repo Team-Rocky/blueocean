@@ -4,23 +4,20 @@ const router = express.Router();
 
 
 // serverhost/api/users/username1
-router.param('user', (req, res, next) => {
-  req.user = req.param.user;
-  next();
-});
-
-router.route('/')
+router.route('/:username')
   .get((req, res) => {
     // get relevant user data (friends list, user's recipes, userID...)
-    res.send('GET to /api/users/ successful!');
+    req.user = req.param.user;
+    if (!req.user) { req.user = 'NO_ID!'; }
+    res.send(`successful GET to /api/users/${req.user}`);
   })
   .post((req, res) => {
     // add new user to users collection in db
-    res.send('POST to /api/users/ successful!');
+    res.send(`successful POST to /api/users/ ${req.user}`);
   })
   .delete((req, res) => {
     // delete user from db
-    res.send('DELETE to /api/users/ successful!');
+    res.send(`successful DELETE to /api/users/ ${req.user}`);
   });
 
 /*
@@ -46,6 +43,12 @@ const axERRcb = (err) => {
     .then(function (response) {
       res.send(response.data);
     .catch(function (err) { axERRcb(err); res.end('axios ERR'); });
+
+// serverhost/api/users/:username1
+//router.param('user', (req, res, next) => {
+//  req.user = req.param.user;
+//  next();
+//});
 */
 
 module.exports = router;

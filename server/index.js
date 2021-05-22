@@ -1,4 +1,5 @@
 const express = require('express');
+const pug = require('pug');
 const chalk = require('chalk');
 
 // init server
@@ -21,14 +22,17 @@ app.use((req, res, next) => {
   let time = now.slice(11,16);
   let method = req.method;
   let url = req.url;
-  let status = chalk.white(res.statusCode);
-  if (res.statusCode >= 200) { status = chalk.green(res.statusCode); }
-  else if (res.statusCode >= 400) { status = chalk.yellow(res.statusCode); }
-  else if (res.statusCode >= 500) { status = chalk.red(res.statusCode); }
-  const duration = getDuration(start);
-  console.log(`${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`);
+  res.on('finish', function() {
+    let status = chalk.white(res.statusCode);
+    if (res.statusCode >= 200) { status = chalk.green(res.statusCode); }
+    if (res.statusCode >= 400) { status = chalk.yellow(res.statusCode); }
+    if (res.statusCode >= 500) { status = chalk.red(res.statusCode); }
+    const duration = getDuration(start);
+    console.log(`${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`);
+  });
   next();
 });
+
 
 // web
 app.use(express.static('./client/public'));
@@ -36,6 +40,14 @@ app.use(express.static('./client/public'));
 // api
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/recipes', require('./routes/recipes.js'));
+
+// error pages
+app.set('view engine', 'pug')
+app.set('views', './server/views');
+app.use(function(req, res) {
+ res.status(404);
+ res.render('404.pug', {title: '404: File Not Found'});
+});
 
 /*
 // http server
