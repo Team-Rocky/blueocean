@@ -1,8 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useState, useCallback } from 'react';
 import config from "../../../config.js";
 import firebase from 'firebase';
 import "firebase/auth";
+=======
+import React from 'react';
+import firebase from 'firebase';
+import 'firebase/auth';
+>>>>>>> main
 =======
 import React from 'react';
 import firebase from 'firebase';
@@ -15,6 +21,7 @@ import {
   IfFirebaseAuthed,
   IfFirebaseAuthedAnd,
 <<<<<<< HEAD
+<<<<<<< HEAD
 } from "@react-firebase/auth";
 firebase.initializeApp(config);
 var db = firebase.firestore();
@@ -25,6 +32,8 @@ return (
       <div>
         <button
 =======
+=======
+>>>>>>> main
 } from '@react-firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import config from '../../../config.js';
@@ -37,6 +46,9 @@ const Auth = () => {
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div>
         {user === null ? <button
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
           onClick={() => {
             const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
@@ -46,7 +58,11 @@ const Auth = () => {
           Sign In with Google
         </button>
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* <button
+=======
+        /* <button
+>>>>>>> main
 =======
         /* <button
 >>>>>>> main
@@ -57,8 +73,13 @@ const Auth = () => {
         >
           Sign In with Email
 <<<<<<< HEAD
+<<<<<<< HEAD
         </button> */}
         <button
+=======
+        </button> */
+          : <button
+>>>>>>> main
 =======
         </button> */
           : <button
@@ -69,6 +90,7 @@ const Auth = () => {
         >
           Sign Out
         </button>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <FirebaseAuthConsumer>
           {({ isSignedIn, user, providerId }) => {
@@ -89,6 +111,8 @@ const Auth = () => {
               return <div>You are authenticated with {providerId}</div>;
             }}
 =======
+=======
+>>>>>>> main
         }
         <div>
           <IfFirebaseAuthedAnd
@@ -96,16 +120,25 @@ const Auth = () => {
           >
             {({ providerId }) => <div>You are authenticated with {providerId}</div>
             }
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
           </IfFirebaseAuthedAnd>
         </div>
       </div>
     </FirebaseAuthProvider>
 <<<<<<< HEAD
+<<<<<<< HEAD
   )
 }
 export default Auth;
 
+=======
+  );
+};
+export default Auth;
+>>>>>>> main
 =======
   );
 };
