@@ -4,8 +4,10 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 const auth = firebase.auth();
+
 import HomePageGrid from './HomePageGrid.jsx'
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx'
+
 
 const App = (props) => {
   const [user] = useAuthState(auth);
@@ -14,17 +16,19 @@ const App = (props) => {
   // user.photoURL = profile pic
   // user.email = user email
   return (
-  <div>
-    {/* {
-    user === null ? 'Sign in to add recipes' :
     <div>
-      <img src={user.photoURL} />
-      <br/>
-      Signed in as {user.displayName}
+      {user === null ? (
+        'Sign in to add recipes'
+      ) : (
+        <div>
+          <img src={user.photoURL} />
+          <br />
+          Signed in as {user.displayName}
+        </div>
+      )}
+      <Auth />
+      <HomePageGrid />
     </div>
-    } */}
-    <RecipeDetailsGrid/>
-  </div>
   );
 };
 
