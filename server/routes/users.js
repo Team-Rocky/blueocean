@@ -1,14 +1,22 @@
 // Users ROUTEs ============================================================ //
 const express = require('express');
+
 const router = express.Router();
 const helpers = require('../controllers/helpers.js')
 
+const dbFunctions = require('../controllers/helpers');
 
 // serverhost/api/users/username1
+<<<<<<< HEAD
 router.route('/:email')
+=======
+router
+  .route('/:email')
+>>>>>>> main
   .get((req, res) => {
     console.log('in route.get!!!!!', req.params)
     // get relevant user data (friends list, user's recipes, userID...)
+<<<<<<< HEAD
 
     helpers.getUser(req.params, (err, data) => {
       if (err) {
@@ -18,6 +26,27 @@ router.route('/:email')
       }
     })
     //res.send(`successful GET to /api/users/${req.user}`);
+=======
+    dbFunctions.getUser(req.params, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      // eslint-disable-next-line no-underscore-dangle
+      const { filter } = req.query || 'time';
+      const limit = Number(req.query.limit) || 10;
+      dbFunctions.getAllRecipeByFilter(
+        { userId: result[0]._id },
+        filter,
+        limit,
+        (resErr, recipeResults) => {
+          if (resErr) {
+            res.json(resErr);
+          }
+          res.json(recipeResults);
+        }
+      );
+    });
+>>>>>>> main
   })
   .post((req, res) => {
     // add new user to users collection in db
