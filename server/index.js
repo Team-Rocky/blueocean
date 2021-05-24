@@ -16,7 +16,7 @@ const getDuration = (start) => {
   const NS_PER_SEC = 1e9;
   const NS_TO_MS = 1e6;
   const diff = process.hrtime(start);
-  return ((diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS);
+  return (diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS;
 };
 app.use((req, res, next) => {
   const start = process.hrtime();
@@ -49,19 +49,22 @@ app.use((req, res, next) => {
 // web
 app.use(express.static('./client/public'));
 
+// web
+app.use(express.static('./client/public'));
+
 // api
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/recipes', require('./routes/recipes.js'));
 
 // error pages
-app.set('view engine', 'pug')
+app.set('view engine', 'pug');
 app.set('views', './server/views');
-app.use(function(req, res) {
+app.use(function (req, res) {
   res.status(404);
-  res.render('404.pug', {title: '404: File Not Found'});
+  res.render('404.pug', { title: '404: File Not Found' });
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(500);
   res.render('500.pug', { title: '500: Internal Server error', error: err });
 });
