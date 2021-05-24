@@ -8,6 +8,7 @@ const app = express();
 const port = 7625;
 app.listen(port, () => { console.log(`listening on port ${port}`) });
 app.use(express.json());
+
 // logger hits first in chain (on all REQs)
 const getDuration = (start) => {
   const NS_PER_SEC = 1e9;
@@ -15,7 +16,6 @@ const getDuration = (start) => {
   const diff = process.hrtime(start);
   return ((diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS);
 }
-
 app.use((req, res, next) => {
   const start = process.hrtime();
   let now = new Date().toISOString();
