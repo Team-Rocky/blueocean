@@ -6,7 +6,9 @@ const chalk = require('chalk');
 // init server
 const app = express();
 const port = 7625;
-app.listen(port, () => { console.log(`listening on port ${port}`); });
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
 app.use(express.json());
 
 // logger hits first in chain (on all REQs)
@@ -14,20 +16,26 @@ const getDuration = (start) => {
   const NS_PER_SEC = 1e9;
   const NS_TO_MS = 1e6;
   const diff = process.hrtime(start);
-  return ((diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS);
+  return (diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS;
 };
 app.use((req, res, next) => {
   const start = process.hrtime();
   let now = new Date().toISOString();
-  let date = now.slice(0,10);
-  let time = now.slice(11,16);
+  let date = now.slice(0, 10);
+  let time = now.slice(11, 16);
   let method = req.method;
   let url = req.url;
-  res.on('finish', function() {
+  res.on('finish', function () {
     let status = chalk.white(res.statusCode);
-    if (res.statusCode >= 200) { status = chalk.green(res.statusCode); }
-    if (res.statusCode >= 400) { status = chalk.yellow(res.statusCode); }
-    if (res.statusCode >= 500) { status = chalk.red(res.statusCode); }
+    if (res.statusCode >= 200) {
+      status = chalk.green(res.statusCode);
+    }
+    if (res.statusCode >= 400) {
+      status = chalk.yellow(res.statusCode);
+    }
+    if (res.statusCode >= 500) {
+      status = chalk.red(res.statusCode);
+    }
     const duration = getDuration(start);
     let log = `${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
     console.log(log);
@@ -38,6 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// web
+app.use(express.static('./client/public'));
 
 // web
 app.use(express.static('./client/public'));
@@ -47,14 +57,14 @@ app.use('/api/users', require('./routes/users.js'));
 app.use('/api/recipes', require('./routes/recipes.js'));
 
 // error pages
-app.set('view engine', 'pug')
+app.set('view engine', 'pug');
 app.set('views', './server/views');
-app.use(function(req, res) {
+app.use(function (req, res) {
   res.status(404);
-  res.render('404.pug', {title: '404: File Not Found'});
+  res.render('404.pug', { title: '404: File Not Found' });
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(500);
   res.render('500.pug', { title: '500: Internal Server error', error: err });
 });

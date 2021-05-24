@@ -1,13 +1,28 @@
 // Recipes ROUTEs =========================================================== //
 const express = require('express');
+
+const dbFunctions = require('../controllers/helpers');
+
 const router = express.Router();
 
-
 // /api/recipes/
-router.route('/')
+router
+  .route('/:id')
   .get((req, res) => {
     // get all public recipes
-    res.send('GET to /api/recipes/ successful!');
+    console.log(req.params);
+    console.log(req.query);
+    const id = { id: req.params.id };
+    console.log(id);
+    const { filter } = req.query || 'time';
+    const limit = req.params.limit || 10;
+    dbFunctions.getAllRecipeByFilter(id, filter, limit, (err, results) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(results);
+    });
+    // res.send('GET to /api/recipes/ successful!');
   })
   .post((req, res) => {
     // add new recipe to recipe collection in db
@@ -19,17 +34,15 @@ router.route('/')
   });
 
 // /api/recipes/top10
-router.route('/top10')
-  .get((req, res) => {
-    // get top 10 recipes
-    res.send('GET to /api/recipes/top10 successful!');
-  });
+router.route('/top10').get((req, res) => {
+  // get top 10 recipes
+  res.send('GET to /api/recipes/top10 successful!');
+});
 
 // /api/recipes/recipe/:recipeID
-router.route('/recipe/:recipeID')
-  .get((req,res) => {
-    res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
-  });
+router.route('/recipe/:recipeID').get((req, res) => {
+  res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
+});
 
 /*
 const axios = require('axios');
@@ -38,7 +51,6 @@ let apiKey = require('../auth/.apiname.key.js');
 router.use(express.json(), (req, res, next) => {
   next();
 });
-
 
 // create axios instance - for if we need to comm with external api
 let ax = axios.create({
