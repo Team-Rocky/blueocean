@@ -1,13 +1,13 @@
 import React from 'react';
 import firebase from 'firebase';
-import "firebase/auth";
+import 'firebase/auth';
 import 'firebase/firestore';
 import {
   FirebaseAuthProvider,
   FirebaseAuthConsumer,
   IfFirebaseAuthed,
   IfFirebaseAuthedAnd,
-} from "@react-firebase/auth";
+} from '@react-firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import config from '../../../config.js';
 firebase.initializeApp(config);

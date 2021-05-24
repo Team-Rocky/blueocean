@@ -258,7 +258,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar config = {\n  apiKey: \"AIzaSyA3uyVb5zjX6t7K7iwcpH6j4bjv_JYQLd8\",\n  authDomain: \"blue-ocean-71002.firebaseapp.com\",\n  projectId: \"blue-ocean-71002\",\n  storageBucket: \"blue-ocean-71002.appspot.com\",\n  messagingSenderId: \"116239881286\",\n  appId: \"1:116239881286:web:c528c398e75c5d11106647\",\n  measurementId: \"G-GHBJCZ443N\"\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (config);\n\n//# sourceURL=webpack://blueocean/./config.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nvar config = {\n  apiKey: 'AIzaSyA3uyVb5zjX6t7K7iwcpH6j4bjv_JYQLd8',\n  authDomain: 'blue-ocean-71002.firebaseapp.com',\n  projectId: 'blue-ocean-71002',\n  storageBucket: 'blue-ocean-71002.appspot.com',\n  messagingSenderId: '116239881286',\n  appId: '1:116239881286:web:c528c398e75c5d11106647',\n  measurementId: 'G-GHBJCZ443N'\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (config);\n\n//# sourceURL=webpack://blueocean/./config.js?");
 
 /***/ }),
 
