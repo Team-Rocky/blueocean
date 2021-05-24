@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   let time = now.slice(11, 16);
   let method = req.method;
   let url = req.url;
-  res.on('finish', function () {
+  res.on('finish', () => {
     let status = chalk.white(res.statusCode);
     if (res.statusCode >= 200) {
       status = chalk.green(res.statusCode);
