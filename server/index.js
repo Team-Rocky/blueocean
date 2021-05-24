@@ -31,9 +31,10 @@ app.use((req, res, next) => {
     const duration = getDuration(start);
     let log = `${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
     console.log(log);
-    fs.appendFile(`./server/logs/${date}.log`, log, (err) => {
-      if (err) throw err;
-    });
+    //UN-COMMENT
+    // fs.appendFile(`./server/logs/${date}.log`, log, (err) => {
+    //   if (err) throw err;
+    // });
   });
   next();
 });
