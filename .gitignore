@@ -4,4 +4,6 @@ package-lock.json
 node_modules
 .env
 client/public/bundle.js
+firebaseConfig.js
+client/public/bundle.jsconfig.js
 config.js
