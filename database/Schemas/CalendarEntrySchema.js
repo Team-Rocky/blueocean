@@ -8,7 +8,7 @@ const CalendarEntrySchema = mongoose.Schema({
   recipeId: String,
   date: String,
   cookTime: Number,
-  ingrediestList: [String],
+  ingredientList: [String],
   recipeName: String
 })
 

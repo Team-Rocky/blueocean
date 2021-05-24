@@ -75,6 +75,12 @@ module.exports = {
     });
   },
   addCalendarEntry(obj, callback) {
+
+// CalendarEntries.drop()
+// .then(() => {
+//   callback(null, 'db cleared!')
+// })
+
     CalendarEntries.create(obj)
       .then(() => {
         callback(null);
@@ -85,5 +91,14 @@ module.exports = {
       })
 
   },
-  getCalendarEntried() { }
+  getCalendarEntries(id, callback) {
+    CalendarEntries.find(id)
+      .then((response) => {
+        callback(null, response)
+      })
+      .catch((err) => {
+        console.log('error in getCalendarEntries: ', err)
+        callback(err)
+      })
+  }
 };

@@ -41,20 +41,6 @@ router
     res.send(`successful DELETE to /api/users/ ${req.user}`);
   });
 
-  router
-  .route('/calendar')
-  .post((req, res) => {
-    console.log('req.body: ', req.body);
-
-    dbFunctions.addCalendarEntry(req.body, (err) => {
-      if (err) {
-        console.log('err in .post to calendar: ', err)
-        res.json(err)
-      }
-        res.send('posted!')
-
-    })
-  })
 
 /*
 const axios = require('axios');
