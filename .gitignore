@@ -4,5 +4,4 @@ package-lock.json
 node_modules
 .env
 client/public/bundle.js
-bundle.js
 config.js
