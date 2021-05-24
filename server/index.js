@@ -1,7 +1,7 @@
-const express = require("express");
-const fs = require("fs");
-const pug = require("pug");
-const chalk = require("chalk");
+const express = require('express');
+const fs = require('fs');
+const pug = require('pug');
+const chalk = require('chalk');
 
 // init server
 const app = express();
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   let time = now.slice(11, 16);
   let method = req.method;
   let url = req.url;
-  res.on("finish", function () {
+  res.on('finish', function () {
     let status = chalk.white(res.statusCode);
     if (res.statusCode >= 200) {
       status = chalk.green(res.statusCode);
@@ -47,23 +47,23 @@ app.use((req, res, next) => {
 });
 
 // web
-app.use(express.static("./client/public"));
+app.use(express.static('./client/public'));
 
 // api
-app.use("/api/users", require("./routes/users.js"));
-app.use("/api/recipes", require("./routes/recipes.js"));
+app.use('/api/users', require('./routes/users.js'));
+app.use('/api/recipes', require('./routes/recipes.js'));
 
 // error pages
-app.set("view engine", "pug");
-app.set("views", "./server/views");
+app.set('view engine', 'pug');
+app.set('views', './server/views');
 app.use(function (req, res) {
   res.status(404);
-  res.render("404.pug", { title: "404: File Not Found" });
+  res.render('404.pug', { title: '404: File Not Found' });
 });
 
 app.use(function (err, req, res, next) {
   res.status(500);
-  res.render("500.pug", { title: "500: Internal Server error", error: err });
+  res.render('500.pug', { title: '500: Internal Server error', error: err });
 });
 
 /*
