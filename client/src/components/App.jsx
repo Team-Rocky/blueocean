@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 const auth = firebase.auth();
 import HomePageGrid from './HomePageGrid.jsx';
+import axios from 'axios';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
@@ -12,6 +13,7 @@ const App = (props) => {
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
+
   return (
     <div>
       {user === null ? (
