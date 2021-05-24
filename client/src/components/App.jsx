@@ -17,13 +17,10 @@ const App = (props) => {
   useEffect(() => {
 
     axios.get(`/api/users/GirlFiery@chefslist.com`)
-      .then((response) => response)
 
       .then((response) => {
         console.log('this is response.data: ', response.data)
-        var userId = response.data._id
-        axios.get()
-
+        // var userId = response.data._id
       })
       .catch((err) => {
         console.log('error in axios.get: ', err)

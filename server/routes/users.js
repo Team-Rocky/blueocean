@@ -7,26 +7,11 @@ const helpers = require('../controllers/helpers.js')
 const dbFunctions = require('../controllers/helpers');
 
 // serverhost/api/users/username1
-<<<<<<< HEAD
-router.route('/:email')
-=======
 router
   .route('/:email')
->>>>>>> main
   .get((req, res) => {
     console.log('in route.get!!!!!', req.params)
     // get relevant user data (friends list, user's recipes, userID...)
-<<<<<<< HEAD
-
-    helpers.getUser(req.params, (err, data) => {
-      if (err) {
-        console.log('')
-      } else {
-        res.send(data)
-      }
-    })
-    //res.send(`successful GET to /api/users/${req.user}`);
-=======
     dbFunctions.getUser(req.params, (err, result) => {
       if (err) {
         res.json(err);
@@ -46,7 +31,6 @@ router
         }
       );
     });
->>>>>>> main
   })
   .post((req, res) => {
     // add new user to users collection in db
@@ -56,6 +40,21 @@ router
     // delete user from db
     res.send(`successful DELETE to /api/users/ ${req.user}`);
   });
+
+  router
+  .route('/calendar')
+  .post((req, res) => {
+    console.log('req.body: ', req.body);
+
+    dbFunctions.addCalendarEntry(req.body, (err) => {
+      if (err) {
+        console.log('err in .post to calendar: ', err)
+        res.json(err)
+      }
+        res.send('posted!')
+
+    })
+  })
 
 /*
 const axios = require('axios');
