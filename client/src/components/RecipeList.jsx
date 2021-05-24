@@ -5,7 +5,7 @@ const RecipeList = (props) => {
 
   return (<div>
     {props.data.map((recipe, index) => {
-      <Recipe recipe={recipe} key={index} />
+      return <Recipe recipe={recipe} key={index} />
     })}
   </div>)
 }

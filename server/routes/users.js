@@ -1,14 +1,23 @@
 // Users ROUTEs ============================================================ //
 const express = require('express');
 const router = express.Router();
+const helpers = require('../controllers/helpers.js')
 
 
 // serverhost/api/users/username1
-router.route('/:username')
+router.route('/:email')
   .get((req, res) => {
+    console.log('in route.get!!!!!', req.params)
     // get relevant user data (friends list, user's recipes, userID...)
-    req.user = req.param.user;
-    res.send(`successful GET to /api/users/${req.user}`);
+
+    helpers.getUser(req.params, (err, data) => {
+      if (err) {
+        console.log('')
+      } else {
+        res.send(data)
+      }
+    })
+    //res.send(`successful GET to /api/users/${req.user}`);
   })
   .post((req, res) => {
     // add new user to users collection in db

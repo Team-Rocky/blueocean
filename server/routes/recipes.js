@@ -1,35 +1,51 @@
 // Recipes ROUTEs =========================================================== //
 const express = require('express');
+
+const dbFunctions = require('../controllers/helpers');
+
 const router = express.Router();
 
-
 // /api/recipes/
-router.route('/')
-  .get((req, res) => {
-    // get all public recipes
-    res.send('GET to /api/recipes/ successful!');
-  })
+router.route('/:id').get((req, res) => {
+  // get all public recipes
+  const userId = { userId: req.params.id };
+  console.log(userId);
+  const { filter } = req.query || 'time';
+  const limit = Number(req.query.limit) || 10;
+  dbFunctions.getAllRecipeByFilter(userId, filter, limit, (err, results) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(results);
+  });
+  // res.send('GET to /api/recipes/ successful!');
+});
+
+router
+  .route('/')
   .post((req, res) => {
-    // add new recipe to recipe collection in db
-    res.send('POST to /api/recipes/ successful!');
+    res.send('in post req');
+    // dbFunctions.newRecipe(req.body, (err, result) => {
+    //   res.json(result);
+    // });
   })
   .delete((req, res) => {
     // delete recipe from db
     res.send('DELETE to /api/recipes/ successful!');
   });
 
-// /api/recipes/top10
-router.route('/top10')
-  .get((req, res) => {
-    // get top 10 recipes
-    res.send('GET to /api/recipes/top10 successful!');
-  });
-
 // /api/recipes/recipe/:recipeID
-router.route('/recipe/:recipeID')
-  .get((req,res) => {
-    res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
+router.route('/recipe/:recipeID').get((req, res) => {
+  const { limit } = req.params || 10;
+
+  dbFunctions.getUserRecipes(req.params.recipeID, limit, (err, result) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(result);
   });
+  res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
+});
 
 /*
 const axios = require('axios');
@@ -38,7 +54,6 @@ let apiKey = require('../auth/.apiname.key.js');
 router.use(express.json(), (req, res, next) => {
   next();
 });
-
 
 // create axios instance - for if we need to comm with external api
 let ax = axios.create({
