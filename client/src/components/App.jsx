@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 const auth = firebase.auth();
 import HomePageGrid from './HomePageGrid.jsx'
+import CalendarEmbed from './CalendarEmbed.jsx';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
