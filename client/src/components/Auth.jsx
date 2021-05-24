@@ -9,7 +9,7 @@ import {
   IfFirebaseAuthedAnd,
 } from '@react-firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import config from '../../../config.js';
+import config from '../../../firebaseConfig.js';
 firebase.initializeApp(config);
 const auth = firebase.auth();
 

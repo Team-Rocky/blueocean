@@ -11,7 +11,6 @@ const App = () => {
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
-  console.log(user)
   return (
   <div>
     {user === null ? 'Sign in to add recipes' :
