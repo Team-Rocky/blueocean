@@ -31,8 +31,12 @@ router
     });
   })
   .post((req, res) => {
-    // add new user to users collection in db
-    res.send(`successful POST to /api/users/ ${req.user}`);
+    dbFunctions.addUser(req.body, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(result);
+    });
   })
   .delete((req, res) => {
     // delete user from db
