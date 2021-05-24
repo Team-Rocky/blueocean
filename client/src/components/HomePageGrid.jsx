@@ -45,7 +45,7 @@ const HomePageGrid = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid container justify='center' spacing={2} className={classes.grid}>
+    <Grid container justify='center'  spacing={2} className={classes.grid}>
       <Grid container justify='space-between' spacing={2} className={classes.grid}>
         <Grid item lg={2}>
           <Paper className={classes.button} >
@@ -64,14 +64,20 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={9} xs={12}>
-        <Paper className={classes.calendar} >Calendar</Paper>
+        <Paper className={classes.calendar} >
+          Calendar
+          </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard} >LeaderBoard</Paper>
+        <Paper className={classes.leaderboard} >
+          LeaderBoard
+          </Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
       <Grid item lg={3}>
-          <Paper className={classes.button} >new Recipe</Paper>
+          <Paper className={classes.button} >
+            new Recipe
+            </Paper>
         </Grid>
       </Grid>
     </Grid>
