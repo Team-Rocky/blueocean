@@ -1,3 +1,6 @@
+const Users = require("./../../database/Schemas/UsersSchemas.js");
+const Recipes = require("./../../database/Schemas/RecipesSchema.js");
+
 module.exports = {
   getUser: function (email, callback) {
     Users.find(email, (err, docs) => {
@@ -7,18 +10,29 @@ module.exports = {
       callback(null, docs);
     });
   },
-  getUserRecipes: function (id, limit, page, callback) {
-    Recipes.find({ _id: id }, (err, docs) => {
+  getUserRecipes: function (id, limit, callback) {
+    Recipes.find(id, (err, docs) => {
       if (err) {
         callback(err, null);
       }
       callback(null, docs);
-    })
-      .limit(limit)
-      .skip(limit * page + limit);
+    }).limit(limit);
+    // .skip(limit * page + limit);
   },
-  getAllRecipeByFilter: function (filter, limit, callback) {
-    Recipes.find(filters, (err, docs) => {
+  getAllRecipeByFilter: function (id, filter, limit, callback) {
+    let queryBy;
+    let search = {};
+    if (filter === "time") {
+      queryBy = { sort: "-date_created" };
+    }
+    if (filter === "popularity") {
+      queryBy = { sort: "-popularity" };
+    }
+    if (filter === "myRecipes") {
+      queryBy = null;
+      search = id;
+    }
+    Recipes.find(search, null, queryBy, (err, docs) => {
       if (err) {
         callback(err, null);
       }
@@ -26,7 +40,7 @@ module.exports = {
     }).limit(limit);
   },
   addUser: function (info, callback) {
-    Users.insertOne(info, (err, docs) => {
+    Users.create(info, (err, docs) => {
       if (err) {
         callback(err, null);
       }
@@ -34,7 +48,7 @@ module.exports = {
     });
   },
   newRecipe: function (info, callback) {
-    Recipes.insertOne(info, (err, docs) => {
+    Recipes.create(info, (err, docs) => {
       if (err) {
         callback(err, null);
       }
@@ -42,7 +56,7 @@ module.exports = {
     });
   },
   updateRecipe: function (id, newInfo, callback) {
-    Recipes.findOneAndUpdate({ _id: id }, { newInfo }, (err, docs) => {
+    Recipes.findOneAndUpdate(id, { newInfo }, { upsert: true }, (err, docs) => {
       if (err) {
         callback(err, null);
       }
@@ -50,7 +64,7 @@ module.exports = {
     });
   },
   incrementPopularity: function (id, callback) {
-    Recipes.function({ _id: id }, { $inc: { popularity: 1 } }, (err, docs) => {
+    Recipes.function(id, { $inc: { popularity: 1 } }, (err, docs) => {
       if (err) {
         callback(err, null);
       }
