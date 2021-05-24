@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import config from "../../../config.js";
+import React from 'react';
 import firebase from 'firebase';
 import "firebase/auth";
 import 'firebase/firestore';
@@ -9,14 +8,17 @@ import {
   IfFirebaseAuthed,
   IfFirebaseAuthedAnd,
 } from "@react-firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import config from '../../../config.js';
 firebase.initializeApp(config);
-var db = firebase.firestore();
+const auth = firebase.auth();
 
-const Auth = (props) => {
-return (
+const Auth = () => {
+  const [user] = useAuthState(auth);
+  return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div>
-        <button
+        {user === null ? <button
           onClick={() => {
             const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
             firebase.auth().signInWithPopup(googleAuthProvider);
@@ -24,44 +26,32 @@ return (
         >
           Sign In with Google
         </button>
-        {/* <button
+        /* <button
           onClick={() => {
             const emailProvider = new firebase.auth.EmailAuthProvider();
             firebase.auth().signInWithPopup(emailProvider);
           }}
         >
           Sign In with Email
-        </button> */}
-        <button
+        </button> */
+          : <button
           onClick={() => {
             firebase.auth().signOut();
           }}
         >
           Sign Out
         </button>
-        <FirebaseAuthConsumer>
-          {({ isSignedIn, user, providerId }) => {
-            if (isSignedIn === true) {
-            }
-          }}
-        </FirebaseAuthConsumer>
+        }
         <div>
-          <IfFirebaseAuthed>
-            {() => {
-              return <div>You are authenticated</div>;
-            }}
-          </IfFirebaseAuthed>
           <IfFirebaseAuthedAnd
-            filter={({ providerId }) => providerId !== "anonymous"}
+            filter={({ providerId }) => providerId !== 'anonymous'}
           >
-            {({ providerId }) => {
-              return <div>You are authenticated with {providerId}</div>;
-            }}
+            {({ providerId }) => <div>You are authenticated with {providerId}</div>
+            }
           </IfFirebaseAuthedAnd>
         </div>
       </div>
     </FirebaseAuthProvider>
-  )
-}
+  );
+};
 export default Auth;
-
