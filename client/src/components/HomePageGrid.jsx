@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
-import Auth from './Auth.jsx'
-import Calendar from './Calendar.jsx';
+import Auth from './Auth.jsx';
 import Day from './Day.jsx';
+import AddToCalendar from './AddToCalendar.jsx';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -75,7 +75,7 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard} >LeaderBoard</Paper>
+        <Paper className={classes.leaderboard} ></Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>
