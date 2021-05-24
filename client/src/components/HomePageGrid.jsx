@@ -41,26 +41,32 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const HomePage = (props) => {
+const HomePageGrid = (props) => {
   const classes = useStyles();
 
   return (
     <Grid container justify='center' spacing={2} className={classes.grid}>
       <Grid container justify='space-between' spacing={2} className={classes.grid}>
         <Grid item lg={2}>
-          <Paper className={classes.button} >show cart</Paper>
+          <Paper className={classes.button} >
+
+          </Paper>
         </Grid>
         <Grid item lg={2}>
-          <Paper className={classes.button} >logIn</Paper>
+          <Paper className={classes.button} >
+
+          </Paper>
         </Grid>
       </Grid>
       <Grid item lg={5}>
-        <Paper className={classes.title} >Title</Paper>
+        <Paper className={classes.title} >
+
+        </Paper>
       </Grid>
-      <Grid item lg={9}>
+      <Grid item lg={9} xs={12}>
         <Paper className={classes.calendar} >Calendar</Paper>
       </Grid>
-      <Grid item lg={3}>
+      <Grid item lg={3} xs={12}>
         <Paper className={classes.leaderboard} >LeaderBoard</Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
@@ -72,4 +78,4 @@ const HomePage = (props) => {
   )
 }
 
-export default HomePage
+export default HomePageGrid

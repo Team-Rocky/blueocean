@@ -1,12 +1,12 @@
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 import Auth from './Auth.jsx';
-import HomePage from './HomePage.jsx'
+import HomePageGrid from './HomePageGrid.jsx'
 
 const App = (props) => {
 
 return(
   <div>
-    <HomePage/>
+    <HomePageGrid/>
     {/* <Auth updateUser={updateUser}/> */}
   </div>
   )
