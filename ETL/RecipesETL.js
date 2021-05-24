@@ -1,8 +1,8 @@
 const fs = require('fs');
 var tempArray = []
-const db = require('../database/index')
-const Recipes = require('../database/Schemas/RecipesSchema.js')
-const Users = require('../database/Schemas/UsersSchemas.js')
+const db = require('../database/index');
+const Recipes = require('../database/Schemas/RecipesSchema.js');
+const Users = require('../database/Schemas/UsersSchemas.js');
 
 var namesArray = [
   "Jordan Hamsey",
@@ -29,8 +29,6 @@ fs.readFile('testData.json', (err, data) => {
   // console.log('length of tempArray: ', tempArray.length)
 
 });
-
-
 
 const addRecipes = (array) => {
 
@@ -60,16 +58,14 @@ var rando = namesArray[Math.round(Math.random() * 4)]
       })
       .then(() => {
         // upon completion of that, call addRecipes on spliced array
-        addRecipes(array.splice(1, array.length))
+        addRecipes(array.splice(1, array.length));
 
       })
       .catch((err) => {
-        console.log('err in recipes.create:', err)
-      })
+        console.log('err in recipes.create:', err);
+      });
     })
     .catch((err) => {
-      console.log('err in users.find: ', err)
-    })
-
-
-}
+      console.log('err in users.find: ', err);
+    });
+};
