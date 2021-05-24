@@ -1,11 +1,14 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
+import Auth from './Auth.jsx';
+import Day from './Day.jsx';
+import AddToCalendar from './AddToCalendar.jsx';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
     width: '100%',
-    margin: '0px'
+    margin: '0px',
   },
   title: {
     padding: theme.spacing(2),
@@ -26,10 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
   calendar: {
     padding: theme.spacing(2),
+    display: 'grid',
+    'grid-template-columns': '14% 14% 14% 14% 14% 14% 14%',
     textAlign: 'center',
     color: theme.palette.text.secondary,
     background: 'lightGrey',
     height: '300px',
+    border: 'solid black',
   },
   leaderboard: {
     padding: theme.spacing(2),
@@ -43,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePageGrid = (props) => {
   const classes = useStyles();
-
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
     <Grid container justify='center' spacing={2} className={classes.grid}>
       <Grid container justify='space-between' spacing={2} className={classes.grid}>
@@ -54,7 +60,7 @@ const HomePageGrid = (props) => {
         </Grid>
         <Grid item lg={2}>
           <Paper className={classes.button} >
-
+            <Auth />
           </Paper>
         </Grid>
       </Grid>
@@ -64,13 +70,15 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={9} xs={12}>
-        <Paper className={classes.calendar} >Calendar</Paper>
+        <Paper className={classes.calendar} >
+          {days.map((day, index) => <Day key={index} day={day} schedule={props.schedule}/>)}
+        </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard} >LeaderBoard</Paper>
+        <Paper className={classes.leaderboard} ></Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
-      <Grid item lg={3}>
+        <Grid item lg={3}>
           <Paper className={classes.button} >new Recipe</Paper>
         </Grid>
       </Grid>

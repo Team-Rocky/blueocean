@@ -1,18 +1,46 @@
 // Users ROUTEs ============================================================ //
 const express = require('express');
+
 const router = express.Router();
 
+const dbFunctions = require('../controllers/helpers');
 
 // serverhost/api/users/username1
-router.route('/:username')
+router
+  .route('/:email')
   .get((req, res) => {
     // get relevant user data (friends list, user's recipes, userID...)
-    req.user = req.param.user;
-    res.send(`successful GET to /api/users/${req.user}`);
+    dbFunctions.getUser(req.params, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      // eslint-disable-next-line no-underscore-dangle
+      const { filter } = req.query || 'time';
+      const limit = Number(req.query.limit) || 10;
+      if (!result.length) {
+        res.send('Does not Exist');
+        return;
+      }
+      dbFunctions.getAllRecipeByFilter(
+        { userId: result[0]._id },
+        filter,
+        limit,
+        (resErr, recipeResults) => {
+          if (resErr) {
+            res.json(resErr);
+          }
+          res.json(recipeResults);
+        }
+      );
+    });
   })
   .post((req, res) => {
-    // add new user to users collection in db
-    res.send(`successful POST to /api/users/ ${req.user}`);
+    dbFunctions.addUser(req.body, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(result);
+    });
   })
   .delete((req, res) => {
     // delete user from db

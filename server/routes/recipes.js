@@ -6,41 +6,55 @@ const dbFunctions = require('../controllers/helpers');
 const router = express.Router();
 
 // /api/recipes/
+router.route('/:id').get((req, res) => {
+  // get all public recipes
+  const userId = { userId: req.params.id };
+  const { filter } = req.query || 'time';
+  const limit = Number(req.query.limit) || 10;
+  dbFunctions.getAllRecipeByFilter(userId, filter, limit, (err, results) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(results);
+  });
+  // res.send('GET to /api/recipes/ successful!');
+});
+
 router
-  .route('/:id')
-  .get((req, res) => {
-    // get all public recipes
-    console.log(req.params);
-    console.log(req.query);
-    const id = { id: req.params.id };
-    console.log(id);
-    const { filter } = req.query || 'time';
-    const limit = req.params.limit || 10;
-    dbFunctions.getAllRecipeByFilter(id, filter, limit, (err, results) => {
+  .route('/')
+  .post((req, res) => {
+    res.send('in post req');
+    dbFunctions.newRecipe(req.body, (err, result) => {
       if (err) {
         res.json(err);
       }
-      res.json(results);
+      res.json(result);
     });
-    // res.send('GET to /api/recipes/ successful!');
-  })
-  .post((req, res) => {
-    // add new recipe to recipe collection in db
-    res.send('POST to /api/recipes/ successful!');
   })
   .delete((req, res) => {
     // delete recipe from db
     res.send('DELETE to /api/recipes/ successful!');
   });
 
-// /api/recipes/top10
-router.route('/top10').get((req, res) => {
-  // get top 10 recipes
-  res.send('GET to /api/recipes/top10 successful!');
+router.route('/recipe/:recipeId/update-pop').put((req, res) => {
+  dbFunctions.incrementPopularity(req.params, (err, results) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(results);
+  });
 });
 
 // /api/recipes/recipe/:recipeID
 router.route('/recipe/:recipeID').get((req, res) => {
+  const { limit } = req.params || 10;
+
+  dbFunctions.getUserRecipes(req.params.recipeID, limit, (err, result) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(result);
+  });
   res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
 });
 
