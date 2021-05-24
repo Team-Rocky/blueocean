@@ -7,12 +7,15 @@ const router = express.Router();
 
 // /api/recipes/
 router
-  .route('/')
+  .route('/:id')
   .get((req, res) => {
     // get all public recipes
+    console.log(req.params);
+    console.log(req.query);
     const id = { id: req.params.id };
-    const { filter } = req.params || 'time';
-    const limit = req.params.limit || 5;
+    console.log(id);
+    const { filter } = req.query || 'time';
+    const limit = req.params.limit || 10;
     dbFunctions.getAllRecipeByFilter(id, filter, limit, (err, results) => {
       if (err) {
         res.json(err);

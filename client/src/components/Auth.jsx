@@ -1,67 +1,60 @@
-import React, { useState, useCallback } from 'react';
-import config from "../../../config.js";
+import React from 'react';
 import firebase from 'firebase';
-import "firebase/auth";
+import 'firebase/auth';
 import 'firebase/firestore';
+import config from '../../../config.js';
 import {
   FirebaseAuthProvider,
   FirebaseAuthConsumer,
   IfFirebaseAuthed,
   IfFirebaseAuthedAnd,
-} from "@react-firebase/auth";
+} from '@react-firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 firebase.initializeApp(config);
-var db = firebase.firestore();
+const auth = firebase.auth();
 
-const Auth = (props) => {
-return (
+const Auth = () => {
+  const [user] = useAuthState(auth);
+  return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div>
-        <button
-          onClick={() => {
-            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(googleAuthProvider);
-          }}
-        >
-          Sign In with Google
-        </button>
-        {/* <button
+        {user === null ? (
+          <button
+            onClick={() => {
+              const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+              firebase.auth().signInWithPopup(googleAuthProvider);
+            }}
+          >
+            Sign In with Google
+          </button>
+        ) : (
+          /* <button
           onClick={() => {
             const emailProvider = new firebase.auth.EmailAuthProvider();
             firebase.auth().signInWithPopup(emailProvider);
           }}
         >
           Sign In with Email
-        </button> */}
-        <button
-          onClick={() => {
-            firebase.auth().signOut();
-          }}
-        >
-          Sign Out
-        </button>
-        <FirebaseAuthConsumer>
-          {({ isSignedIn, user, providerId }) => {
-            if (isSignedIn === true) {
-            }
-          }}
-        </FirebaseAuthConsumer>
-        <div>
-          <IfFirebaseAuthed>
-            {() => {
-              return <div>You are authenticated</div>;
+        </button> */
+          <button
+            onClick={() => {
+              firebase.auth().signOut();
             }}
-          </IfFirebaseAuthed>
-          <IfFirebaseAuthedAnd
-            filter={({ providerId }) => providerId !== "anonymous"}
           >
-            {({ providerId }) => {
-              return <div>You are authenticated with {providerId}</div>;
-            }}
+            Sign Out
+          </button>
+        )}
+        <div>
+          <IfFirebaseAuthedAnd
+            filter={({ providerId }) => providerId !== 'anonymous'}
+          >
+            {({ providerId }) => (
+              <div>You are authenticated with {providerId}</div>
+            )}
           </IfFirebaseAuthedAnd>
         </div>
       </div>
     </FirebaseAuthProvider>
-  )
-}
+  );
+};
 export default Auth;
-

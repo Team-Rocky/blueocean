@@ -3,6 +3,6 @@ server/logs
 package-lock.json
 node_modules
 .env
-config.js
-bundle.js
 client/public/bundle.js
+bundle.js
+config.js

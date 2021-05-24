@@ -22,6 +22,7 @@ module.exports = {
   getAllRecipeByFilter(id, filter, limit, callback) {
     let queryBy;
     let search = {};
+    console.log(filter);
     if (filter === 'time') {
       queryBy = { sort: '-date_created' };
     }
@@ -32,6 +33,7 @@ module.exports = {
       queryBy = null;
       search = id;
     }
+    search.private = false;
     Recipes.find(search, null, queryBy, (err, docs) => {
       if (err) {
         callback(err, null);
