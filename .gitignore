@@ -6,3 +6,4 @@ node_modules
 firebaseConfig.js
 client/public/bundle.jsconfig.js
 config.js
+bundle.js
