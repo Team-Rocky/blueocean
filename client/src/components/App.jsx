@@ -1,5 +1,6 @@
 import React from 'react';
 import Auth from './Auth.jsx';
+import Test from './Test.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -11,6 +12,7 @@ const App = () => {
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
+  console.log(user)
   return (
   <div>
     {user === null ? 'Sign in to add recipes' :
