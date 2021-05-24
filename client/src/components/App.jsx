@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
@@ -9,6 +9,11 @@ import getUserRecipes from './helpers/getUserRecipes.js';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
+  const [schedule, setSchedule] = useState([{
+    day: 'Monday',
+    name: 'name',
+    ingredientLines: ['rice', 'apples'],
+  }]);
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
@@ -20,7 +25,7 @@ const App = (props) => {
   }, [user]);
   return (
   <div>
-    <HomePageGrid/>
+    <HomePageGrid schedule={schedule}/>
   </div>
   );
 };

@@ -8,7 +8,7 @@ router.route('/:username')
   .get((req, res) => {
     // get relevant user data (friends list, user's recipes, userID...)
     req.user = req.param.user;
-    res.send(`successful GET to /api/users/${req.user}`);
+    res.send(`successful GET to /api/users/${req.params.username}`);
   })
   .post((req, res) => {
     // add new user to users collection in db
