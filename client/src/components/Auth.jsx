@@ -18,15 +18,17 @@ const Auth = () => {
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div>
-        {user === null ? <button
-          onClick={() => {
-            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(googleAuthProvider);
-          }}
-        >
-          Sign In with Google
-        </button>
-        /* <button
+        {user === null ? (
+          <button
+            onClick={() => {
+              const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+              firebase.auth().signInWithPopup(googleAuthProvider);
+            }}
+          >
+            Sign In with Google
+          </button>
+        ) : (
+          /* <button
           onClick={() => {
             const emailProvider = new firebase.auth.EmailAuthProvider();
             firebase.auth().signInWithPopup(emailProvider);
@@ -34,14 +36,14 @@ const Auth = () => {
         >
           Sign In with Email
         </button> */
-          : <button
-          onClick={() => {
-            firebase.auth().signOut();
-          }}
-        >
-          Sign Out
-        </button>
-        }
+          <button
+            onClick={() => {
+              firebase.auth().signOut();
+            }}
+          >
+            Sign Out
+          </button>
+        )}
         <div>
           <IfFirebaseAuthedAnd
             filter={({ providerId }) => providerId !== 'anonymous'}

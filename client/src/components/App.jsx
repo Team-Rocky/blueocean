@@ -7,6 +7,7 @@ import HomePageGrid from './HomePageGrid.jsx';
 const auth = firebase.auth();
 import getUserRecipes from './helpers/getUserRecipes.js';
 
+
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([{
@@ -24,9 +25,9 @@ const App = (props) => {
     }
   }, [user]);
   return (
-  <div>
-    <HomePageGrid schedule={schedule}/>
-  </div>
+    <div>
+      <HomePageGrid schedule={schedule}/>
+    </div>
   );
 };
 
