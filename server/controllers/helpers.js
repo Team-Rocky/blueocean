@@ -22,7 +22,6 @@ module.exports = {
   getAllRecipeByFilter(id, filter, limit, callback) {
     let queryBy;
     let search = {};
-    console.log(filter);
     if (filter === 'time') {
       queryBy = { sort: '-date_created' };
     }
