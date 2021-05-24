@@ -75,7 +75,7 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard} ><AddToCalendar schedule={props.schedule}/></Paper>
+        <Paper className={classes.leaderboard} ></Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>

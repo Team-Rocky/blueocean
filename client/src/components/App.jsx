@@ -6,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import HomePageGrid from './HomePageGrid.jsx';
 const auth = firebase.auth();
 import getUserRecipes from './helpers/getUserRecipes.js';
+import AddToCalendar from './AddToCalendar.jsx';
 
 
 const App = (props) => {
@@ -27,6 +28,7 @@ const App = (props) => {
   return (
     <div>
       <HomePageGrid schedule={schedule}/>
+      <AddToCalendar schedule={schedule}/>
     </div>
   );
 };
