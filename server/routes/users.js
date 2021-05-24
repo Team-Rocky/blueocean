@@ -8,7 +8,6 @@ router.route('/:username')
   .get((req, res) => {
     // get relevant user data (friends list, user's recipes, userID...)
     req.user = req.param.user;
-    if (!req.user) { req.user = 'NO_ID!'; }
     res.send(`successful GET to /api/users/${req.user}`);
   })
   .post((req, res) => {
