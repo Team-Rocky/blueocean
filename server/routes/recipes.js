@@ -9,7 +9,6 @@ const router = express.Router();
 router.route('/:id').get((req, res) => {
   // get all public recipes
   const userId = { userId: req.params.id };
-  console.log(userId);
   const { filter } = req.query || 'time';
   const limit = Number(req.query.limit) || 10;
   dbFunctions.getAllRecipeByFilter(userId, filter, limit, (err, results) => {
@@ -25,14 +24,26 @@ router
   .route('/')
   .post((req, res) => {
     res.send('in post req');
-    // dbFunctions.newRecipe(req.body, (err, result) => {
-    //   res.json(result);
-    // });
+    dbFunctions.newRecipe(req.body, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(result);
+    });
   })
   .delete((req, res) => {
     // delete recipe from db
     res.send('DELETE to /api/recipes/ successful!');
   });
+
+router.route('/recipe/:recipeId/update-pop').put((req, res) => {
+  dbFunctions.incrementPopularity(req.params, (err, results) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(results);
+  });
+});
 
 // /api/recipes/recipe/:recipeID
 router.route('/recipe/:recipeID').get((req, res) => {

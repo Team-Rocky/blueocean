@@ -48,9 +48,8 @@ const Auth = () => {
           <IfFirebaseAuthedAnd
             filter={({ providerId }) => providerId !== 'anonymous'}
           >
-            {({ providerId }) => (
-              <div>You are authenticated with {providerId}</div>
-            )}
+            {/* {({ providerId }) => <div>You are authenticated with {providerId}</div>
+            } */}
           </IfFirebaseAuthedAnd>
         </div>
       </div>
