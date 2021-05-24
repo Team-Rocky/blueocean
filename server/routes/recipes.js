@@ -38,41 +38,7 @@ let apiKey = require('../auth/.apiname.key.js');
 router.use(express.json(), (req, res, next) => {
   next();
 });
-<<<<<<< HEAD
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-// for incoming JSON
-router.use(express.json(), (req, res, next) => {
-  next();
-});
-=======
->>>>>>> main
+
 
 // create axios instance - for if we need to comm with external api
 let ax = axios.create({
