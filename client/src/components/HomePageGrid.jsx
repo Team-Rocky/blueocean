@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     background: 'lightGrey',
-    height: '300px',
+    height: '450px',
     border: 'solid black',
   },
   leaderboard: {
@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomePageGrid = (props) => {
+  console.log('props.wee: ', props.week);
   const classes = useStyles();
   const days = [
     'Sunday',

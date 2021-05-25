@@ -10,6 +10,7 @@ const RecipesSchema = mongoose.Schema({
   ingredientLines: [String],
   popularity: Number,
   totalTime: Number,
+  description: String,
   yield: Number,
   photo: [String],
   date_created: Date,
