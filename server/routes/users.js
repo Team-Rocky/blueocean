@@ -49,6 +49,14 @@ router
     res.send(`successful DELETE to /api/users/ ${req.user}`);
   });
 
+router.route('/:email/userInfo').get((req, res) => {
+  dbFunctions.getUser(req.params, (err, result) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(result);
+  });
+});
 
 /*
 const axios = require('axios');

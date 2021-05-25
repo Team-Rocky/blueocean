@@ -6,26 +6,48 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import HomePageGrid from './HomePageGrid.jsx';
 import axios from 'axios';
 const auth = firebase.auth();
-import getUserRecipes from './helpers/getUserRecipes.js';
+import getUserRecipes from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
 
 
 const App = (props) => {
   const [user] = useAuthState(auth);
-  const [schedule, setSchedule] = useState([{
-    day: 'Monday',
-    name: 'name',
-    ingredientLines: ['rice', 'apples'],
-  }]);
+  const [schedule, setSchedule] = useState([]);
+  const days = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursay',
+    5: 'Friday',
+    6: 'Saturday',
+  };
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
   useEffect(() => {
     if (user !== null) {
-      getUserRecipes(user.email).then(data => console.log(data));
+      getUserRecipes('JackPeepin@chefslist.com').then(data => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          mappedToDay[day].push(meal);
+          setSchedule(mappedToDay);
+        });
+      });
     }
   }, [user]);
+  // console.log(schedule)
   return (
     <div>
       <HomePageGrid schedule={schedule}/>
@@ -64,7 +86,7 @@ export default App;
     //   recipeId: "60a8289ee9432a1c8262eead",
     //   date: new Date(),
     //   cookTime: 45,
-    //   ingredientsList: [
+    //   ingredientList: [
     //     "2 pounds skin-on, boneless chicken thighs",
     //     "1 cup thinly sliced red onion",
     //     "2 tablespoons minced garlic",
