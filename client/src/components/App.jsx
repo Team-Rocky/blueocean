@@ -10,6 +10,9 @@ import getUserRecipes from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
 
 
+
+
+
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
@@ -26,7 +29,38 @@ const App = (props) => {
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
+
+
   useEffect(() => {
+
+
+    var weekList = {
+      mon: [],
+      tue: [],
+      wed: [],
+      thur: [],
+      fri: [],
+      sat: [],
+      sun: [],
+    }
+
+    var weekdays = ['sun', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat']
+    axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
+      .then((response) => {
+
+        for (var i = 0; i < response.data.length; i++) {
+          var weekday = new Date(response.data[i].date).getDay()
+          weekList[weekdays[weekday]].push(response.data[i])
+        }
+        setWeek(weekList)
+
+
+      })
+      .catch((err) => {
+        console.log('err getting calendar entries!: ', err)
+      })
+
+
     if (user !== null) {
       getUserRecipes('JackPeepin@chefslist.com').then(data => {
         const mappedToDay = {
@@ -50,13 +84,16 @@ const App = (props) => {
   // console.log(schedule)
   return (
     <div>
-      <HomePageGrid schedule={schedule}/>
-      <AddToCalendar schedule={schedule}/>
+      <HomePageGrid week={week} schedule={schedule} />
+      <AddToCalendar schedule={schedule} />
     </div>
   );
 };
 
 export default App;
+
+
+
 
 // Axios requests:
 
