@@ -34,8 +34,6 @@ const App = (props) => {
 
 
   useEffect(() => {
-
-
     var weekList = {
       Sunday: [],
       Monday: [],
