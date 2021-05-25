@@ -2,6 +2,7 @@
 const express = require('express');
 
 const router = express.Router();
+const helpers = require('../controllers/helpers.js')
 
 const dbFunctions = require('../controllers/helpers');
 
@@ -9,6 +10,7 @@ const dbFunctions = require('../controllers/helpers');
 router
   .route('/:email')
   .get((req, res) => {
+    console.log('in route.get!!!!!', req.params)
     // get relevant user data (friends list, user's recipes, userID...)
     dbFunctions.getUser(req.params, (err, result) => {
       if (err) {
@@ -46,6 +48,7 @@ router
     // delete user from db
     res.send(`successful DELETE to /api/users/ ${req.user}`);
   });
+
 
 /*
 const axios = require('axios');

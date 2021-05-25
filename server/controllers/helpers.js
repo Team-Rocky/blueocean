@@ -1,13 +1,15 @@
 const Users = require('../../database/Schemas/UsersSchemas');
 const Recipes = require('../../database/Schemas/RecipesSchema');
+const CalendarEntries = require('../../database/Schemas/CalendarEntrySchema')
 
 module.exports = {
   getUser(email, callback) {
+    console.log('in getUser!')
     Users.find(email, (err, docs) => {
       if (err) {
         callback(err, null);
       }
-      callback(null, docs);
+      callback(null, docs)
     });
   },
   getUserRecipes(id, limit, callback) {
@@ -64,12 +66,39 @@ module.exports = {
       callback(docs, null);
     });
   },
-  incrementPopularity(id, callback) {
-    Recipes.function(id, { $inc: { popularity: 1 } }, (err, docs) => {
+  incrementPopularity(id, callback) { //
+    Recipes.findOneAndUpdate({ _id: id.recipeId }, { $inc: { popularity: 1 } }, (err, docs) => {
       if (err) {
         callback(err, null);
       }
       callback(null, docs);
     });
   },
+  addCalendarEntry(obj, callback) {
+
+// CalendarEntries.drop()
+// .then(() => {
+//   callback(null, 'db cleared!')
+// })
+
+    CalendarEntries.create(obj)
+      .then(() => {
+        callback(null);
+      })
+      .catch((err) => {
+        console.log('error in CalendarEntries.create!')
+        callback(err);
+      })
+
+  },
+  getCalendarEntries(id, callback) {
+    CalendarEntries.find(id)
+      .then((response) => {
+        callback(null, response)
+      })
+      .catch((err) => {
+        console.log('error in getCalendarEntries: ', err)
+        callback(err)
+      })
+  }
 };
