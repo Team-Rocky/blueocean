@@ -5,7 +5,6 @@ const Meal = (props) => {
   const mealTime = `${new Date(props.meal.date).getHours()}:${new Date(props.meal.date).getMinutes()}`;
   const startTimeSec = (new Date(props.meal.date) - (props.meal.cookTime*60*1000));
   const startTime = `${new Date(startTimeSec).getHours()}:${new Date(startTimeSec).getMinutes()}`;
-  console.log(startTime);
 
   return (
     <StyledMeal style={{listStyle: 'none'}}>
