@@ -3,16 +3,16 @@ import React from 'react';
 const AddToCalendar = (props) => {
   const days = Object.keys(props.schedule);
   const ingredients = {
-
   };
   days.forEach((day => {
     if (ingredients[day] === undefined) {
       ingredients[day] = [];
+      props.schedule[day].forEach((meal,index) => {
+        ingredients[day].push(meal.ingredientList);
+      });
     }
-    props.schedule[day].forEach((meal) => {
-      ingredients[day].push(meal.ingredientList);
-    });
   }));
+
   return (
     <div>
       <h2>Weekly Ingredients</h2>

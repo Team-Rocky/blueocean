@@ -6,13 +6,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import HomePageGrid from './HomePageGrid.jsx';
 import axios from 'axios';
 const auth = firebase.auth();
-import getUserRecipes from './helpers/getUserCalendar.js';
+import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
 
 
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
+  const [display, setDisplay] = useState('home');
   const days = {
     0: 'Sunday',
     1: 'Monday',
@@ -28,7 +29,7 @@ const App = (props) => {
   // user.email = user email
   useEffect(() => {
     if (user !== null) {
-      getUserRecipes('JackPeepin@chefslist.com').then(data => {
+      getUserCalendar('JackPeepin@chefslist.com').then(data => {
         const mappedToDay = {
           Sunday: [],
           Monday: [],
@@ -42,16 +43,28 @@ const App = (props) => {
           const date = new Date(meal.date).getDay();
           const day = days[date];
           mappedToDay[day].push(meal);
-          setSchedule(mappedToDay);
         });
+        setSchedule(mappedToDay);
       });
     }
   }, [user]);
-  // console.log(schedule)
+  const changeDisplay = () => {
+    display === 'home' ? setDisplay('list') : setDisplay('home');
+  };
   return (
     <div>
-      <HomePageGrid schedule={schedule}/>
-      <AddToCalendar schedule={schedule}/>
+      {display === 'home' ?
+      <div>
+        <button onClick={changeDisplay}>Shopping List</button>
+        <HomePageGrid schedule={schedule}/>
+      </div>
+        : null}
+      {display === 'list' ?
+      <div>
+        <button onClick={changeDisplay}>Calendar</button>
+        <AddToCalendar schedule={schedule}/>
+      </div>
+        : null}
     </div>
   );
 };
