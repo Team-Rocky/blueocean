@@ -53,7 +53,7 @@ const HomePageGrid = (props) => {
   const classes = useStyles();
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
-    <Grid container justify='center' spacing={2} className={classes.grid}>
+    <Grid container justify='center'  spacing={2} className={classes.grid}>
       <Grid container justify='space-between' spacing={2} className={classes.grid}>
         <Grid item lg={2}>
           <Paper className={classes.button} >

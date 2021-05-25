@@ -3,6 +3,11 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+const auth = firebase.auth();
+
+import HomePageGrid from './HomePageGrid.jsx';
+import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
+import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import HomePageGrid from './HomePageGrid.jsx';
 import axios from 'axios';
 const auth = firebase.auth();
