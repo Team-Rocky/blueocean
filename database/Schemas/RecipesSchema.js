@@ -3,7 +3,6 @@ const db = require('../index.js');
 mongoose.Promise = global.Promise;
 
 const RecipesSchema = mongoose.Schema({
-
   userId: String,
   userName: String,
   name: String,
@@ -13,9 +12,8 @@ const RecipesSchema = mongoose.Schema({
   totalTime: Number,
   yield: Number,
   photo: [String],
-  date_created: Date
-
-})
+  date_created: Date,
+});
 
 const Recipes = mongoose.model('Recipes', RecipesSchema);
 

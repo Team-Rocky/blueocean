@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 require('dotenv').config();
 // console.log('this is process.env:', process.env.MONGOURI)
@@ -6,7 +5,7 @@ require('dotenv').config();
 mongoose.connect(process.env.MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;

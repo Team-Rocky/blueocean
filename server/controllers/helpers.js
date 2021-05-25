@@ -65,7 +65,7 @@ module.exports = {
     });
   },
   incrementPopularity(id, callback) {
-    Recipes.function(id, { $inc: { popularity: 1 } }, (err, docs) => {
+    Recipes.findOneAndUpdate(id, { $inc: { popularity: 1 } }, (err, docs) => {
       if (err) {
         callback(err, null);
       }
