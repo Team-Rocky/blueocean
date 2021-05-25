@@ -25,6 +25,7 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
+  const [week, setWeek] = useState({})
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
@@ -35,19 +36,19 @@ const App = (props) => {
 
 
     var weekList = {
-      mon: [],
-      tue: [],
-      wed: [],
-      thur: [],
-      fri: [],
-      sat: [],
-      sun: [],
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: []
     }
 
-    var weekdays = ['sun', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat']
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
       .then((response) => {
-
+        console.log('got response; ', response.data)
         for (var i = 0; i < response.data.length; i++) {
           var weekday = new Date(response.data[i].date).getDay()
           weekList[weekdays[weekday]].push(response.data[i])
