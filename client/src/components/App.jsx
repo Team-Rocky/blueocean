@@ -93,34 +93,7 @@ const App = (props) => {
 export default App;
 
 
-// POST USER'S RECIPE OF CHOICE TO DATABASE
 
-// var fakeEntry = {
-//   userId: "60a8479474e6921f4fea1189",
-//   recipeId: "60a847d0ee2e091f56d068e9",
-//   date: new Date(2021, 5, 28, 19, 30),
-//   cookTime: 45,
-//   ingredientList: [
-//     "2 pounds skin-on, boneless chicken thighs",
-//     "1 cup thinly sliced red onion",
-//     "2 tablespoons minced garlic",
-//     "2 tablespoons minced peeled ginger",
-//     "1/4 cup soy sauce",
-//     "1/4 cup fresh tangerine or orange juice",
-//     "Freshly ground pepper",
-//     "Vegetable oil, for the grill"
-//   ],
-//   recipeName: "Dirty P's Garlic-Ginger Chicken Thighs"
-// }
-
-// axios.post('/api/recipes/calendar', fakeEntry)
-//   .then((response) => {
-//     console.log('posted calendar entry!')
-//   })
-//   .catch((err) => {
-//     console.log('err in axios post calendar entry:', err)
-//   })
-  //  // GET CALENDAR ENTRIES FOR SPECIFIC USER
 
 // Axios requests:
 
@@ -134,11 +107,6 @@ export default App;
     //     console.log('error in axios.get: ', err)
     //   })
 
-<<<<<<< HEAD
-
-
-
-=======
     // GET CALENDAR ENTRIES FOR SPECIFIC USER
     // axios.get('/api/recipes/calendar/60a828914c20a51c8065bb49')
     // .then((response) => {
@@ -175,4 +143,3 @@ export default App;
     //   .catch((err) => {
     //     console.log('err in axios post calendar entry:', err)
     //   })
->>>>>>> main
