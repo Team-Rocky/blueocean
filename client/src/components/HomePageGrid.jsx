@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper } from '@material-ui/core';
+import { ClickAwayListener, Grid, Paper, Modal } from '@material-ui/core';
+import AddRecipe from './AddRecipe.jsx'
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HomePageGrid = (props) => {
   const classes = useStyles();
+  const [clicked, setClicked] = useState(false);
 
   return (
     <Grid container justify='center' spacing={2} className={classes.grid}>
@@ -71,7 +73,7 @@ const HomePageGrid = (props) => {
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
       <Grid item lg={3}>
-          <Paper className={classes.button} >new Recipe</Paper>
+          <Paper><AddRecipe /></Paper>
         </Grid>
       </Grid>
     </Grid>

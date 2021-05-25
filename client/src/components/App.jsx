@@ -6,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 const auth = firebase.auth();
 import HomePageGrid from './HomePageGrid.jsx'
 
+
 const App = (props) => {
   const [user] = useAuthState(auth);
   // To use auth for child components
