@@ -5,9 +5,9 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 const auth = firebase.auth();
 
-import HomePageGrid from './HomePageGrid.jsx'
-import RecipeDetailsGrid from './RecipeDetailsGrid.jsx'
-
+import HomePageGrid from './HomePageGrid.jsx';
+import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
+import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
@@ -27,7 +27,7 @@ const App = (props) => {
         </div>
       )}
       <Auth />
-      <HomePageGrid />
+      <RecipeSearchGrid />
     </div>
   );
 };
