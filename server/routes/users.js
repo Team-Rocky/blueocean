@@ -2,6 +2,7 @@
 const express = require('express');
 
 const router = express.Router();
+const helpers = require('../controllers/helpers.js')
 
 const dbFunctions = require('../controllers/helpers');
 
@@ -9,6 +10,7 @@ const dbFunctions = require('../controllers/helpers');
 router
   .route('/:email')
   .get((req, res) => {
+    console.log('in route.get!!!!!', req.params)
     // get relevant user data (friends list, user's recipes, userID...)
     dbFunctions.getUser(req.params, (err, result) => {
       if (err) {
@@ -17,6 +19,10 @@ router
       // eslint-disable-next-line no-underscore-dangle
       const { filter } = req.query || 'time';
       const limit = Number(req.query.limit) || 10;
+      if (!result.length) {
+        res.send('Does not Exist');
+        return;
+      }
       dbFunctions.getAllRecipeByFilter(
         { userId: result[0]._id },
         filter,
@@ -31,13 +37,26 @@ router
     });
   })
   .post((req, res) => {
-    // add new user to users collection in db
-    res.send(`successful POST to /api/users/ ${req.user}`);
+    dbFunctions.addUser(req.body, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(result);
+    });
   })
   .delete((req, res) => {
     // delete user from db
     res.send(`successful DELETE to /api/users/ ${req.user}`);
   });
+
+router.route('/:email/userInfo').get((req, res) => {
+  dbFunctions.getUser(req.params, (err, result) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(result);
+  });
+});
 
 /*
 const axios = require('axios');

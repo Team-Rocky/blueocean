@@ -13,8 +13,6 @@ var namesArray = [
   "Jack Peepin"
 ]
 
-
-
 var storeAll = (array) => {
   if (array.length === 0) {
     return console.log('saved users!')

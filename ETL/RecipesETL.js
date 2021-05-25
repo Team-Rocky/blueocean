@@ -1,8 +1,8 @@
 const fs = require('fs');
 var tempArray = []
-const db = require('../database/index')
-const Recipes = require('../database/Schemas/RecipesSchema.js')
-const Users = require('../database/Schemas/UsersSchemas.js')
+const db = require('../database/index');
+const Recipes = require('../database/Schemas/RecipesSchema.js');
+const Users = require('../database/Schemas/UsersSchemas.js');
 
 var namesArray = [
   "Jordan Hamsey",
@@ -30,8 +30,6 @@ fs.readFile('testData.json', (err, data) => {
 
 });
 
-
-
 const addRecipes = (array) => {
 
   // if array is empty
@@ -53,6 +51,7 @@ var rando = namesArray[Math.round(Math.random() * 4)]
         ingredientLines: array[0].recipe.ingredientLines,
         popularity: Math.round(Math.random() * 100),
         totalTime: 45,
+        description: 'Mix it all into a bowl, put a garnish on it, and serve.',
         yield: Math.round(Math.random() * 4),
         photo: array[0].recipe.image,
         date_created: new Date()
@@ -60,16 +59,14 @@ var rando = namesArray[Math.round(Math.random() * 4)]
       })
       .then(() => {
         // upon completion of that, call addRecipes on spliced array
-        addRecipes(array.splice(1, array.length))
+        addRecipes(array.splice(1, array.length));
 
       })
       .catch((err) => {
-        console.log('err in recipes.create:', err)
-      })
+        console.log('err in recipes.create:', err);
+      });
     })
     .catch((err) => {
-      console.log('err in users.find: ', err)
-    })
-
-
-}
+      console.log('err in users.find: ', err);
+    });
+};

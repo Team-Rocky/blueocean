@@ -9,7 +9,6 @@ const router = express.Router();
 router.route('/:id').get((req, res) => {
   // get all public recipes
   const userId = { userId: req.params.id };
-  console.log(userId);
   const { filter } = req.query || 'time';
   const limit = Number(req.query.limit) || 10;
   dbFunctions.getAllRecipeByFilter(userId, filter, limit, (err, results) => {
@@ -25,14 +24,26 @@ router
   .route('/')
   .post((req, res) => {
     res.send('in post req');
-    // dbFunctions.newRecipe(req.body, (err, result) => {
-    //   res.json(result);
-    // });
+    dbFunctions.newRecipe(req.body, (err, result) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(result);
+    });
   })
   .delete((req, res) => {
     // delete recipe from db
     res.send('DELETE to /api/recipes/ successful!');
   });
+
+router.route('/recipe/:recipeId/update-pop').put((req, res) => {
+  dbFunctions.incrementPopularity(req.params, (err, results) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(results);
+  });
+});
 
 // /api/recipes/recipe/:recipeID
 router.route('/recipe/:recipeID').get((req, res) => {
@@ -46,6 +57,39 @@ router.route('/recipe/:recipeID').get((req, res) => {
   });
   res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
 });
+
+router
+  .route('/calendar')
+  .post((req, res) => {
+    console.log('in post to calendar! req.body: ', req.body);
+
+    dbFunctions.addCalendarEntry(req.body, (err) => {
+      if (err) {
+        console.log('err in .post to calendar: ', err)
+        res.json(err)
+      }
+      console.log('got positive respose!')
+      res.send('posted!')
+
+    })
+  });
+
+router
+  .route('/calendar/:userId')
+  .get((req, res) => {
+    // gets all the calendar entries for that user
+    console.log('in calendar get by user id!: ', req.params)
+     var body = { userId: req.params.userId }
+    dbFunctions.getCalendarEntries(body, (err, data) => {
+      if (err) {
+        console.log('err in .get all calendar entries: ', err)
+      } else {
+
+        res.send(data)
+      }
+    })
+  })
+
 
 /*
 const axios = require('axios');
