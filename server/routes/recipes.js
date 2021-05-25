@@ -58,6 +58,39 @@ router.route('/recipe/:recipeID').get((req, res) => {
   res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
 });
 
+router
+  .route('/calendar')
+  .post((req, res) => {
+    console.log('in post to calendar! req.body: ', req.body);
+
+    dbFunctions.addCalendarEntry(req.body, (err) => {
+      if (err) {
+        console.log('err in .post to calendar: ', err)
+        res.json(err)
+      }
+      console.log('got positive respose!')
+      res.send('posted!')
+
+    })
+  });
+
+router
+  .route('/calendar/:userId')
+  .get((req, res) => {
+    // gets all the calendar entries for that user
+    console.log('in calendar get by user id!: ', req.params)
+     var body = { userId: req.params.userId }
+    dbFunctions.getCalendarEntries(body, (err, data) => {
+      if (err) {
+        console.log('err in .get all calendar entries: ', err)
+      } else {
+
+        res.send(data)
+      }
+    })
+  })
+
+
 /*
 const axios = require('axios');
 let apiKey = require('../auth/.apiname.key.js');
