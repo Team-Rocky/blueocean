@@ -44,19 +44,19 @@ const RecipeDetailsGrid = (props) => {
 
   return (
     <Grid container justify='center' justify-content='center' alignItems='center' spacing={1} className={classes.grid}>
-      <Grid item className={classes.title} lg={8}>
+      <Grid item className={classes.title} lg={8} xs={12}>
         Back to HomePage
       </Grid>
-      <Grid item className={classes.recipe} lg={4}>
+      <Grid item className={classes.recipe} lg={4} xs={12}>
         recipeitem
       </Grid>
-      <Grid item className={classes.description} lg={5}>
+      <Grid item className={classes.description} lg={5} xs={12}>
         description
       </Grid>
-      <Grid item className={classes.description} lg={4}>
+      <Grid item className={classes.description} lg={4} xs={12}>
         ingredients
       </Grid>
-      <Grid item className={classes.button} lg={5}>
+      <Grid item className={classes.button} lg={5} xs={12}>
         schedule button
       </Grid>
     </Grid >
