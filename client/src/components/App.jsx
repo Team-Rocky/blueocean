@@ -7,16 +7,9 @@ const auth = firebase.auth();
 
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
-import RecipeSearchGrid from './RecipeSearchGrid.jsx';
-import HomePageGrid from './HomePageGrid.jsx';
 import axios from 'axios';
-const auth = firebase.auth();
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
-
-
-
-
 
 const App = (props) => {
   const [user] = useAuthState(auth);
