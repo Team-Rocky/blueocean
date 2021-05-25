@@ -10,6 +10,9 @@ import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
 
 
+
+
+
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
@@ -23,11 +26,43 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
+  const [week, setWeek] = useState({})
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
+
+
   useEffect(() => {
+
+
+    var weekList = {
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: []
+    }
+
+    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
+      .then((response) => {
+        console.log('got response; ', response.data)
+        for (var i = 0; i < response.data.length; i++) {
+          var weekday = new Date(response.data[i].date).getDay()
+          weekList[weekdays[weekday]].push(response.data[i])
+        }
+        setWeek(weekList)
+
+
+      })
+      .catch((err) => {
+        console.log('err getting calendar entries!: ', err)
+      })
+
+
     if (user !== null) {
       getUserCalendar('JackPeepin@chefslist.com').then(data => {
         const mappedToDay = {
@@ -56,7 +91,7 @@ const App = (props) => {
       {display === 'home' ?
       <div>
         <button onClick={changeDisplay}>Shopping List</button>
-        <HomePageGrid schedule={schedule}/>
+        <HomePageGrid week={week} schedule={schedule}/>
       </div>
         : null}
       {display === 'list' ?
@@ -70,6 +105,9 @@ const App = (props) => {
 };
 
 export default App;
+
+
+
 
 // Axios requests:
 
