@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     background: 'lightGrey',
-    height: '300px',
+    height: '450px',
     border: 'solid black',
   },
   leaderboard: {
