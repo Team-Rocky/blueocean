@@ -10,9 +10,8 @@ const checkForCalendarEvents = () => {
 const NotificationsTest = () => {
   if (Notification.permission !== 'granted') {
     Notification.requestPermission();
-  } else {
-    new Notification('an infinite order of spam, coming right up! :]');
   }
+  new Notification('an infinite order of spam, coming right up! :]');
   const calCheck = checkForCalendarEvents();
   //setInterval(calCheck, 5000);
 };
