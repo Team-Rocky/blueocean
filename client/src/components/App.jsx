@@ -17,21 +17,18 @@ const App = (props) => {
   const [schedule, setSchedule] = useState([]);
   const [searchPage, setSearch] = useState(false);
   const [detailPage, setDetail] = useState(false);
-  const [currentRecipe, setRecipe] = useState({})
+  const [currentRecipe, setRecipe] = useState({});
 
   const goToDetailsPage = (recipe) => {
-    setDetail(true)
-    setSearch(false)
-    setRecipe(recipe)
+    setDetail(true);
+    setSearch(false);
+    setRecipe(recipe);
     return (
       <div>
-        <RecipeDetailsGrid
-          recipe={currentRecipe}
-        />
+        <RecipeDetailsGrid recipe={currentRecipe} />
       </div>
-    )
-
-  }
+    );
+  };
 
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -45,7 +42,7 @@ const App = (props) => {
     6: 'Saturday',
   };
 
-  const [topTen, setTopTen] = useState([])
+  const [topTen, setTopTen] = useState([]);
 
   const getPreviousSunday = () => {
     var date = new Date();
@@ -95,16 +92,17 @@ const App = (props) => {
   };
 
   const getBoard = (id, val) => {
-    val = val || 'time'
-    axios.get(`/api/recipes/${id}?filter=${val}`)
+    val = val || 'time';
+    axios
+      .get(`/api/recipes/${id}?filter=${val}`)
       .then((response) => {
-        console.log('got leaderboard data: ', response.data)
-        setTopTen(response.data)
+        console.log('got leaderboard data: ', response.data);
+        setTopTen(response.data);
       })
       .catch((err) => {
-        console.log('err in axios get recipe leaderboarda')
-      })
-  }
+        console.log('err in axios get recipe leaderboarda');
+      });
+  };
 
   useEffect(() => {
     const newUser = {
@@ -120,7 +118,6 @@ const App = (props) => {
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
-            console.log("in user doesn't exist");
             axios.post('/api/users', newUser).then((response) => {
               console.log('NEW USER ADDED TO DATABASE');
               setUserInfo(response.data[0]);
@@ -137,14 +134,14 @@ const App = (props) => {
         });
   }, [user]);
 
-  console.log('current user: ', userInfo._id)
+  console.log('current user: ', userInfo._id);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
   if (!searchPage && !detailPage) {
     return (
       <div>
-        {display === 'home' ?
+        {display === 'home' ? (
           <div>
             <HomePageGrid
               getBoard={getBoard}
@@ -155,16 +152,16 @@ const App = (props) => {
               schedule={schedule}
               userId={userInfo._id}
               updateCalendar={updateCalendar}
+              changeDisplay={changeDisplay}
             />
-            <button onClick={changeDisplay}>Shopping List</button>
           </div>
-          : null}
-        {display === 'list' ?
+        ) : null}
+        {display === 'list' ? (
           <div>
-            <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
+            <button onClick={changeDisplay}>Calendar</button>
           </div>
-          : null}
+        ) : null}
       </div>
     );
   } else if (searchPage) {
@@ -174,9 +171,10 @@ const App = (props) => {
           searchPage={searchPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
+          user={user}
         />
       </div>
-    )
+    );
   } else if (detailPage) {
     return (
       <div>
@@ -185,9 +183,10 @@ const App = (props) => {
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}
+          user={user}
         />
       </div>
-    )
+    );
   }
 };
 
