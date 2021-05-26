@@ -153,14 +153,14 @@ const App = (props) => {
               schedule={schedule}
               userId={userInfo._id}
               updateCalendar={updateCalendar}
+              changeDisplay={changeDisplay}
             />
-            <button onClick={changeDisplay}>Shopping List</button>
           </div>
           : null}
         {display === 'list' ?
           <div>
-            <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
+            <button onClick={changeDisplay}>Calendar</button>
           </div>
           : null}
       </div>
@@ -172,6 +172,7 @@ const App = (props) => {
           searchPage={searchPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
+          user={user}
         />
       </div>
     )
@@ -183,6 +184,7 @@ const App = (props) => {
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}
+          user={user}
         />
       </div>
     )

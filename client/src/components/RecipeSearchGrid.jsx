@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     textAlign: 'left',
+    width: '60%',
     color: theme.palette.text.secondary,
     borderBottom: '1px solid black',
     height: '200',
@@ -68,7 +69,7 @@ const RecipeSearchGrid = (props) => {
   const [recipes, setRecipes] = React.useState([])
 
   const getRecipes = () => {
-    axios.get('http://localhost:7625/api/recipes/GirlFiery@chefslist.com')
+    axios.get(`http://localhost:7625/api/recipes/${props.user.email}?filter=time&limit=20`)
       .then(recipes => {
         var names = [];
         //console.log('RECIPES: ', recipes.data)
@@ -78,7 +79,6 @@ const RecipeSearchGrid = (props) => {
           setRecipes(recipes.data)
           //console.log('options: ', recipes.data)
         }
-
       })
       .catch(err => {
         console.error(err)
@@ -86,21 +86,20 @@ const RecipeSearchGrid = (props) => {
   }
 
   const renderRecipe = (index) => {
+
     const { description, name, ingredientLines } = recipes[index];
     //console.log('IT IS RUNNING')
     return (
       <Grid item className={classes.card} xl={6}
-        key={name}
+        key={name + index}
         value={recipes[index]}>
         <CardContent>
-          <Typography>{name}</Typography>
+          <Typography variant="h4">{name}</Typography>
           <Typography>{description}</Typography>
-          <br />
-          <Typography>{ingredientLines}</Typography>
-          <button style={{ margin: '5px' }}
+          <Button variant="outlined" color="primary" style={{ margin: '5px' }}
             value={recipes[index]}
             onClick={() =>props.goToDetailsPage(recipes[index])}
-          >more info</button>
+          >more info</Button>
           <Button variant="outlined" color="primary" style={{ margin: '5px' }}>Schedule Meal</Button>
         </CardContent>
       </Grid>
