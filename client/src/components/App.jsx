@@ -3,17 +3,17 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-const auth = firebase.auth();
-
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
+const auth = firebase.auth();
 
 const App = (props) => {
   const [user] = useAuthState(auth);
+  const [userId, setUserId] = useState('');
   const [schedule, setSchedule] = useState([]);
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -110,18 +110,20 @@ const App = (props) => {
           mappedToDay[day].push(meal);
         });
         setSchedule(mappedToDay);
+        setUserId(data[0].userId);
       });
     }
   }, [user]);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
+
   return (
     <div>
       {display === 'home' ? (
         <div>
           <button onClick={changeDisplay}>Shopping List</button>
-          <HomePageGrid week={week} schedule={schedule} />
+          <HomePageGrid schedule={schedule} userId={userId} />
         </div>
       ) : null}
       {display === 'list' ? (

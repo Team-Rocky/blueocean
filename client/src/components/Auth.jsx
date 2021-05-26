@@ -19,10 +19,9 @@ const Auth = () => {
   const [userInfo, setUserInfo] = useState({});
   const [user] = useAuthState(auth);
 
-  // useEffect(() => {
-  //   console.log(user);
-  //   axios.get();
-  // }, [user]);
+  useEffect(() => {
+    axios.get('/');
+  }, [user]);
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
