@@ -11,12 +11,12 @@ const Meal = (props) => {
       <StyledHead>{props.meal.recipeName}</StyledHead>
       <StyledSpan>Meal Time: {mealTime}
       </StyledSpan><br/>
-      <StyledSpan style={{color: 'red'}}>Cook Time: {props.meal.cookTime} min</StyledSpan><br/>
-      <StyledSpan>Start At: {startTime}
+      <StyledSpan>Cook Time: {props.meal.cookTime} min</StyledSpan><br/>
+      <StyledSpan style={{color: 'red'}}>Start At: {startTime}
       </StyledSpan><br/>
     </StyledMeal>
-  )
-}
+  );
+};
 
 const StyledMeal = styled.li`
   text-align: left;
@@ -29,6 +29,7 @@ const StyledSpan = styled.span`
   margin: 0;
   padding: 0;
   font-size: .5em;
+  font-weight: bold;
 `;
 const StyledHead = styled.h5`
   text-align: left;
