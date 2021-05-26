@@ -7,7 +7,7 @@ const dbFunctions = require('../controllers/helpers');
 
 // serverhost/api/users/username1
 router.route('/:email').get((req, res) => {
-  console.log('in route.get!!!!!', req.params);
+  // console.log('in route.get!!!!!', req.params);
   // get relevant user data (friends list, user's recipes, userID...)
   dbFunctions.getUser(req.params, (err, result) => {
     if (err) {
@@ -15,6 +15,7 @@ router.route('/:email').get((req, res) => {
     }
     // eslint-disable-next-line no-underscore-dangle
     const { filter } = req.query || 'time';
+    console.log();
     const limit = Number(req.query.limit) || 10;
     if (!result.length) {
       res.send('Does not Exist');

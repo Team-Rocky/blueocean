@@ -3,6 +3,7 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
@@ -13,7 +14,6 @@ const auth = firebase.auth();
 
 const App = (props) => {
   const [user] = useAuthState(auth);
-  const [userId, setUserId] = useState('');
   const [schedule, setSchedule] = useState([]);
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -26,32 +26,14 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  const [week, setWeek] = useState({});
+  // const [week, setWeek] = useState({})
+  const [topTen, setTopTen] = useState([]);
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
 
   useEffect(() => {
-    var weekList = {
-      Sunday: [],
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: [],
-    };
-
-    var weekdays = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
     const newUser = {
       name: user && user.displayName,
       email: user && user.email,
@@ -75,51 +57,42 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios
-            .get(`/api/recipes/calendar/${userInfo._id}`)
-            .then((response) => {
-              for (var i = 0; i < response.data.length; i++) {
-                var weekday = new Date(response.data[i].date).getDay();
-                weekList[weekdays[weekday]].push(response.data[i]);
-              }
-              setWeek(weekList);
-            })
-            .catch((err) => {
-              console.log('err getting calendar entries!: ', err);
+          if (user !== null) {
+            getUserCalendar(userInfo._id).then((data) => {
+              const mappedToDay = {
+                Sunday: [],
+                Monday: [],
+                Tuesday: [],
+                Wednesday: [],
+                Thursday: [],
+                Friday: [],
+                Saturday: [],
+              };
+              data.forEach((meal) => {
+                const date = new Date(meal.date).getDay();
+                const day = days[date];
+                mappedToDay[day].push(meal);
+              });
+              setSchedule(mappedToDay);
             });
+          }
         });
-
-    if (user !== null) {
-      getUserCalendar(user.email).then((data) => {
-        const mappedToDay = {
-          Sunday: [],
-          Monday: [],
-          Tuesday: [],
-          Wednesday: [],
-          Thursday: [],
-          Friday: [],
-          Saturday: [],
-        };
-        data.forEach((meal) => {
-          const date = new Date(meal.date).getDay();
-          const day = days[date];
-          mappedToDay[day].push(meal);
-        });
-        setSchedule(mappedToDay);
-        setUserId(data[0].userId);
-      });
-    }
   }, [user]);
+  console.log('current user: ', userInfo._id);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
-
+  console.log('schedule,', schedule);
   return (
     <div>
       {display === 'home' ? (
         <div>
           <button onClick={changeDisplay}>Shopping List</button>
-          <HomePageGrid schedule={schedule} userId={userId} />
+          <HomePageGrid
+            topTen={topTen}
+            schedule={schedule}
+            userId={userInfo._id}
+          />
         </div>
       ) : null}
       {display === 'list' ? (
@@ -157,7 +130,7 @@ export default App;
 
 // POST USER'S RECIPE OF CHOICE TO DATABASE
 // var fakeEntry = {
-//   userId: "60a828914c20a51c8065bb49",
+//   userId: "60ae667772fdbd15f82280d6",
 //   recipeId: "60a8289ee9432a1c8262eead",
 //   date: new Date(),
 //   cookTime: 45,
