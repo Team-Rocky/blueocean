@@ -8,7 +8,8 @@ import axios from 'axios';
 const auth = firebase.auth();
 import getUserRecipes from './helpers/getUserRecipes.js';
 import AddToCalendar from './AddToCalendar.jsx';
-
+require('./NotificationsTest.js')
+import ScheduleMeal from './ScheduleMeal.jsx';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
@@ -30,6 +31,7 @@ const App = (props) => {
     <div>
       <HomePageGrid schedule={schedule}/>
       <AddToCalendar schedule={schedule}/>
+      <ScheduleMeal />
     </div>
   );
 };

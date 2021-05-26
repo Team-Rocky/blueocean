@@ -19,12 +19,14 @@ const getDuration = (start) => {
   return (diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS;
 };
 app.use((req, res, next) => {
+  // req info
   const start = process.hrtime();
   let now = new Date().toISOString();
   let date = now.slice(0, 10);
   let time = now.slice(11, 16);
   let method = req.method;
   let url = req.url;
+  // res info
   res.on('finish', () => {
     let status = chalk.white(res.statusCode);
     if (res.statusCode >= 200) {
@@ -37,7 +39,8 @@ app.use((req, res, next) => {
       status = chalk.red(res.statusCode);
     }
     const duration = getDuration(start);
-    let log = `${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
+    // log
+    let log = `\n${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
     console.log(log);
     fs.appendFile(`./server/logs/${date}.log`, log, (err) => {
       if (err) throw err;
@@ -45,9 +48,6 @@ app.use((req, res, next) => {
   });
   next();
 });
-
-// web
-app.use(express.static('./client/public'));
 
 // web
 app.use(express.static('./client/public'));
