@@ -23,12 +23,13 @@ router.route('/:id').get((req, res) => {
 router
   .route('/')
   .post((req, res) => {
-    res.send('in post req');
     dbFunctions.newRecipe(req.body, (err, result) => {
+      console.log('here');
       if (err) {
         res.json(err);
+      } else {
+        res.json(result);
       }
-      res.json(result);
     });
   })
   .delete((req, res) => {
@@ -58,38 +59,31 @@ router.route('/recipe/:recipeID').get((req, res) => {
   res.send(`GET to /api/recipes/recipe/${req.params.recipeID} successful!`);
 });
 
-router
-  .route('/calendar')
-  .post((req, res) => {
-    console.log('in post to calendar! req.body: ', req.body);
+router.route('/calendar').post((req, res) => {
+  console.log('in post to calendar! req.body: ', req.body);
 
-    dbFunctions.addCalendarEntry(req.body, (err) => {
-      if (err) {
-        console.log('err in .post to calendar: ', err)
-        res.json(err)
-      }
-      console.log('got positive respose!')
-      res.send('posted!')
-
-    })
+  dbFunctions.addCalendarEntry(req.body, (err) => {
+    if (err) {
+      console.log('err in .post to calendar: ', err);
+      res.json(err);
+    }
+    console.log('got positive respose!');
+    res.send('posted!');
   });
+});
 
-router
-  .route('/calendar/:userId')
-  .get((req, res) => {
-    // gets all the calendar entries for that user
-    console.log('in calendar get by user id!: ', req.params)
-     var body = { userId: req.params.userId }
-    dbFunctions.getCalendarEntries(body, (err, data) => {
-      if (err) {
-        console.log('err in .get all calendar entries: ', err)
-      } else {
-
-        res.send(data)
-      }
-    })
-  })
-
+router.route('/calendar/:userId').get((req, res) => {
+  // gets all the calendar entries for that user
+  console.log('in calendar get by user id!: ', req.params);
+  var body = { userId: req.params.userId };
+  dbFunctions.getCalendarEntries(body, (err, data) => {
+    if (err) {
+      console.log('err in .get all calendar entries: ', err);
+    } else {
+      res.send(data);
+    }
+  });
+});
 
 /*
 const axios = require('axios');

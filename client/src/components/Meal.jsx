@@ -8,7 +8,7 @@ const Meal = (props) => {
 
   return (
     <StyledMeal style={{listStyle: 'none'}}>
-      <h5>{props.meal.recipeName}</h5>
+      <StyledHead>{props.meal.recipeName}</StyledHead>
       <StyledSpan>Meal Time: {mealTime}
       </StyledSpan><br/>
       <StyledSpan style={{color: 'red'}}>Cook Time: {props.meal.cookTime} min</StyledSpan><br/>
@@ -29,5 +29,10 @@ const StyledSpan = styled.span`
   margin: 0;
   padding: 0;
   font-size: .5em;
+`;
+const StyledHead = styled.h5`
+  text-align: left;
+  margin: 0;
+  padding: 0;
 `;
 export default Meal;

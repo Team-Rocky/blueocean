@@ -3,18 +3,14 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-const auth = firebase.auth();
 
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
-import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import HomePageGrid from './HomePageGrid.jsx';
+import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
-
-
-
-
+const auth = firebase.auth();
 
 const App = (props) => {
   const [user] = useAuthState(auth);
@@ -27,17 +23,18 @@ const App = (props) => {
     setDetail(true)
     setSearch(false)
     setRecipe(recipe)
-   return (
-     <div>
-       <RecipeDetailsGrid
-       recipe={currentRecipe}
-       />
-       </div>
-   )
+    return (
+      <div>
+        <RecipeDetailsGrid
+          recipe={currentRecipe}
+        />
+      </div>
+    )
 
   }
 
   const [display, setDisplay] = useState('home');
+  const [userInfo, setUserInfo] = useState({});
   const days = {
     0: 'Sunday',
     1: 'Monday',
@@ -47,62 +44,71 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  const [week, setWeek] = useState({})
+  // const [week, setWeek] = useState({})
+  const [topTen, setTopTen] = useState([])
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
 
-
   useEffect(() => {
 
-    var weekList = {
-      Sunday: [],
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: []
-    }
-
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
-      .then((response) => {
-        console.log('got response; ', response.data)
-        for (var i = 0; i < response.data.length; i++) {
-          var weekday = new Date(response.data[i].date).getDay()
-          weekList[weekdays[weekday]].push(response.data[i])
-        }
-        setWeek(weekList)
 
 
-      })
-      .catch((err) => {
-        console.log('err getting calendar entries!: ', err)
-      })
+    const newUser = {
+      name: user && user.displayName,
+      email: user && user.email,
+      friends: [],
+      date: new Date(),
+    };
 
-
-    if (user !== null) {
-      getUserCalendar('JackPeepin@chefslist.com').then(data => {
-        const mappedToDay = {
-          Sunday: [],
-          Monday: [],
-          Tuesday: [],
-          Wednesday: [],
-          Thursday: [],
-          Friday: [],
-          Saturday: [],
-        };
-        data.forEach((meal) => {
-          const date = new Date(meal.date).getDay();
-          const day = days[date];
-          mappedToDay[day].push(meal);
+    user &&
+      axios
+        .get(`/api/users/${user.email}/userInfo`)
+        .then((res) => {
+          if (!res.data.length) {
+            console.log("in user doesn't exist");
+            axios.post('/api/users', newUser).then((response) => {
+              console.log('NEW USER ADDED TO DATABASE');
+              setUserInfo(response.data[0]);
+              return response.data[0];
+            });
+          } else {
+            setUserInfo(res.data[0]);
+            return res.data[0];
+          }
+        })
+        .then((userInfo) => {
+          axios.get(`/api/recipes/${userInfo._id}`)
+            .then((response) => {
+              console.log('got leaderboard data: ', response.data)
+              setTopTen(response.data)
+            })
+            .catch((err) => {
+              console.log('err in axios get recipe leaderboarda')
+            })
+          if (user !== null) {
+            getUserCalendar(userInfo._id).then((data) => {
+              const mappedToDay = {
+                Sunday: [],
+                Monday: [],
+                Tuesday: [],
+                Wednesday: [],
+                Thursday: [],
+                Friday: [],
+                Saturday: [],
+              };
+              data.forEach((meal) => {
+                const date = new Date(meal.date).getDay();
+                const day = days[date];
+                mappedToDay[day].push(meal);
+              });
+              setSchedule(mappedToDay);
+            });
+          }
         });
-        setSchedule(mappedToDay);
-      });
-    }
   }, [user]);
+  console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
@@ -111,13 +117,13 @@ const App = (props) => {
       <div>
         {display === 'home' ?
           <div>
-            <button onClick={changeDisplay}>Shopping List</button>
             <HomePageGrid
-              week={week}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
+              topTen={topTen} schedule={schedule} userId={userInfo._id}
             />
+            <button onClick={changeDisplay}>Shopping List</button>
           </div>
           : null}
         {display === 'list' ?
@@ -154,54 +160,50 @@ const App = (props) => {
 
 export default App;
 
-
-
-
 // Axios requests:
 
- // axios.get(`/api/users/GirlFiery@chefslist.com`)
+// axios.get(`/api/users/GirlFiery@chefslist.com`)
 
-    //   .then((response) => {
-    //     console.log('this is response.data: ', response.data)
-    //     // var userId = response.data._id
-    //   })
-    //   .catch((err) => {
-    //     console.log('error in axios.get: ', err)
-    //   })
+//   .then((response) => {
+//     console.log('this is response.data: ', response.data)
+//     // var userId = response.data._id
+//   })
+//   .catch((err) => {
+//     console.log('error in axios.get: ', err)
+//   })
 
-    // GET CALENDAR ENTRIES FOR SPECIFIC USER
-    // axios.get('/api/recipes/calendar/60a828914c20a51c8065bb49')
-    // .then((response) => {
-    //   console.log('got calendar entries!: ', response.data)
-    // })
-    // .catch((err) => {
-    //   console.log('err getting calendar entries!: ', err)
-    // })
+// GET CALENDAR ENTRIES FOR SPECIFIC USER
+// axios.get('/api/recipes/calendar/60a828914c20a51c8065bb49')
+// .then((response) => {
+//   console.log('got calendar entries!: ', response.data)
+// })
+// .catch((err) => {
+//   console.log('err getting calendar entries!: ', err)
+// })
 
+// POST USER'S RECIPE OF CHOICE TO DATABASE
+// var fakeEntry = {
+//   userId: "60ae667772fdbd15f82280d6",
+//   recipeId: "60a8289ee9432a1c8262eead",
+//   date: new Date(),
+//   cookTime: 45,
+//   ingredientList: [
+//     "2 pounds skin-on, boneless chicken thighs",
+//     "1 cup thinly sliced red onion",
+//     "2 tablespoons minced garlic",
+//     "2 tablespoons minced peeled ginger",
+//     "1/4 cup soy sauce",
+//     "1/4 cup fresh tangerine or orange juice",
+//     "Freshly ground pepper",
+//     "Vegetable oil, for the grill"
+//   ],
+//   recipeName: "Dirty P's Garlic-Ginger Chicken Thighs"
+// }
 
-    // POST USER'S RECIPE OF CHOICE TO DATABASE
-    // var fakeEntry = {
-    //   userId: "60a828914c20a51c8065bb49",
-    //   recipeId: "60a8289ee9432a1c8262eead",
-    //   date: new Date(),
-    //   cookTime: 45,
-    //   ingredientList: [
-    //     "2 pounds skin-on, boneless chicken thighs",
-    //     "1 cup thinly sliced red onion",
-    //     "2 tablespoons minced garlic",
-    //     "2 tablespoons minced peeled ginger",
-    //     "1/4 cup soy sauce",
-    //     "1/4 cup fresh tangerine or orange juice",
-    //     "Freshly ground pepper",
-    //     "Vegetable oil, for the grill"
-    //   ],
-    //   recipeName: "Dirty P's Garlic-Ginger Chicken Thighs"
-    // }
-
-    // axios.post('/api/recipes/calendar', fakeEntry)
-    //   .then((response) => {
-    //     console.log('posted calendar entry!')
-    //   })
-    //   .catch((err) => {
-    //     console.log('err in axios post calendar entry:', err)
-    //   })
+// axios.post('/api/recipes/calendar', fakeEntry)
+//   .then((response) => {
+//     console.log('posted calendar entry!')
+//   })
+//   .catch((err) => {
+//     console.log('err in axios post calendar entry:', err)
+//   })
