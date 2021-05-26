@@ -50,6 +50,27 @@ const App = (props) => {
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
+  const updateCalendar = (id) => {
+    if (user !== null) {
+      getUserCalendar(id).then((data) => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          mappedToDay[day].push(meal);
+        });
+        setSchedule(mappedToDay);
+      });
+    }
+  };
 
   useEffect(() => {
     const newUser = {
@@ -84,27 +105,10 @@ const App = (props) => {
             .catch((err) => {
               console.log('err in axios get recipe leaderboarda')
             })
-          if (user !== null) {
-            getUserCalendar(userInfo._id).then((data) => {
-              const mappedToDay = {
-                Sunday: [],
-                Monday: [],
-                Tuesday: [],
-                Wednesday: [],
-                Thursday: [],
-                Friday: [],
-                Saturday: [],
-              };
-              data.forEach((meal) => {
-                const date = new Date(meal.date).getDay();
-                const day = days[date];
-                mappedToDay[day].push(meal);
-              });
-              setSchedule(mappedToDay);
-            });
-          }
+          updateCalendar(userInfo._id);
         });
   }, [user]);
+
   console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
