@@ -99,12 +99,11 @@ const AddRecipe = (props) => {
       totalTime: Number(TotalTime),
       yield: Number(Yield),
       photo: [],
-      date_created: Date.now()
-    }
+      date_created: Date.now(),
+    };
 
     axios.post('/api/recipes', result)
       .then(() => {
-        console.log(result)
         setSubmitted(true);
       })
       .catch((error) => {
