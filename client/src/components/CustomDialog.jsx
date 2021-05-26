@@ -7,7 +7,7 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import { Paper } from '@material-ui/core';
-
+import ScheduleMeal from './ScheduleMeal.jsx';
 import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
@@ -88,9 +88,7 @@ export default function RecipeItem(props) {
           </Typography> */}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Schedule Meal
-          </Button>
+          <ScheduleMeal recipe={props.recipe} userId={props.userId} />
         </DialogActions>
       </Dialog>
     </div>

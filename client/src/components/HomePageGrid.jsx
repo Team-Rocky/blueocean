@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ClickAwayListener, Grid, Paper, Modal } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddRecipe from './AddRecipe.jsx'
-import RecipeList from './recipeList.jsx';
+import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
-import AddToCalendar from './AddToCalendar.jsx';
 import myPic from './../assets/set-and-forget.svg';
+require('./helpers/pushNotifications.js');
 
 const useStyles = makeStyles((theme) => ({
+  /*
+
+  */
   grid: {
     width: '100%',
     margin: '0px',
@@ -86,7 +89,7 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} /></Paper>
+        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} userId={props.userId} /></Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>
