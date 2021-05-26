@@ -40,7 +40,7 @@ const App = (props) => {
     1: 'Monday',
     2: 'Tuesday',
     3: 'Wednesday',
-    4: 'Thursay',
+    4: 'Thursday',
     5: 'Friday',
     6: 'Saturday',
   };
@@ -101,6 +101,7 @@ const App = (props) => {
               data.forEach((meal) => {
                 const date = new Date(meal.date).getDay();
                 const day = days[date];
+                console.log(day, typeof(day), date);
                 mappedToDay[day].push(meal);
               });
               setSchedule(mappedToDay);

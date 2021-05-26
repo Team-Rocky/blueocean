@@ -33,20 +33,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-//const ScheduleMeal = ({ recipe }) => {
-const ScheduleMeal = () => {
-  let recipe = {
+const ScheduleMeal = (props) => {
+  let entry = {
+    userId: props.userId,
+    recipeId: props.recipe._id,
+    cookTime: props.recipe.totalTime,
+    recipeName: props.recipe.name,
+    ingredientList: props.recipe.ingredientLines,
+  };
+  console.log('meal: ', meal)
+/*
+  let recipe2 = {
     userId: 'id_43598385',
-    userName: 'GirlFiery@chemail.com',
-    name: 'Girl Fiery',
-    private: false,
-    ingredientLines: ['5 tomatoes', '2 hands of bananas', '1 carrot, minced', '3 gerbils'],
-    popularity: 99,
-    totalTime: 90,
+    recipeId: String,
+    ingredientList: ['5 tomatoes', '2 hands of bananas', '1 carrot, minced', '3 gerbils'],
+    cookTime: 90,
     yield: 4,
     photo: ['https://files.catbox.moe/emshh9.jpg'],
   };
-
+*/
   /*
   userId: String,
   userName: String,
@@ -62,11 +67,12 @@ const ScheduleMeal = () => {
 
   const classes = useStyles();
   //const [prevMealState, updateMeal] = useState(recipe);
-  const [meal, updateMeal] = useState(recipe);
+  const [meal, updateMeal] = useState(entry);
   const [date_time, updateDateTime] = useState({ date: '', time: '' });
   //const [status, scheduledState] = useState('');
   const handleChange = (e) => {
     e.preventDefault();
+    console.log(e.target.id, e.target.value)
     if (e.target.id === 'date') {
       updateDateTime({
         time: date_time.time,
@@ -90,19 +96,24 @@ const ScheduleMeal = () => {
     let hour = date_time.time.slice(0,2);
     let minute = date_time.time.slice(3);
     let mealTime = new Date(year, month, day, hour, minute);
-    const ms_per_min = 60000;
-    let cookTime = new Date(mealTime - (recipe.totalTime * ms_per_min));
+    console.log(mealTime)
+    //const ms_per_min = 60000;
+    //let cookTime = new Date(mealTime - (recipe.totalTime * ms_per_min));
     // !!! cookTime is when reminders should be set !!!
-    console.log(`mealTime: ${mealTime}\ncookTime: ${cookTime}`);
+    //console.log(`mealTime: ${mealTime}\ncookTime: ${cookTime}`);
+    let meal2 = meal;
+    meal2.date = mealTime;
+    /*
     updateMeal({
       ...meal,
-      date_created: mealTime,
+      date: mealTime,
     });
+    */
     //scheduledState('scheduled');
     handleClose();
-    ax.post('/api/recipes/', meal)
+    ax.post('/api/recipes/calendar/', meal2)
       .then((res) => {
-        console.log('post to /api/recipes/ successful');
+        console.log('post to /api/recipes/calendar/ successful');
       })
       .catch((err) => {
         console.error(err);

@@ -7,7 +7,6 @@ import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
-import ScheduleMeal from './ScheduleMeal.jsx';
 require('./helpers/pushNotifications.js');
 
 const useStyles = makeStyles((theme) => ({
@@ -90,13 +89,12 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} /></Paper>
+        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} userId={props.userId} /></Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>
           <Paper><AddRecipe userId={props.userId} /></Paper>
           <Button className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
-          <ScheduleMeal />
         </Grid>
       </Grid>
     </Grid>
