@@ -52,7 +52,7 @@ const App = (props) => {
       prevSunday.setDate(date.getDate() - 8);
     }
     else {
-      prevSunday.setDate(date.getDate() - (day - 1));
+      prevSunday.setDate(date.getDate() - day);
     }
 
     return prevSunday.toUTCString();
