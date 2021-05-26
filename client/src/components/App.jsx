@@ -44,12 +44,32 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  // const [week, setWeek] = useState({})
+
   const [topTen, setTopTen] = useState([])
-  // To use auth for child components
-  // user.displayName = name
-  // user.photoURL = profile pic
-  // user.email = user email
+
+  const updateCalendar = (id) => {
+    if (id !== undefined) {
+      getUserCalendar(id).then((data) => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          if (day[date] !== undefined) {
+            mappedToDay[day].push(meal);
+          }
+        });
+        setSchedule(mappedToDay);
+      });
+    }
+  };
 
   const getBoard = (id, val) => {
     val = val || 'time'
@@ -111,8 +131,10 @@ const App = (props) => {
               setSchedule(mappedToDay);
             });
           }
+          updateCalendar(userInfo._id);
         });
   }, [user]);
+
   console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
@@ -127,7 +149,10 @@ const App = (props) => {
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
-              topTen={topTen} schedule={schedule} userId={userInfo._id}
+              topTen={topTen}
+              schedule={schedule}
+              userId={userInfo._id}
+              updateCalendar={updateCalendar}
             />
             <button onClick={changeDisplay}>Shopping List</button>
           </div>

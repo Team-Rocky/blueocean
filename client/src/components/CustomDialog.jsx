@@ -103,7 +103,7 @@ export default function RecipeItem(props) {
           </Typography> */}
         </DialogContent>
         <DialogActions>
-          <ScheduleMeal handleClose={handleClose} recipe={props.recipe} userId={props.userId} />
+          <ScheduleMeal handleClose={handleClose} recipe={props.recipe} userId={props.userId} updateCalendar={props.updateCalendar}/>
         </DialogActions>
       </Dialog>
     </div>

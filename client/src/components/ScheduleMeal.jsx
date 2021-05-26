@@ -41,7 +41,6 @@ const ScheduleMeal = (props) => {
     recipeName: props.recipe.name,
     ingredientList: props.recipe.ingredientLines,
   };
-  console.log('meal: ', meal)
 /*
   let recipe2 = {
     userId: 'id_43598385',
@@ -114,7 +113,7 @@ const ScheduleMeal = (props) => {
     ax.post('/api/recipes/calendar/', meal2)
       .then((res) => {
         console.log('post to /api/recipes/calendar/ successful');
-      })
+      }).then((result) => props.updateCalendar(props.userId))
       .catch((err) => {
         console.error(err);
       });
