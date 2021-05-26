@@ -17,21 +17,18 @@ const App = (props) => {
   const [schedule, setSchedule] = useState([]);
   const [searchPage, setSearch] = useState(false);
   const [detailPage, setDetail] = useState(false);
-  const [currentRecipe, setRecipe] = useState({})
+  const [currentRecipe, setRecipe] = useState({});
 
   const goToDetailsPage = (recipe) => {
-    setDetail(true)
-    setSearch(false)
-    setRecipe(recipe)
+    setDetail(true);
+    setSearch(false);
+    setRecipe(recipe);
     return (
       <div>
-        <RecipeDetailsGrid
-          recipe={currentRecipe}
-        />
+        <RecipeDetailsGrid recipe={currentRecipe} />
       </div>
-    )
-
-  }
+    );
+  };
 
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -45,7 +42,7 @@ const App = (props) => {
     6: 'Saturday',
   };
 
-  const [topTen, setTopTen] = useState([])
+  const [topTen, setTopTen] = useState([]);
 
   const updateCalendar = (id) => {
     if (id !== undefined) {
@@ -72,16 +69,18 @@ const App = (props) => {
   };
 
   const getBoard = (id, val) => {
-    val = val || 'time'
-    axios.get(`/api/recipes/${id}?filter=${val}`)
-    .then((response) => {
-      console.log('got leaderboard data: ', response.data)
-      setTopTen(response.data)
-    })
-    .catch((err) => {
-      console.log('err in axios get recipe leaderboarda')
-    })
-  }
+    console.log(val);
+    val = val || 'time';
+    axios
+      .get(`/api/recipes/${id}?filter=${val}`)
+      .then((response) => {
+        console.log('got leaderboard data: ', response.data);
+        setTopTen(response.data);
+      })
+      .catch((err) => {
+        console.log('err in axios get recipe leaderboarda');
+      });
+  };
 
   useEffect(() => {
     const newUser = {
@@ -97,7 +96,6 @@ const App = (props) => {
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
-            console.log("in user doesn't exist");
             axios.post('/api/users', newUser).then((response) => {
               console.log('NEW USER ADDED TO DATABASE');
               setUserInfo(response.data[0]);
@@ -109,7 +107,7 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          getBoard(userInfo._id)
+          getBoard(userInfo._id);
 
           if (user !== null) {
             getUserCalendar(userInfo._id).then((data) => {
@@ -125,7 +123,7 @@ const App = (props) => {
               data.forEach((meal) => {
                 const date = new Date(meal.date).getDay();
                 const day = days[date];
-                console.log(day, typeof(day), date);
+                console.log(day, typeof day, date);
                 mappedToDay[day].push(meal);
               });
               setSchedule(mappedToDay);
@@ -135,17 +133,17 @@ const App = (props) => {
         });
   }, [user]);
 
-  console.log('current user: ', userInfo._id)
+  console.log('current user: ', userInfo._id);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
   if (!searchPage && !detailPage) {
     return (
       <div>
-        {display === 'home' ?
+        {display === 'home' ? (
           <div>
             <HomePageGrid
-            getBoard={getBoard}
+              getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
@@ -156,13 +154,13 @@ const App = (props) => {
               changeDisplay={changeDisplay}
             />
           </div>
-          : null}
-        {display === 'list' ?
+        ) : null}
+        {display === 'list' ? (
           <div>
             <AddToCalendar schedule={schedule} />
             <button onClick={changeDisplay}>Calendar</button>
           </div>
-          : null}
+        ) : null}
       </div>
     );
   } else if (searchPage) {
@@ -175,7 +173,7 @@ const App = (props) => {
           user={user}
         />
       </div>
-    )
+    );
   } else if (detailPage) {
     return (
       <div>
@@ -187,7 +185,7 @@ const App = (props) => {
           user={user}
         />
       </div>
-    )
+    );
   }
 };
 
