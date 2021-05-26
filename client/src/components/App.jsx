@@ -17,21 +17,18 @@ const App = (props) => {
   const [schedule, setSchedule] = useState([]);
   const [searchPage, setSearch] = useState(false);
   const [detailPage, setDetail] = useState(false);
-  const [currentRecipe, setRecipe] = useState({})
+  const [currentRecipe, setRecipe] = useState({});
 
   const goToDetailsPage = (recipe) => {
-    setDetail(true)
-    setSearch(false)
-    setRecipe(recipe)
+    setDetail(true);
+    setSearch(false);
+    setRecipe(recipe);
     return (
       <div>
-        <RecipeDetailsGrid
-          recipe={currentRecipe}
-        />
+        <RecipeDetailsGrid recipe={currentRecipe} />
       </div>
-    )
-
-  }
+    );
+  };
 
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -44,16 +41,8 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-<<<<<<< HEAD
-  // const [week, setWeek] = useState({})
-  const [topTen, setTopTen] = useState([]);
-  // To use auth for child components
-  // user.displayName = name
-  // user.photoURL = profile pic
-  // user.email = user email
-=======
 
-  const [topTen, setTopTen] = useState([])
+  const [topTen, setTopTen] = useState([]);
 
   const updateCalendar = (id) => {
     if (id !== undefined) {
@@ -78,7 +67,6 @@ const App = (props) => {
       });
     }
   };
->>>>>>> main
 
   useEffect(() => {
     const newUser = {
@@ -104,53 +92,27 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios.get(`/api/recipes/${userInfo._id}`)
+          axios
+            .get(`/api/recipes/${userInfo._id}`)
             .then((response) => {
-              console.log('got leaderboard data: ', response.data)
-              setTopTen(response.data)
+              console.log('got leaderboard data: ', response.data);
+              setTopTen(response.data);
             })
             .catch((err) => {
-              console.log('err in axios get recipe leaderboarda')
-            })
+              console.log('err in axios get recipe leaderboarda');
+            });
           updateCalendar(userInfo._id);
         });
   }, [user]);
-<<<<<<< HEAD
-  console.log('current user: ', userInfo._id);
-  const changeDisplay = () => {
-    display === 'home' ? setDisplay('list') : setDisplay('home');
-  };
-  console.log('schedule,', schedule);
-  return (
-    <div>
-      {display === 'home' ? (
-        <div>
-          <button onClick={changeDisplay}>Shopping List</button>
-          <HomePageGrid
-            topTen={topTen}
-            schedule={schedule}
-            userId={userInfo._id}
-          />
-        </div>
-      ) : null}
-      {display === 'list' ? (
-        <div>
-          <button onClick={changeDisplay}>Calendar</button>
-          <AddToCalendar schedule={schedule} />
-        </div>
-      ) : null}
-    </div>
-  );
-=======
 
-  console.log('current user: ', userInfo._id)
+  console.log('current user: ', userInfo._id);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
   if (!searchPage && !detailPage) {
     return (
       <div>
-        {display === 'home' ?
+        {display === 'home' ? (
           <div>
             <HomePageGrid
               schedule={schedule}
@@ -163,13 +125,13 @@ const App = (props) => {
             />
             <button onClick={changeDisplay}>Shopping List</button>
           </div>
-          : null}
-        {display === 'list' ?
+        ) : null}
+        {display === 'list' ? (
           <div>
             <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
           </div>
-          : null}
+        ) : null}
       </div>
     );
   } else if (searchPage) {
@@ -181,7 +143,7 @@ const App = (props) => {
           goToDetailsPage={goToDetailsPage}
         />
       </div>
-    )
+    );
   } else if (detailPage) {
     return (
       <div>
@@ -192,9 +154,8 @@ const App = (props) => {
           recipe={currentRecipe}
         />
       </div>
-    )
+    );
   }
->>>>>>> main
 };
 
 export default App;
