@@ -64,7 +64,6 @@ const App = (props) => {
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
-            console.log("in user doesn't exist");
             axios.post('/api/users', newUser).then((response) => {
               console.log('NEW USER ADDED TO DATABASE');
               setUserInfo(response.data[0]);
@@ -76,12 +75,9 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          console.log(userInfo);
           axios
             .get(`/api/recipes/calendar/${userInfo._id}`)
             .then((response) => {
-              console.log('USERINFO', userInfo);
-              console.log('got response; ', response.data);
               for (var i = 0; i < response.data.length; i++) {
                 var weekday = new Date(response.data[i].date).getDay();
                 weekList[weekdays[weekday]].push(response.data[i]);
