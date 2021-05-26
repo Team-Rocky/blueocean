@@ -17,21 +17,18 @@ const App = (props) => {
   const [schedule, setSchedule] = useState([]);
   const [searchPage, setSearch] = useState(false);
   const [detailPage, setDetail] = useState(false);
-  const [currentRecipe, setRecipe] = useState({})
+  const [currentRecipe, setRecipe] = useState({});
 
   const goToDetailsPage = (recipe) => {
-    setDetail(true)
-    setSearch(false)
-    setRecipe(recipe)
+    setDetail(true);
+    setSearch(false);
+    setRecipe(recipe);
     return (
       <div>
-        <RecipeDetailsGrid
-          recipe={currentRecipe}
-        />
+        <RecipeDetailsGrid recipe={currentRecipe} />
       </div>
-    )
-
-  }
+    );
+  };
 
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -45,9 +42,27 @@ const App = (props) => {
     6: 'Saturday',
   };
 
-  const [topTen, setTopTen] = useState([])
+  const [topTen, setTopTen] = useState([]);
+
+  const getPreviousSunday = () => {
+    var date = new Date();
+    var day = date.getDay();
+    var prevSunday = new Date();
+    if (date.getDay() === 0) {
+      prevSunday.setDate(date.getDate() - 8);
+    }
+    else {
+      prevSunday.setDate(date.getDate() - day);
+    }
+    return prevSunday.toUTCString();
+  };
 
   const updateCalendar = (id) => {
+    var sunday = getPreviousSunday()
+    var today = new Date()
+    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 6))).toUTCString()
+
+    // if (new Date(monday) < new Date(today) && new Date(sunday) > new Date(today))
     if (id !== undefined) {
       getUserCalendar(id).then((data) => {
         const mappedToDay = {
@@ -63,7 +78,11 @@ const App = (props) => {
           const date = new Date(meal.date).getDay();
           const day = days[date];
           if (day[date] !== undefined) {
-            mappedToDay[day].push(meal);
+            if (new Date(meal.date) > new Date(sunday)
+                 && new Date(meal.date) < new Date(saturday)) {
+              console.log('its the correct week')
+              mappedToDay[day].push(meal);
+            }
           }
         });
         setSchedule(mappedToDay);
@@ -72,16 +91,17 @@ const App = (props) => {
   };
 
   const getBoard = (id, val) => {
-    val = val || 'time'
-    axios.get(`/api/recipes/${id}?filter=${val}`)
-    .then((response) => {
-      console.log('got leaderboard data: ', response.data)
-      setTopTen(response.data)
-    })
-    .catch((err) => {
-      console.log('err in axios get recipe leaderboarda')
-    })
-  }
+    val = val || 'time';
+    axios
+      .get(`/api/recipes/${id}?filter=${val}`)
+      .then((response) => {
+        console.log('got leaderboard data: ', response.data);
+        setTopTen(response.data);
+      })
+      .catch((err) => {
+        console.log('err in axios get recipe leaderboarda');
+      });
+  };
 
   useEffect(() => {
     const newUser = {
@@ -97,7 +117,6 @@ const App = (props) => {
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
-            console.log("in user doesn't exist");
             axios.post('/api/users', newUser).then((response) => {
               console.log('NEW USER ADDED TO DATABASE');
               setUserInfo(response.data[0]);
@@ -120,26 +139,26 @@ const App = (props) => {
   if (!searchPage && !detailPage) {
     return (
       <div>
-        {display === 'home' ?
+        {display === 'home' ? (
           <div>
             <HomePageGrid
-            getBoard={getBoard}
+              getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
               topTen={topTen}
               userId={userInfo._id}
               updateCalendar={updateCalendar}
+              changeDisplay={changeDisplay}
             />
-            <button onClick={changeDisplay}>Shopping List</button>
           </div>
-          : null}
-        {display === 'list' ?
+        ) : null}
+        {display === 'list' ? (
           <div>
-            <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
+            <button onClick={changeDisplay}>Calendar</button>
           </div>
-          : null}
+        ) : null}
       </div>
     );
   } else if (searchPage) {
@@ -149,9 +168,10 @@ const App = (props) => {
           searchPage={searchPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
+          user={user}
         />
       </div>
-    )
+    );
   } else if (detailPage) {
     return (
       <div>
@@ -160,9 +180,10 @@ const App = (props) => {
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}
+          user={user}
         />
       </div>
-    )
+    );
   }
 };
 
