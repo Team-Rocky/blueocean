@@ -68,6 +68,20 @@ const App = (props) => {
     }
   };
 
+  const getBoard = (id, val) => {
+    console.log(val);
+    val = val || 'time';
+    axios
+      .get(`/api/recipes/${id}?filter=${val}`)
+      .then((response) => {
+        console.log('got leaderboard data: ', response.data);
+        setTopTen(response.data);
+      })
+      .catch((err) => {
+        console.log('err in axios get recipe leaderboarda');
+      });
+  };
+
   useEffect(() => {
     const newUser = {
       name: user && user.displayName,
@@ -78,6 +92,7 @@ const App = (props) => {
 
     user &&
       axios
+        // .get(`/api/users/girlfiery@chefslist.com/userInfo`)
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
@@ -92,15 +107,28 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios
-            .get(`/api/recipes/${userInfo._id}`)
-            .then((response) => {
-              console.log('got leaderboard data: ', response.data);
-              setTopTen(response.data);
-            })
-            .catch((err) => {
-              console.log('err in axios get recipe leaderboarda');
+          getBoard(userInfo._id);
+
+          if (user !== null) {
+            getUserCalendar(userInfo._id).then((data) => {
+              const mappedToDay = {
+                Sunday: [],
+                Monday: [],
+                Tuesday: [],
+                Wednesday: [],
+                Thursday: [],
+                Friday: [],
+                Saturday: [],
+              };
+              data.forEach((meal) => {
+                const date = new Date(meal.date).getDay();
+                const day = days[date];
+                console.log(day, typeof day, date);
+                mappedToDay[day].push(meal);
+              });
+              setSchedule(mappedToDay);
             });
+          }
           updateCalendar(userInfo._id);
         });
   }, [user]);
@@ -115,6 +143,7 @@ const App = (props) => {
         {display === 'home' ? (
           <div>
             <HomePageGrid
+              getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import AddRecipe from './AddRecipe.jsx'
+import AddRecipe from './AddRecipe.jsx';
 import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     background: 'lightGrey',
     height: '450px',
-    overflow: 'scroll'
+    overflow: 'scroll',
   },
   header: {
     display: 'flex',
@@ -64,10 +64,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomePageGrid = (props) => {
+  const handleFilterChange = (e) => {
+    props.getBoard(props.userId, e.target.value);
+  };
   const classes = useStyles();
   const [clicked, setClicked] = useState(false);
 
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   return (
     <Grid container justify="center" spacing={2} className={classes.grid}>
       <Grid container justify="center" spacing={2}>
@@ -89,12 +100,33 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} userId={props.userId} updateCalendar={props.updateCalendar}/></Paper>
+        <Paper className={classes.leaderboard}>
+          <span>Filter by: </span>
+          <select onChange={handleFilterChange} name="filter">
+            <option value="time">Recent</option>
+            <option value="popular">Popularity</option>
+            <option value="myRecipes">My Recipes</option>
+          </select>
+          <RecipeList
+            topTen={props.topTen}
+            userId={props.userId}
+            updateCalendar={props.updateCalendar}
+          />
+        </Paper>
       </Grid>
-      <Grid container justify='flex-end' spacing={2} className={classes.grid}>
+      <Grid container justify="flex-end" spacing={2} className={classes.grid}>
         <Grid item lg={3}>
-          <Paper><AddRecipe userId={props.userId} /></Paper>
-          <Button className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
+          <Paper>
+            <AddRecipe getBoard={props.getBoard} userId={props.userId} />
+          </Paper>
+          <Button
+            className={classes.button}
+            onClick={() => {
+              props.setSearch(true);
+            }}
+          >
+            Browse
+          </Button>
         </Grid>
       </Grid>
     </Grid>
