@@ -83,7 +83,9 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}></Paper>
+        <Paper className={classes.leaderboard}>
+          <RecipeList topTen={props.topTen}/>
+        </Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
       <Grid item lg={3}>

@@ -35,9 +35,6 @@ const App = (props) => {
 
   useEffect(() => {
 
-
-
-
     const newUser = {
       name: user && user.displayName,
       email: user && user.email,
@@ -47,6 +44,7 @@ const App = (props) => {
 
     user &&
       axios
+        // .get(`/api/users/girlfiery@chefslist.com/userInfo`)
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
@@ -62,6 +60,15 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
+          axios.get(`/api/recipes/${userInfo._id}?filter=myRecipes`)
+          .then((response) => {
+            console.log('got leaderboard data: ', response.data)
+            setTopTen(response.data)
+          })
+          .catch((err) => {
+            console.log('err in axios get recipe leaderboarda')
+          })
+
           if (user !== null) {
             getUserCalendar(userInfo._id).then((data) => {
               const mappedToDay = {

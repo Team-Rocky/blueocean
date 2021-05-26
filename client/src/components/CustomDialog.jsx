@@ -7,6 +7,7 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import { Paper } from '@material-ui/core';
+import axios from 'axios';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -56,6 +57,19 @@ export default function RecipeItem(props) {
     setOpen(false);
   };
 
+  const postCalendarEntry = (obj) => {
+    var entry = {
+      userId: obj.userId,
+      recipeId: obj._id,
+      date: new Date() + 3,
+      cookTime: obj.totalTime,
+      ingredientList: obj.ingredientLines,
+      recipeName: obj.name
+    }
+    console.log('this is entry: ', entry)
+    // axios.post(axios.post('/api/recipes/calendar', entry))
+  }
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -88,7 +102,10 @@ export default function RecipeItem(props) {
           </Typography> */}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button autoFocus onClick={() => {
+            postCalendarEntry(props.recipe)
+            handleClose()
+          }} color="primary">
             Schedule Meal
           </Button>
         </DialogActions>
