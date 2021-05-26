@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Paper } from '@material-ui/core';
+import { ClickAwayListener, Grid, Paper, Modal } from '@material-ui/core';
+import AddRecipe from './AddRecipe.jsx'
 import RecipeList from './recipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
@@ -56,17 +57,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomePageGrid = (props) => {
-  console.log('props.wee: ', props.week);
   const classes = useStyles();
-  const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
+  const [clicked, setClicked] = useState(false);
+
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
     <Grid container justify="center" spacing={2} className={classes.grid}>
       <Grid container justify="center" spacing={2}>
@@ -90,9 +84,9 @@ const HomePageGrid = (props) => {
       <Grid item lg={3} xs={12}>
         <Paper className={classes.leaderboard}></Paper>
       </Grid>
-      <Grid container justify="flex-end" spacing={2} className={classes.grid}>
-        <Grid item lg={3}>
-          <Paper className={classes.button}>new Recipe</Paper>
+      <Grid container justify='flex-end' spacing={2} className={classes.grid}>
+      <Grid item lg={3}>
+          <Paper><AddRecipe userId={props.userId} /></Paper>
         </Grid>
       </Grid>
     </Grid>
