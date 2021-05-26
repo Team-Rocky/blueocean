@@ -2,40 +2,40 @@
 const express = require('express');
 
 const router = express.Router();
-const helpers = require('../controllers/helpers.js')
 
 const dbFunctions = require('../controllers/helpers');
 
 // serverhost/api/users/username1
-router
-  .route('/:email')
-  .get((req, res) => {
-    console.log('in route.get!!!!!', req.params)
-    // get relevant user data (friends list, user's recipes, userID...)
-    dbFunctions.getUser(req.params, (err, result) => {
-      if (err) {
-        res.json(err);
-      }
-      // eslint-disable-next-line no-underscore-dangle
-      const { filter } = req.query || 'time';
-      const limit = Number(req.query.limit) || 10;
-      if (!result.length) {
-        res.send('Does not Exist');
-        return;
-      }
-      dbFunctions.getAllRecipeByFilter(
-        { userId: result[0]._id },
-        filter,
-        limit,
-        (resErr, recipeResults) => {
-          if (resErr) {
-            res.json(resErr);
-          }
-          res.json(recipeResults);
+router.route('/:email').get((req, res) => {
+  console.log('in route.get!!!!!', req.params);
+  // get relevant user data (friends list, user's recipes, userID...)
+  dbFunctions.getUser(req.params, (err, result) => {
+    if (err) {
+      res.json(err);
+    }
+    // eslint-disable-next-line no-underscore-dangle
+    const { filter } = req.query || 'time';
+    const limit = Number(req.query.limit) || 10;
+    if (!result.length) {
+      res.send('Does not Exist');
+      return;
+    }
+    dbFunctions.getAllRecipeByFilter(
+      { userId: result[0]._id },
+      filter,
+      limit,
+      (resErr, recipeResults) => {
+        if (resErr) {
+          res.json(resErr);
         }
-      );
-    });
-  })
+        res.json(recipeResults);
+      }
+    );
+  });
+});
+
+router
+  .route('/')
   .post((req, res) => {
     dbFunctions.addUser(req.body, (err, result) => {
       if (err) {
