@@ -25,7 +25,6 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  const [week, setWeek] = useState({});
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
