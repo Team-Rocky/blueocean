@@ -14,7 +14,11 @@ const RecipeList = (props) => {
 
     return (<div>
       {props.topTen.map((recipe, index) => {
-        return <RecipeItem recipe={recipe} key={index} />
+        return <RecipeItem
+        userId={props.userId}
+        recipe={recipe}
+        key={index}
+        updateCalendar={props.updateCalendar} />
       })}
     </div>)
   } else {
