@@ -1,6 +1,5 @@
 const express = require('express');
 const fs = require('fs');
-const pug = require('pug');
 const chalk = require('chalk');
 
 // init server
@@ -59,12 +58,11 @@ app.use('/api/recipes', require('./routes/recipes.js'));
 // error pages
 app.set('view engine', 'pug');
 app.set('views', './server/views');
-app.use(function (req, res) {
+app.use((req, res) => {
   res.status(404);
   res.render('404.pug', { title: '404: File Not Found' });
 });
-
-app.use(function (err, req, res, next) {
+app.use((err, req, res) => {
   res.status(500);
   res.render('500.pug', { title: '500: Internal Server error', error: err });
 });

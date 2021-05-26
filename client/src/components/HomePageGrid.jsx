@@ -6,6 +6,7 @@ import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import AddToCalendar from './AddToCalendar.jsx';
 import myPic from './../assets/set-and-forget.svg';
+import ScheduleMeal from './ScheduleMeal.jsx';
 
 const useStyles = makeStyles((theme) => ({
   /*
@@ -96,6 +97,7 @@ const HomePageGrid = (props) => {
       <Grid container justify="flex-end" spacing={2} className={classes.grid}>
         <Grid item lg={3}>
           <Paper className={classes.button}>new Recipe</Paper>
+          <ScheduleMeal />
         </Grid>
       </Grid>
     </Grid>

@@ -11,7 +11,7 @@ import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
-require('./NotificationsTest.js')
+require('./NotificationsTest.js');
 import ScheduleMeal from './ScheduleMeal.jsx';
 
 const App = (props) => {
@@ -92,11 +92,6 @@ const App = (props) => {
   };
   return (
     <div>
-<<<<<<< HEAD
-      <HomePageGrid schedule={schedule}/>
-      <AddToCalendar schedule={schedule}/>
-      <ScheduleMeal />
-=======
       {display === 'home' ? (
         <div>
           <button onClick={changeDisplay}>Shopping List</button>
@@ -109,7 +104,6 @@ const App = (props) => {
           <AddToCalendar schedule={schedule} />
         </div>
       ) : null}
->>>>>>> b9118ef13b327c0918b5b3095a13e5f46ae82e08
     </div>
   );
 };
