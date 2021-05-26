@@ -52,9 +52,6 @@ const App = (props) => {
   // user.email = user email
 
   useEffect(() => {
-
-
-
     const newUser = {
       name: user && user.displayName,
       email: user && user.email,
