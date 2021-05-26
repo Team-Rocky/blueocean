@@ -54,9 +54,8 @@ const App = (props) => {
     else {
       prevSunday.setDate(date.getDate() - day);
     }
-
     return prevSunday.toUTCString();
-  }
+  };
 
   const updateCalendar = (id) => {
     var sunday = getPreviousSunday()
@@ -64,31 +63,31 @@ const App = (props) => {
     var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 6))).toUTCString()
 
     // if (new Date(monday) < new Date(today) && new Date(sunday) > new Date(today))
-      if (id !== undefined) {
-        getUserCalendar(id).then((data) => {
-          const mappedToDay = {
-            Sunday: [],
-            Monday: [],
-            Tuesday: [],
-            Wednesday: [],
-            Thursday: [],
-            Friday: [],
-            Saturday: [],
-          };
-          data.forEach((meal) => {
-            const date = new Date(meal.date).getDay();
-            const day = days[date];
-            if (day[date] !== undefined) {
-                 if (new Date(meal.date) > new Date(sunday) && new Date(meal.date) < new Date(saturday)) {
-                   console.log('its the correct week')
-                mappedToDay[day].push(meal);
-               }
+    if (id !== undefined) {
+      getUserCalendar(id).then((data) => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          if (day[date] !== undefined) {
+            if (new Date(meal.date) > new Date(sunday)
+                 && new Date(meal.date) < new Date(saturday)) {
+              console.log('its the correct week')
+              mappedToDay[day].push(meal);
             }
-          });
-          setSchedule(mappedToDay);
+          }
         });
-      }
-
+        setSchedule(mappedToDay);
+      });
+    }
   };
 
   const getBoard = (id, val) => {
@@ -134,7 +133,6 @@ const App = (props) => {
         });
   }, [user]);
 
-  console.log('current user: ', userInfo._id);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
@@ -149,7 +147,6 @@ const App = (props) => {
               searchPage={searchPage}
               setSearch={setSearch}
               topTen={topTen}
-              schedule={schedule}
               userId={userInfo._id}
               updateCalendar={updateCalendar}
               changeDisplay={changeDisplay}
