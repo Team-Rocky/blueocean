@@ -44,32 +44,54 @@ const App = (props) => {
 
   const [topTen, setTopTen] = useState([]);
 
-  const updateCalendar = (id) => {
-    if (id !== undefined) {
-      getUserCalendar(id).then((data) => {
-        const mappedToDay = {
-          Sunday: [],
-          Monday: [],
-          Tuesday: [],
-          Wednesday: [],
-          Thursday: [],
-          Friday: [],
-          Saturday: [],
-        };
-        data.forEach((meal) => {
-          const date = new Date(meal.date).getDay();
-          const day = days[date];
-          if (day[date] !== undefined) {
-            mappedToDay[day].push(meal);
-          }
-        });
-        setSchedule(mappedToDay);
-      });
+  const getPreviousSunday = () => {
+    var date = new Date();
+    var day = date.getDay();
+    var prevSunday = new Date();
+    if (date.getDay() === 0) {
+      prevSunday.setDate(date.getDate() - 8);
     }
+    else {
+      prevSunday.setDate(date.getDate() - (day - 1));
+    }
+
+    return prevSunday.toUTCString();
+  }
+
+  const updateCalendar = (id) => {
+    var sunday = getPreviousSunday()
+    var today = new Date()
+    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 6))).toUTCString()
+
+    // if (new Date(monday) < new Date(today) && new Date(sunday) > new Date(today))
+      if (id !== undefined) {
+        getUserCalendar(id).then((data) => {
+          const mappedToDay = {
+            Sunday: [],
+            Monday: [],
+            Tuesday: [],
+            Wednesday: [],
+            Thursday: [],
+            Friday: [],
+            Saturday: [],
+          };
+          data.forEach((meal) => {
+            const date = new Date(meal.date).getDay();
+            const day = days[date];
+            if (day[date] !== undefined) {
+                 if (new Date(meal.date) > new Date(sunday) && new Date(meal.date) < new Date(saturday)) {
+                   console.log('its the correct week')
+                mappedToDay[day].push(meal);
+               }
+            }
+          });
+          setSchedule(mappedToDay);
+        });
+      }
+
   };
 
   const getBoard = (id, val) => {
-    console.log(val);
     val = val || 'time';
     axios
       .get(`/api/recipes/${id}?filter=${val}`)
@@ -107,28 +129,7 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          getBoard(userInfo._id);
-
-          if (user !== null) {
-            getUserCalendar(userInfo._id).then((data) => {
-              const mappedToDay = {
-                Sunday: [],
-                Monday: [],
-                Tuesday: [],
-                Wednesday: [],
-                Thursday: [],
-                Friday: [],
-                Saturday: [],
-              };
-              data.forEach((meal) => {
-                const date = new Date(meal.date).getDay();
-                const day = days[date];
-                console.log(day, typeof day, date);
-                mappedToDay[day].push(meal);
-              });
-              setSchedule(mappedToDay);
-            });
-          }
+          getBoard(userInfo._id)
           updateCalendar(userInfo._id);
         });
   }, [user]);
