@@ -71,7 +71,7 @@ const RecipeSearchGrid = (props) => {
     axios.get('http://localhost:7625/api/recipes/GirlFiery@chefslist.com')
       .then(recipes => {
         var names = [];
-        console.log('RECIPES: ', recipes.data)
+        //console.log('RECIPES: ', recipes.data)
         for (let i = 0; i < recipes.data.length; i++) {
           names.push(recipes.data[i].name)
           getRecipeNames(names)

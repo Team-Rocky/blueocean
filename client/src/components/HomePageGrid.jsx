@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const HomePageGrid = (props) => {
-  console.log('props.wee: ', props.week)
+  //console.log('props.week: ', props.week)
   const classes = useStyles();
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
