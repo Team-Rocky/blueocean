@@ -51,6 +51,7 @@ var rando = namesArray[Math.round(Math.random() * 4)]
         ingredientLines: array[0].recipe.ingredientLines,
         popularity: Math.round(Math.random() * 100),
         totalTime: 45,
+        description: 'Mix it all into a bowl, put a garnish on it, and serve.',
         yield: Math.round(Math.random() * 4),
         photo: array[0].recipe.image,
         date_created: new Date()
