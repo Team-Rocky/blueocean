@@ -80,8 +80,10 @@ const ScheduleMeal = (props) => {
     let meal2 = meal;
     meal2.date = mealTime;
     ax.post('/api/recipes/calendar/', meal2)
-      .then((res) => {
-        console.log('post to /api/recipes/calendar/ successful');
+      .then(() => {
+        props.updateCalendar(props.userId);
+      })
+      .then(() => {
         handleClose();
       })
       .catch((err) => {
@@ -135,7 +137,10 @@ const ScheduleMeal = (props) => {
                 disabled={btn.state}
                 variant="contained"
                 color="primary"
-                onClick={handleSchedule}
+                onClick={() => {
+                  handleSchedule()
+                  props.handleClose()
+                }}
               >
                 schedule
               </Button>

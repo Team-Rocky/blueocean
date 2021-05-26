@@ -44,17 +44,46 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  // const [week, setWeek] = useState({})
+
   const [topTen, setTopTen] = useState([])
-  // To use auth for child components
-  // user.displayName = name
-  // user.photoURL = profile pic
-  // user.email = user email
+
+  const updateCalendar = (id) => {
+    if (id !== undefined) {
+      getUserCalendar(id).then((data) => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          if (day[date] !== undefined) {
+            mappedToDay[day].push(meal);
+          }
+        });
+        setSchedule(mappedToDay);
+      });
+    }
+  };
+
+  const getBoard = (id, val) => {
+    val = val || 'time'
+    axios.get(`/api/recipes/${id}?filter=${val}`)
+    .then((response) => {
+      console.log('got leaderboard data: ', response.data)
+      setTopTen(response.data)
+    })
+    .catch((err) => {
+      console.log('err in axios get recipe leaderboarda')
+    })
+  }
 
   useEffect(() => {
-
-
-
     const newUser = {
       name: user && user.displayName,
       email: user && user.email,
@@ -64,6 +93,7 @@ const App = (props) => {
 
     user &&
       axios
+        // .get(`/api/users/girlfiery@chefslist.com/userInfo`)
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
@@ -79,14 +109,8 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios.get(`/api/recipes/${userInfo._id}`)
-            .then((response) => {
-              console.log('got leaderboard data: ', response.data)
-              setTopTen(response.data)
-            })
-            .catch((err) => {
-              console.log('err in axios get recipe leaderboarda')
-            })
+          getBoard(userInfo._id)
+
           if (user !== null) {
             getUserCalendar(userInfo._id).then((data) => {
               const mappedToDay = {
@@ -107,8 +131,10 @@ const App = (props) => {
               setSchedule(mappedToDay);
             });
           }
+          updateCalendar(userInfo._id);
         });
   }, [user]);
+
   console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
@@ -119,18 +145,22 @@ const App = (props) => {
         {display === 'home' ?
           <div>
             <HomePageGrid
+            getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
-              topTen={topTen} schedule={schedule} userId={userInfo._id}
+              topTen={topTen}
+              schedule={schedule}
+              userId={userInfo._id}
+              updateCalendar={updateCalendar}
+              changeDisplay={changeDisplay}
             />
-            <button onClick={changeDisplay}>Shopping List</button>
           </div>
           : null}
         {display === 'list' ?
           <div>
-            <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
+            <button onClick={changeDisplay}>Calendar</button>
           </div>
           : null}
       </div>
@@ -142,6 +172,7 @@ const App = (props) => {
           searchPage={searchPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
+          user={user}
         />
       </div>
     )
@@ -153,6 +184,7 @@ const App = (props) => {
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}
+          user={user}
         />
       </div>
     )

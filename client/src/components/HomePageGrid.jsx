@@ -7,7 +7,7 @@ import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
-require('./helpers/pushNotifications.js');
+// require('./helpers/pushNotifications.js');
 
 const useStyles = makeStyles((theme) => ({
   /*
@@ -61,6 +61,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '100%',
   },
+  button: {
+    margin: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+  }
 }));
 
 const HomePageGrid = (props) => {
@@ -89,13 +96,16 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} userId={props.userId} /></Paper>
+        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} userId={props.userId} updateCalendar={props.updateCalendar}/></Paper>
       </Grid>
-      <Grid container justify='flex-end' spacing={2} className={classes.grid}>
-        <Grid item lg={3}>
-          <Paper><AddRecipe userId={props.userId} /></Paper>
-          <Button className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
-        </Grid>
+      <Grid container direction="row" justify="space-between" alignItems="center" spacing={2} className={classes.button}>
+
+
+          <Button variant="contained" color="primary" onClick={props.changeDisplay}>Shopping List</Button>
+          <Button variant="contained" color="primary" className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
+          <AddRecipe getBoard={props.getBoard} userId={props.userId}  userId={props.userId} />
+
+
       </Grid>
     </Grid>
   );
