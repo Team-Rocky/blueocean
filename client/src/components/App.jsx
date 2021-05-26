@@ -32,38 +32,38 @@ const App = (props) => {
   // user.email = user email
 
   useEffect(() => {
-    var weekList = {
-      Sunday: [],
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: [],
-    };
+    // var weekList = {
+    //   Sunday: [],
+    //   Monday: [],
+    //   Tuesday: [],
+    //   Wednesday: [],
+    //   Thursday: [],
+    //   Friday: [],
+    //   Saturday: [],
+    // };
 
-    var weekdays = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    axios
-      .get('/api/recipes/calendar/60a8479474e6921f4fea1189')
-      .then((response) => {
-        console.log('got response; ', response.data);
-        for (var i = 0; i < response.data.length; i++) {
-          var weekday = new Date(response.data[i].date).getDay();
-          weekList[weekdays[weekday]].push(response.data[i]);
-        }
-        setWeek(weekList);
-      })
-      .catch((err) => {
-        console.log('err getting calendar entries!: ', err);
-      });
+    // var weekdays = [
+    //   'Sunday',
+    //   'Monday',
+    //   'Tuesday',
+    //   'Wednesday',
+    //   'Thursday',
+    //   'Friday',
+    //   'Saturday',
+    // ];
+    // axios
+    //   .get('/api/recipes/calendar/60a8479474e6921f4fea1189')
+    //   .then((response) => {
+    //     console.log('got response; ', response.data);
+    //     for (var i = 0; i < response.data.length; i++) {
+    //       var weekday = new Date(response.data[i].date).getDay();
+    //       weekList[weekdays[weekday]].push(response.data[i]);
+    //     }
+    //     setWeek(weekList);
+    //   })
+    //   .catch((err) => {
+    //     console.log('err getting calendar entries!: ', err);
+    //   });
 
     if (user !== null) {
       getUserCalendar('JackPeepin@chefslist.com').then((data) => {

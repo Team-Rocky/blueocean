@@ -5,7 +5,7 @@ import RecipeList from './recipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import AddToCalendar from './AddToCalendar.jsx';
-import myPic from './../assets/set-and-forget.svg';
+// import myPic from './../assets/set-and-forget.svg';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -72,7 +72,7 @@ const HomePageGrid = (props) => {
       <Grid container justify="center" spacing={2}>
         <Grid item xs={12} lg={12}>
           <Paper className={classes.header}>
-            <img height="100px" widht="100px" src={myPic} />
+            {/* <img height="100px" widht="100px" src={myPic} /> */}
             <Auth />
           </Paper>
         </Grid>
