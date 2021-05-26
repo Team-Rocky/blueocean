@@ -68,7 +68,7 @@ const RecipeSearchGrid = (props) => {
   const [recipes, setRecipes] = React.useState([])
 
   const getRecipes = () => {
-    axios.get('http://localhost:7625/api/recipes/GirlFiery@chefslist.com')
+    axios.get(`http://localhost:7625/api/recipes/${props.user.email}`)
       .then(recipes => {
         var names = [];
         //console.log('RECIPES: ', recipes.data)
