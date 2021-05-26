@@ -93,7 +93,7 @@ const AddRecipe = (props) => {
       userName: user.displayName,
       name: RecipeName,
       private: Private,
-      IngredientLines: Ingredients,
+      ingredientLines: Ingredients,
       description: Directions,
       popularity: 0,
       totalTime: Number(TotalTime),
@@ -147,9 +147,11 @@ const AddRecipe = (props) => {
                 onClose={handleClose}
             >
               {Submitted ? <FormStyle  style={modalStyle} className={classes.paper} onSubmit={handleSubmit}>
+                <Exit onClick={handleClose}>+</Exit>
                 <SubmittedForm/>
                 </FormStyle>:
-                <FormStyle  style={modalStyle} className={classes.paper} onSubmit={handleSubmit}>
+                <FormStyle autoComplete="off" style={modalStyle} className={classes.paper} onSubmit={handleSubmit}>
+                  <Exit onClick={handleClose}>+</Exit>
                   <RecipeStyle>
                   <RecipeLabel>Recipe</RecipeLabel>
                   <TextField  variant="outlined"  id="recipeName" onChange={HandleRecipeName}/>
@@ -164,7 +166,7 @@ const AddRecipe = (props) => {
                       return (
                         <Box display="flex" alignItems="flex-end" key={i}>
                           <div>
-                          <TextField required name="Ingredient" value={x.Ingredient} onChange={e => handleInputChange(e, i)}/>
+                          <TextField name="Ingredient" value={x.Ingredient} onChange={e => handleInputChange(e, i)}/>
                           </div>
                           <div>
                             {IngredientList.length - 1 === i && <AddButton onClick={handleAddClick}>+</AddButton>}
@@ -203,11 +205,22 @@ const FormStyle = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
+  margin-top
 `
 const IngredientLabel = styled.div`
   display: flex;
   font-family: 'Amatic SC', cursive;
   font-size: 20px;
+`
+
+const Exit = styled.div`
+  align-self: flex-end;
+  margin: 0;
+  padding: 0;
+  transform: rotate(45deg);
+  cursor: pointer;
 `
 
 const Ingredientpic = styled.img`
@@ -258,6 +271,9 @@ const PrepTime = styled.label`
 const InputDirection = styled.input`
   width: 300px;
   height: 100px;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
+  border: 1px solid black;
 `
 
 const BoxStyle = styled.div `
