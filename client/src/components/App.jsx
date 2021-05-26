@@ -110,27 +110,6 @@ const App = (props) => {
         })
         .then((userInfo) => {
           getBoard(userInfo._id)
-
-          if (user !== null) {
-            getUserCalendar(userInfo._id).then((data) => {
-              const mappedToDay = {
-                Sunday: [],
-                Monday: [],
-                Tuesday: [],
-                Wednesday: [],
-                Thursday: [],
-                Friday: [],
-                Saturday: [],
-              };
-              data.forEach((meal) => {
-                const date = new Date(meal.date).getDay();
-                const day = days[date];
-                console.log(day, typeof(day), date);
-                mappedToDay[day].push(meal);
-              });
-              setSchedule(mappedToDay);
-            });
-          }
           updateCalendar(userInfo._id);
         });
   }, [user]);
@@ -149,7 +128,6 @@ const App = (props) => {
               searchPage={searchPage}
               setSearch={setSearch}
               topTen={topTen}
-              schedule={schedule}
               userId={userInfo._id}
               updateCalendar={updateCalendar}
             />
