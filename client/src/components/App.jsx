@@ -51,6 +51,18 @@ const App = (props) => {
   // user.photoURL = profile pic
   // user.email = user email
 
+  const getBoard = (id, val) => {
+    val = val || 'time'
+    axios.get(`/api/recipes/${id}?filter=${val}`)
+    .then((response) => {
+      console.log('got leaderboard data: ', response.data)
+      setTopTen(response.data)
+    })
+    .catch((err) => {
+      console.log('err in axios get recipe leaderboarda')
+    })
+  }
+
   useEffect(() => {
     const newUser = {
       name: user && user.displayName,
@@ -77,14 +89,8 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios.get(`/api/recipes/${userInfo._id}`)
-            .then((response) => {
-              console.log('got leaderboard data: ', response.data)
-              setTopTen(response.data)
-            })
-            .catch((err) => {
-              console.log('err in axios get recipe leaderboarda')
-            })
+          getBoard(userInfo._id)
+
           if (user !== null) {
             getUserCalendar(userInfo._id).then((data) => {
               const mappedToDay = {
@@ -117,6 +123,7 @@ const App = (props) => {
         {display === 'home' ?
           <div>
             <HomePageGrid
+            getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}

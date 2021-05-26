@@ -93,7 +93,7 @@ const HomePageGrid = (props) => {
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>
-          <Paper><AddRecipe userId={props.userId} /></Paper>
+          <Paper><AddRecipe getBoard={props.getBoard} userId={props.userId} /></Paper>
           <Button className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
         </Grid>
       </Grid>
