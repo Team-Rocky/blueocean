@@ -44,16 +44,16 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     background: 'lightGrey',
     height: '300px',
+    overflow: 'scroll'
   },
 }))
 
 
 const HomePageGrid = (props) => {
-  console.log('props.wee: ', props.week)
   const classes = useStyles();
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
-    <Grid container justify='center'  spacing={2} className={classes.grid}>
+    <Grid container justify='center' spacing={2} className={classes.grid}>
       <Grid container justify='space-between' spacing={2} className={classes.grid}>
         <Grid item lg={2}>
           <Paper className={classes.button} >
@@ -68,16 +68,18 @@ const HomePageGrid = (props) => {
       </Grid>
       <Grid item lg={5}>
         <Paper className={classes.title} >
-
+          Set n Forget!
         </Paper>
       </Grid>
       <Grid item lg={9} xs={12}>
         <Paper className={classes.calendar} >
-          {days.map((day, index) => <Day key={index} day={day} schedule={props.schedule}/>)}
+          {days.map((day, index) => <Day key={index} day={day} schedule={props.schedule} />)}
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard} ></Paper>
+        <Paper className={classes.leaderboard} >
+          <RecipeList topTen={props.topTen} />
+        </Paper>
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>

@@ -3,12 +3,10 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-const auth = firebase.auth();
 
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
-import HomePageGrid from './HomePageGrid.jsx';
 import axios from 'axios';
 const auth = firebase.auth();
 import getUserCalendar from './helpers/getUserCalendar.js';
@@ -31,7 +29,8 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  const [week, setWeek] = useState({})
+  // const [week, setWeek] = useState({})
+  const [topTen, setTopTen] = useState([])
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
@@ -40,32 +39,37 @@ const App = (props) => {
 
   useEffect(() => {
 
+// get request for leaderboard
+axios.get('/api/users/JackPeepin@chefslist.com?filter=time')
+.then((response) => {
+  console.log('got top ten: ', response.data)
+  setTopTen(response.data)
+})
+    // var weekList = {
+    //   Sunday: [],
+    //   Monday: [],
+    //   Tuesday: [],
+    //   Wednesday: [],
+    //   Thursday: [],
+    //   Friday: [],
+    //   Saturday: []
+    // }
 
-    var weekList = {
-      Sunday: [],
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: []
-    }
-
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
-      .then((response) => {
-        console.log('got response; ', response.data)
-        for (var i = 0; i < response.data.length; i++) {
-          var weekday = new Date(response.data[i].date).getDay()
-          weekList[weekdays[weekday]].push(response.data[i])
-        }
-        setWeek(weekList)
+    // var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    // axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
+    //   .then((response) => {
+    //     console.log('got response; ', response.data)
+    //     for (var i = 0; i < response.data.length; i++) {
+    //       var weekday = new Date(response.data[i].date).getDay()
+    //       weekList[weekdays[weekday]].push(response.data[i])
+    //     }
+    //     setWeek(weekList)
 
 
-      })
-      .catch((err) => {
-        console.log('err getting calendar entries!: ', err)
-      })
+    //   })
+    //   .catch((err) => {
+    //     console.log('err getting calendar entries!: ', err)
+    //   })
 
 
     if (user !== null) {
@@ -79,6 +83,7 @@ const App = (props) => {
           Friday: [],
           Saturday: [],
         };
+        console.log('dadat: ', data)
         data.forEach((meal) => {
           const date = new Date(meal.date).getDay();
           const day = days[date];
@@ -91,12 +96,13 @@ const App = (props) => {
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
+  console.log('schedule,', schedule)
   return (
     <div>
       {display === 'home' ?
       <div>
         <button onClick={changeDisplay}>Shopping List</button>
-        <HomePageGrid week={week} schedule={schedule}/>
+        <HomePageGrid topTen={topTen} schedule={schedule}/>
       </div>
         : null}
       {display === 'list' ?

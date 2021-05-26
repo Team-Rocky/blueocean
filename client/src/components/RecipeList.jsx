@@ -1,13 +1,31 @@
 import React from 'react';
-import Recipe from './Recipe.jsx'
+import Recipe from './Recipe.jsx';
+import { makeStyles } from '@material-ui/core/styles';
+
+// const useStyles = makeStyles((theme) => ({
+//   recipeList: {
+//     overflow: 'scroll'
+//   }
+
+// }))
 
 const RecipeList = (props) => {
+  // const classes = useStyles()
 
-  return (<div>
-    {props.data.map((recipe, index) => {
-      return <Recipe recipe={recipe} key={index} />
-    })}
-  </div>)
+  console.log('props.topTen:', props.topTen)
+
+  if (props.topTen !== undefined) {
+
+    return (<div>
+      {props.topTen.map((recipe, index) => {
+        return <Recipe recipe={recipe} key={index} />
+      })}
+    </div>)
+  } else {
+    return null;
+  }
+
+  // return(<div>LISTTTT</div>)
 }
 
 export default RecipeList;

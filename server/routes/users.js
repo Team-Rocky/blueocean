@@ -10,7 +10,7 @@ const dbFunctions = require('../controllers/helpers');
 router
   .route('/:email')
   .get((req, res) => {
-    console.log('in route.get!!!!!', req.params)
+    console.log('in route.get!!!!!', req.query)
     // get relevant user data (friends list, user's recipes, userID...)
     dbFunctions.getUser(req.params, (err, result) => {
       if (err) {
