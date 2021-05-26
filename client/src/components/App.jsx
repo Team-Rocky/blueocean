@@ -13,6 +13,7 @@ import AddToCalendar from './AddToCalendar.jsx';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
+  const [userId, setUserId] = useState(null);
   const [schedule, setSchedule] = useState([]);
   const [display, setDisplay] = useState('home');
   const days = {
@@ -48,6 +49,7 @@ const App = (props) => {
           mappedToDay[day].push(meal);
         });
         setSchedule(mappedToDay);
+        setUserId(data[0].userId)
       });
     }
   }, [user]);
@@ -59,7 +61,7 @@ const App = (props) => {
       {display === 'home' ? (
         <div>
           <button onClick={changeDisplay}>Shopping List</button>
-          <HomePageGrid week={week} schedule={schedule} />
+          <HomePageGrid schedule={schedule} userId={userId}/>
         </div>
       ) : null}
       {display === 'list' ? (
