@@ -40,18 +40,15 @@ const App = (props) => {
     1: 'Monday',
     2: 'Tuesday',
     3: 'Wednesday',
-    4: 'Thursay',
+    4: 'Thursday',
     5: 'Friday',
     6: 'Saturday',
   };
-  // const [week, setWeek] = useState({})
+
   const [topTen, setTopTen] = useState([])
-  // To use auth for child components
-  // user.displayName = name
-  // user.photoURL = profile pic
-  // user.email = user email
+
   const updateCalendar = (id) => {
-    if (user !== null) {
+    if (id !== undefined) {
       getUserCalendar(id).then((data) => {
         const mappedToDay = {
           Sunday: [],
@@ -65,7 +62,9 @@ const App = (props) => {
         data.forEach((meal) => {
           const date = new Date(meal.date).getDay();
           const day = days[date];
-          mappedToDay[day].push(meal);
+          if (day[date] !== undefined) {
+            mappedToDay[day].push(meal);
+          }
         });
         setSchedule(mappedToDay);
       });
@@ -122,7 +121,10 @@ const App = (props) => {
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
-              topTen={topTen} schedule={schedule} userId={userInfo._id}
+              topTen={topTen}
+              schedule={schedule}
+              userId={userInfo._id}
+              updateCalendar={updateCalendar}
             />
             <button onClick={changeDisplay}>Shopping List</button>
           </div>
