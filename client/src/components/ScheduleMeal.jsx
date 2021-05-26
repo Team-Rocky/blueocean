@@ -100,7 +100,6 @@ const ScheduleMeal = () => {
     });
     //scheduledState('scheduled');
     handleClose();
-    /*
     ax.post('/api/recipes/', meal)
       .then((res) => {
         console.log('post to /api/recipes/ successful');
@@ -108,8 +107,6 @@ const ScheduleMeal = () => {
       .catch((err) => {
         console.error(err);
       });
-    */
-
   };
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);

@@ -8,7 +8,7 @@ import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
 import ScheduleMeal from './ScheduleMeal.jsx';
-require('./NotificationsTest.js');
+require('./helpers/pushNotifications.js');
 
 const useStyles = makeStyles((theme) => ({
   /*
