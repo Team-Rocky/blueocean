@@ -1,24 +1,20 @@
 import React from 'react';
 import Recipe from './Recipe.jsx';
 import { makeStyles } from '@material-ui/core/styles';
+import RecipeItem from './CustomDialog.jsx';
 
-// const useStyles = makeStyles((theme) => ({
-//   recipeList: {
-//     overflow: 'scroll'
-//   }
 
-// }))
 
 const RecipeList = (props) => {
   // const classes = useStyles()
 
-  console.log('props.topTen:', props.topTen)
+
 
   if (props.topTen !== undefined) {
 
     return (<div>
       {props.topTen.map((recipe, index) => {
-        return <Recipe recipe={recipe} key={index} />
+        return <RecipeItem recipe={recipe} key={index} />
       })}
     </div>)
   } else {

@@ -83,7 +83,7 @@ axios.get('/api/users/JackPeepin@chefslist.com?filter=time')
           Friday: [],
           Saturday: [],
         };
-        console.log('dadat: ', data)
+
         data.forEach((meal) => {
           const date = new Date(meal.date).getDay();
           const day = days[date];

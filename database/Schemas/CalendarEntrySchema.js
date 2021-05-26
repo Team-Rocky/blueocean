@@ -6,7 +6,7 @@ const CalendarEntrySchema = mongoose.Schema({
 
   userId: String,
   recipeId: String,
-  date: Date,
+  date:{ type: Date, required: true, unique: true },
   cookTime: Number,
   ingredientList: [String],
   recipeName: String
