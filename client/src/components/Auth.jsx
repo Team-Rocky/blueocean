@@ -20,7 +20,7 @@ const Auth = () => {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    axios.get('/');
+    /*axios.get('/');*/
   }, [user]);
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>

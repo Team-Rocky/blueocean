@@ -1,6 +1,5 @@
 const express = require('express');
 const fs = require('fs');
-const pug = require('pug');
 const chalk = require('chalk');
 
 // init server
@@ -19,13 +18,15 @@ const getDuration = (start) => {
   return (diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS;
 };
 app.use((req, res, next) => {
+  // req info
   const start = process.hrtime();
   let now = new Date().toISOString();
   let date = now.slice(0, 10);
   let time = now.slice(11, 16);
   let method = req.method;
   let url = req.url;
-  res.on('finish', function () {
+  // res info
+  res.on('finish', () => {
     let status = chalk.white(res.statusCode);
     if (res.statusCode >= 200) {
       status = chalk.green(res.statusCode);
@@ -37,7 +38,8 @@ app.use((req, res, next) => {
       status = chalk.red(res.statusCode);
     }
     const duration = getDuration(start);
-    let log = `${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
+    // log
+    let log = `\n${date} [${time}] - ${method} request to - ${url}\n\t\t     ${status} (${duration}ms)`;
     console.log(log);
     fs.appendFile(`./server/logs/${date}.log`, log, (err) => {
       if (err) throw err;
@@ -49,9 +51,6 @@ app.use((req, res, next) => {
 // web
 app.use(express.static('./client/public'));
 
-// web
-app.use(express.static('./client/public'));
-
 // api
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/recipes', require('./routes/recipes.js'));
@@ -59,12 +58,11 @@ app.use('/api/recipes', require('./routes/recipes.js'));
 // error pages
 app.set('view engine', 'pug');
 app.set('views', './server/views');
-app.use(function (req, res) {
+app.use((req, res) => {
   res.status(404);
   res.render('404.pug', { title: '404: File Not Found' });
 });
-
-app.use(function (err, req, res, next) {
+app.use((err, req, res) => {
   res.status(500);
   res.render('500.pug', { title: '500: Internal Server error', error: err });
 });

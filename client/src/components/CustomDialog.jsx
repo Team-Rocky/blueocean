@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { Paper } from '@material-ui/core';
 import axios from 'axios';
 
+import ScheduleMeal from './ScheduleMeal.jsx';
 import Typography from '@material-ui/core/Typography';
 
 const styles = (theme) => ({
@@ -102,12 +103,7 @@ export default function RecipeItem(props) {
           </Typography> */}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => {
-            postCalendarEntry(props.recipe)
-            handleClose()
-          }} color="primary">
-            Schedule Meal
-          </Button>
+          <ScheduleMeal handleClose={handleClose} recipe={props.recipe} userId={props.userId} />
         </DialogActions>
       </Dialog>
     </div>

@@ -4,8 +4,8 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
+import HomePageGrid from './HomePageGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
@@ -15,6 +15,24 @@ const auth = firebase.auth();
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
+  const [searchPage, setSearch] = useState(false);
+  const [detailPage, setDetail] = useState(false);
+  const [currentRecipe, setRecipe] = useState({})
+
+  const goToDetailsPage = (recipe) => {
+    setDetail(true)
+    setSearch(false)
+    setRecipe(recipe)
+    return (
+      <div>
+        <RecipeDetailsGrid
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+
+  }
+
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
   const days = {
@@ -22,7 +40,7 @@ const App = (props) => {
     1: 'Monday',
     2: 'Tuesday',
     3: 'Wednesday',
-    4: 'Thursay',
+    4: 'Thursday',
     5: 'Friday',
     6: 'Saturday',
   };
@@ -34,7 +52,6 @@ const App = (props) => {
   // user.email = user email
 
   useEffect(() => {
-
     const newUser = {
       name: user && user.displayName,
       email: user && user.email,
@@ -60,15 +77,14 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios.get(`/api/recipes/${userInfo._id}?filter=myRecipes`)
-          .then((response) => {
-            console.log('got leaderboard data: ', response.data)
-            setTopTen(response.data)
-          })
-          .catch((err) => {
-            console.log('err in axios get recipe leaderboarda')
-          })
-
+          axios.get(`/api/recipes/${userInfo._id}`)
+            .then((response) => {
+              console.log('got leaderboard data: ', response.data)
+              setTopTen(response.data)
+            })
+            .catch((err) => {
+              console.log('err in axios get recipe leaderboarda')
+            })
           if (user !== null) {
             getUserCalendar(userInfo._id).then((data) => {
               const mappedToDay = {
@@ -83,6 +99,7 @@ const App = (props) => {
               data.forEach((meal) => {
                 const date = new Date(meal.date).getDay();
                 const day = days[date];
+                console.log(day, typeof(day), date);
                 mappedToDay[day].push(meal);
               });
               setSchedule(mappedToDay);
@@ -94,23 +111,50 @@ const App = (props) => {
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
-  console.log('schedule,', schedule)
-  return (
-    <div>
-      {display === 'home' ?
+  if (!searchPage && !detailPage) {
+    return (
       <div>
-        <button onClick={changeDisplay}>Shopping List</button>
-        <HomePageGrid topTen={topTen} schedule={schedule} userId={userInfo._id}/>
+        {display === 'home' ?
+          <div>
+            <HomePageGrid
+              schedule={schedule}
+              searchPage={searchPage}
+              setSearch={setSearch}
+              topTen={topTen} schedule={schedule} userId={userInfo._id}
+            />
+            <button onClick={changeDisplay}>Shopping List</button>
+          </div>
+          : null}
+        {display === 'list' ?
+          <div>
+            <button onClick={changeDisplay}>Calendar</button>
+            <AddToCalendar schedule={schedule} />
+          </div>
+          : null}
       </div>
-        : null}
-      {display === 'list' ?
+    );
+  } else if (searchPage) {
+    return (
       <div>
-        <button onClick={changeDisplay}>Calendar</button>
-        <AddToCalendar schedule={schedule}/>
+        <RecipeSearchGrid
+          searchPage={searchPage}
+          setSearch={setSearch}
+          goToDetailsPage={goToDetailsPage}
+        />
       </div>
-        : null}
-    </div>
-  );
+    )
+  } else if (detailPage) {
+    return (
+      <div>
+        <RecipeDetailsGrid
+          detailPage={detailPage}
+          setDetail={setDetail}
+          setSearch={setSearch}
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+  }
 };
 
 export default App;
