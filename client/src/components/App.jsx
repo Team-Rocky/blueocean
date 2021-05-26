@@ -119,14 +119,14 @@ const App = (props) => {
               searchPage={searchPage}
               setSearch={setSearch}
               topTen={topTen} schedule={schedule} userId={userInfo._id}
+              changeDisplay={changeDisplay}
             />
-            <button onClick={changeDisplay}>Shopping List</button>
           </div>
           : null}
         {display === 'list' ?
           <div>
-            <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
+            <button onClick={changeDisplay}>Calendar</button>
           </div>
           : null}
       </div>
