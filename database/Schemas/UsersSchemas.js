@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 
 const UsersSchema = mongoose.Schema({
   name: String,
-  email: String,
+  email:{type: String, required: true, unique: true},
   friends: [String],
   date_created: Date,
 });
