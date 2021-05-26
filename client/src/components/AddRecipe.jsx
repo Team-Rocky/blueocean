@@ -104,7 +104,6 @@ const AddRecipe = (props) => {
 
     axios.post('/api/recipes', result)
       .then(() => {
-        console.log(result);
         setSubmitted(true);
       })
       .catch((error) => {
