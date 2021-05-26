@@ -165,7 +165,10 @@ const ScheduleMeal = (props) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSchedule}
+                onClick={() => {
+                  handleSchedule()
+                  props.handleClose()
+                }}
               >
                 schedule
               </Button>
