@@ -3,17 +3,17 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-const auth = firebase.auth();
-
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
+const auth = firebase.auth();
 
 const App = (props) => {
   const [user] = useAuthState(auth);
+  const [userId, setUserId] = useState('')
   const [schedule, setSchedule] = useState([]);
   const [display, setDisplay] = useState('home');
   const days = {
@@ -32,39 +32,6 @@ const App = (props) => {
   // user.email = user email
 
   useEffect(() => {
-    var weekList = {
-      Sunday: [],
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: [],
-    };
-
-    var weekdays = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-    ];
-    axios
-      .get('/api/recipes/calendar/60a8479474e6921f4fea1189')
-      .then((response) => {
-        console.log('got response; ', response.data);
-        for (var i = 0; i < response.data.length; i++) {
-          var weekday = new Date(response.data[i].date).getDay();
-          weekList[weekdays[weekday]].push(response.data[i]);
-        }
-        setWeek(weekList);
-      })
-      .catch((err) => {
-        console.log('err getting calendar entries!: ', err);
-      });
-
     if (user !== null) {
       getUserCalendar('JackPeepin@chefslist.com').then((data) => {
         const mappedToDay = {
@@ -82,26 +49,28 @@ const App = (props) => {
           mappedToDay[day].push(meal);
         });
         setSchedule(mappedToDay);
+        setUserId(data[0].userId)
       });
     }
   }, [user]);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
+
   return (
     <div>
-      {display === 'home' ? (
-        <div>
-          <button onClick={changeDisplay}>Shopping List</button>
-          <HomePageGrid week={week} schedule={schedule} />
-        </div>
-      ) : null}
-      {display === 'list' ? (
-        <div>
-          <button onClick={changeDisplay}>Calendar</button>
-          <AddToCalendar schedule={schedule} />
-        </div>
-      ) : null}
+      {display === 'home' ?
+      <div>
+        <button onClick={changeDisplay}>Shopping List</button>
+        <HomePageGrid schedule={schedule} userId={userId}/>
+      </div>
+        : null}
+      {display === 'list' ?
+      <div>
+        <button onClick={changeDisplay}>Calendar</button>
+        <AddToCalendar schedule={schedule}/>
+      </div>
+        : null}
     </div>
   );
 };
