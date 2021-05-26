@@ -108,7 +108,6 @@ const App = (props) => {
         });
   }, [user]);
 
-  console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
