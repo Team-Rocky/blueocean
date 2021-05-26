@@ -4,8 +4,8 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
+import HomePageGrid from './HomePageGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
@@ -15,6 +15,24 @@ const auth = firebase.auth();
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
+  const [searchPage, setSearch] = useState(false);
+  const [detailPage, setDetail] = useState(false);
+  const [currentRecipe, setRecipe] = useState({})
+
+  const goToDetailsPage = (recipe) => {
+    setDetail(true)
+    setSearch(false)
+    setRecipe(recipe)
+    return (
+      <div>
+        <RecipeDetailsGrid
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+
+  }
+
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
   const days = {
@@ -22,16 +40,45 @@ const App = (props) => {
     1: 'Monday',
     2: 'Tuesday',
     3: 'Wednesday',
-    4: 'Thursay',
+    4: 'Thursday',
     5: 'Friday',
     6: 'Saturday',
   };
+<<<<<<< HEAD
   // const [week, setWeek] = useState({})
   const [topTen, setTopTen] = useState([]);
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
+=======
+
+  const [topTen, setTopTen] = useState([])
+
+  const updateCalendar = (id) => {
+    if (id !== undefined) {
+      getUserCalendar(id).then((data) => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          if (day[date] !== undefined) {
+            mappedToDay[day].push(meal);
+          }
+        });
+        setSchedule(mappedToDay);
+      });
+    }
+  };
+>>>>>>> main
 
   useEffect(() => {
     const newUser = {
@@ -57,27 +104,18 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          if (user !== null) {
-            getUserCalendar(userInfo._id).then((data) => {
-              const mappedToDay = {
-                Sunday: [],
-                Monday: [],
-                Tuesday: [],
-                Wednesday: [],
-                Thursday: [],
-                Friday: [],
-                Saturday: [],
-              };
-              data.forEach((meal) => {
-                const date = new Date(meal.date).getDay();
-                const day = days[date];
-                mappedToDay[day].push(meal);
-              });
-              setSchedule(mappedToDay);
-            });
-          }
+          axios.get(`/api/recipes/${userInfo._id}`)
+            .then((response) => {
+              console.log('got leaderboard data: ', response.data)
+              setTopTen(response.data)
+            })
+            .catch((err) => {
+              console.log('err in axios get recipe leaderboarda')
+            })
+          updateCalendar(userInfo._id);
         });
   }, [user]);
+<<<<<<< HEAD
   console.log('current user: ', userInfo._id);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
@@ -103,6 +141,60 @@ const App = (props) => {
       ) : null}
     </div>
   );
+=======
+
+  console.log('current user: ', userInfo._id)
+  const changeDisplay = () => {
+    display === 'home' ? setDisplay('list') : setDisplay('home');
+  };
+  if (!searchPage && !detailPage) {
+    return (
+      <div>
+        {display === 'home' ?
+          <div>
+            <HomePageGrid
+              schedule={schedule}
+              searchPage={searchPage}
+              setSearch={setSearch}
+              topTen={topTen}
+              schedule={schedule}
+              userId={userInfo._id}
+              updateCalendar={updateCalendar}
+            />
+            <button onClick={changeDisplay}>Shopping List</button>
+          </div>
+          : null}
+        {display === 'list' ?
+          <div>
+            <button onClick={changeDisplay}>Calendar</button>
+            <AddToCalendar schedule={schedule} />
+          </div>
+          : null}
+      </div>
+    );
+  } else if (searchPage) {
+    return (
+      <div>
+        <RecipeSearchGrid
+          searchPage={searchPage}
+          setSearch={setSearch}
+          goToDetailsPage={goToDetailsPage}
+        />
+      </div>
+    )
+  } else if (detailPage) {
+    return (
+      <div>
+        <RecipeDetailsGrid
+          detailPage={detailPage}
+          setDetail={setDetail}
+          setSearch={setSearch}
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+  }
+>>>>>>> main
 };
 
 export default App;
