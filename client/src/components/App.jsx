@@ -3,8 +3,10 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
+import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
@@ -24,12 +26,18 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
+  // const [week, setWeek] = useState({})
+  const [topTen, setTopTen] = useState([])
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
 
   useEffect(() => {
+
+
+
+
     const newUser = {
       name: user && user.displayName,
       email: user && user.email,
@@ -75,24 +83,25 @@ const App = (props) => {
           }
         });
   }, [user]);
+  console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
-
+  console.log('schedule,', schedule)
   return (
     <div>
-      {display === 'home' ? (
-        <div>
-          <button onClick={changeDisplay}>Shopping List</button>
-          <HomePageGrid schedule={schedule} userId={userInfo._id}/>
-        </div>
-      ) : null}
-      {display === 'list' ? (
-        <div>
-          <button onClick={changeDisplay}>Calendar</button>
-          <AddToCalendar schedule={schedule} />
-        </div>
-      ) : null}
+      {display === 'home' ?
+      <div>
+        <button onClick={changeDisplay}>Shopping List</button>
+        <HomePageGrid topTen={topTen} schedule={schedule} userId={userInfo._id}/>
+      </div>
+        : null}
+      {display === 'list' ?
+      <div>
+        <button onClick={changeDisplay}>Calendar</button>
+        <AddToCalendar schedule={schedule}/>
+      </div>
+        : null}
     </div>
   );
 };
@@ -122,7 +131,7 @@ export default App;
 
 // POST USER'S RECIPE OF CHOICE TO DATABASE
 // var fakeEntry = {
-//   userId: "60ae61cee562ede3ed13811d",
+//   userId: "60ae667772fdbd15f82280d6",
 //   recipeId: "60a8289ee9432a1c8262eead",
 //   date: new Date(),
 //   cookTime: 45,

@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     background: 'lightGrey',
     height: '300px',
+    overflow: 'scroll'
   },
   header: {
     display: 'flex',
