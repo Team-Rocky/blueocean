@@ -45,17 +45,22 @@ const RecipeDetailsGrid = (props) => {
 
   return (
     <Grid container justify='center' justify-content='center' alignItems='center' spacing={1} className={classes.grid}>
-      <Grid item className={classes.title} lg={8} xs={12}>
+      <Grid item className={classes.title} lg={8} xs={12}
+      onClick={() => {
+        props.setSearch(false)
+        props.setDetail(false)
+      }}>
         Back to HomePage
       </Grid>
       <Grid item className={classes.recipe} lg={4} xs={12}>
-        recipeitem
+        {props.recipe.name}
+        <img src={props.recipe.photo[0]}></img>
       </Grid>
       <Grid item className={classes.description} lg={5} xs={12}>
-        description
+        {props.recipe.description}
       </Grid>
       <Grid item className={classes.description} lg={4} xs={12}>
-        ingredients
+      {props.recipe.ingredientLines}
       </Grid>
       <Grid item className={classes.button} lg={5} xs={12}>
         schedule button

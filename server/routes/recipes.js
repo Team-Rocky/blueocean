@@ -24,10 +24,12 @@ router
   .route('/')
   .post((req, res) => {
     dbFunctions.newRecipe(req.body, (err, result) => {
+      console.log('here');
       if (err) {
         res.json(err);
+      } else {
+        res.json(result);
       }
-      res.json(result);
     });
   })
   .delete((req, res) => {

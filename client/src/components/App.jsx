@@ -3,8 +3,9 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import HomePageGrid from './HomePageGrid.jsx';
+
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
+import HomePageGrid from './HomePageGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import axios from 'axios';
 import getUserCalendar from './helpers/getUserCalendar.js';
@@ -13,66 +14,146 @@ const auth = firebase.auth();
 
 const App = (props) => {
   const [user] = useAuthState(auth);
-  const [userId, setUserId] = useState('')
   const [schedule, setSchedule] = useState([]);
+  const [searchPage, setSearch] = useState(false);
+  const [detailPage, setDetail] = useState(false);
+  const [currentRecipe, setRecipe] = useState({})
+
+  const goToDetailsPage = (recipe) => {
+    setDetail(true)
+    setSearch(false)
+    setRecipe(recipe)
+    return (
+      <div>
+        <RecipeDetailsGrid
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+
+  }
+
   const [display, setDisplay] = useState('home');
+  const [userInfo, setUserInfo] = useState({});
   const days = {
     0: 'Sunday',
     1: 'Monday',
     2: 'Tuesday',
     3: 'Wednesday',
-    4: 'Thursay',
+    4: 'Thursday',
     5: 'Friday',
     6: 'Saturday',
   };
-  const [week, setWeek] = useState({});
+  // const [week, setWeek] = useState({})
+  const [topTen, setTopTen] = useState([])
   // To use auth for child components
   // user.displayName = name
   // user.photoURL = profile pic
   // user.email = user email
 
   useEffect(() => {
-    if (user !== null) {
-      getUserCalendar('JackPeepin@chefslist.com').then((data) => {
-        const mappedToDay = {
-          Sunday: [],
-          Monday: [],
-          Tuesday: [],
-          Wednesday: [],
-          Thursday: [],
-          Friday: [],
-          Saturday: [],
-        };
-        data.forEach((meal) => {
-          const date = new Date(meal.date).getDay();
-          const day = days[date];
-          mappedToDay[day].push(meal);
+    const newUser = {
+      name: user && user.displayName,
+      email: user && user.email,
+      friends: [],
+      date: new Date(),
+    };
+
+    user &&
+      axios
+        .get(`/api/users/${user.email}/userInfo`)
+        .then((res) => {
+          if (!res.data.length) {
+            console.log("in user doesn't exist");
+            axios.post('/api/users', newUser).then((response) => {
+              console.log('NEW USER ADDED TO DATABASE');
+              setUserInfo(response.data[0]);
+              return response.data[0];
+            });
+          } else {
+            setUserInfo(res.data[0]);
+            return res.data[0];
+          }
+        })
+        .then((userInfo) => {
+          axios.get(`/api/recipes/${userInfo._id}`)
+            .then((response) => {
+              console.log('got leaderboard data: ', response.data)
+              setTopTen(response.data)
+            })
+            .catch((err) => {
+              console.log('err in axios get recipe leaderboarda')
+            })
+          if (user !== null) {
+            getUserCalendar(userInfo._id).then((data) => {
+              const mappedToDay = {
+                Sunday: [],
+                Monday: [],
+                Tuesday: [],
+                Wednesday: [],
+                Thursday: [],
+                Friday: [],
+                Saturday: [],
+              };
+              data.forEach((meal) => {
+                const date = new Date(meal.date).getDay();
+                const day = days[date];
+                console.log(day, typeof(day), date);
+                mappedToDay[day].push(meal);
+              });
+              setSchedule(mappedToDay);
+            });
+          }
         });
-        setSchedule(mappedToDay);
-        setUserId(data[0].userId)
-      });
-    }
   }, [user]);
+  console.log('current user: ', userInfo._id)
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
-
-  return (
-    <div>
-      {display === 'home' ?
+  if (!searchPage && !detailPage) {
+    return (
       <div>
-        <button onClick={changeDisplay}>Shopping List</button>
-        <HomePageGrid schedule={schedule} userId={userId}/>
+        {display === 'home' ?
+          <div>
+            <HomePageGrid
+              schedule={schedule}
+              searchPage={searchPage}
+              setSearch={setSearch}
+              topTen={topTen} schedule={schedule} userId={userInfo._id}
+            />
+            <button onClick={changeDisplay}>Shopping List</button>
+          </div>
+          : null}
+        {display === 'list' ?
+          <div>
+            <button onClick={changeDisplay}>Calendar</button>
+            <AddToCalendar schedule={schedule} />
+          </div>
+          : null}
       </div>
-        : null}
-      {display === 'list' ?
+    );
+  } else if (searchPage) {
+    return (
       <div>
-        <button onClick={changeDisplay}>Calendar</button>
-        <AddToCalendar schedule={schedule}/>
+        <RecipeSearchGrid
+          searchPage={searchPage}
+          setSearch={setSearch}
+          goToDetailsPage={goToDetailsPage}
+        />
       </div>
-        : null}
-    </div>
-  );
+    )
+  } else if (detailPage) {
+    return (
+      <div>
+        <RecipeDetailsGrid
+          detailPage={detailPage}
+          setDetail={setDetail}
+          setSearch={setSearch}
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+  }
 };
 
 export default App;
@@ -100,7 +181,7 @@ export default App;
 
 // POST USER'S RECIPE OF CHOICE TO DATABASE
 // var fakeEntry = {
-//   userId: "60a828914c20a51c8065bb49",
+//   userId: "60ae667772fdbd15f82280d6",
 //   recipeId: "60a8289ee9432a1c8262eead",
 //   date: new Date(),
 //   cookTime: 45,

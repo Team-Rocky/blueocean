@@ -1,13 +1,27 @@
 import React from 'react';
-import Recipe from './Recipe.jsx'
+import Recipe from './Recipe.jsx';
+import { makeStyles } from '@material-ui/core/styles';
+import RecipeItem from './CustomDialog.jsx';
+
+
 
 const RecipeList = (props) => {
+  // const classes = useStyles()
 
-  return (<div>
-    {props.data.map((recipe, index) => {
-      return <Recipe recipe={recipe} key={index} />
-    })}
-  </div>)
+
+
+  if (props.topTen !== undefined) {
+
+    return (<div>
+      {props.topTen.map((recipe, index) => {
+        return <RecipeItem userId={props.userId} recipe={recipe} key={index} />
+      })}
+    </div>)
+  } else {
+    return null;
+  }
+
+  // return(<div>LISTTTT</div>)
 }
 
 export default RecipeList;

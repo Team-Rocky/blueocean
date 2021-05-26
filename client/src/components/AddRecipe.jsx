@@ -84,9 +84,9 @@ const AddRecipe = (props) => {
     var Ingredients = [];
     IngredientList.forEach(obj => {
       if (obj.Ingredient !== "") {
-        Ingredients.push(obj.Ingredient)
+        Ingredients.push(obj.Ingredient);
       }
-    })
+    });
 
     result = {
       userId: props.userId,

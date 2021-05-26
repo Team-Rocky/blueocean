@@ -3,13 +3,17 @@ import Meal from './Meal.jsx';
 import styled from 'styled-components';
 
 const Day = (props) => {
+  let meals = props.schedule[props.day];
+  if (meals !== undefined) {
+    meals = meals.sort((a, b) => new Date(a.date) - new Date(b.date));
+  }
   return (
     <StyledDay className="day">
       <h2 style={{borderBottom: 'solid black'}}>{props.day}</h2>
-      {props.schedule[props.day] === undefined ?
-      null :
-      <StyledList>
-        {props.schedule[props.day].map((meal, index)=> <Meal key={index} meal={meal}/>)}
+      {props.schedule[props.day] === undefined
+        ? null
+        : <StyledList>
+        {meals.map((meal, index)=> <Meal key={index} meal={meal}/>)}
       </StyledList>
       }
     </StyledDay>
