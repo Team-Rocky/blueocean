@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import RecipeList from './recipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
@@ -21,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
     background: 'lightGrey',
   },
   button: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
     textAlign: 'center',
+    alignContent: 'center',
     justify: 'right',
     color: theme.palette.text.secondary,
     border: '1px',
@@ -43,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     background: 'lightGrey',
-    height: '300px',
+    height: '450px',
   },
 }))
 
@@ -53,7 +56,7 @@ const HomePageGrid = (props) => {
   const classes = useStyles();
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
-    <Grid container justify='center'  spacing={2} className={classes.grid}>
+    <Grid container justify='center' spacing={2} className={classes.grid}>
       <Grid container justify='space-between' spacing={2} className={classes.grid}>
         <Grid item lg={2}>
           <Paper className={classes.button} >
@@ -73,7 +76,7 @@ const HomePageGrid = (props) => {
       </Grid>
       <Grid item lg={9} xs={12}>
         <Paper className={classes.calendar} >
-          {days.map((day, index) => <Day key={index} day={day} schedule={props.schedule}/>)}
+          {days.map((day, index) => <Day key={index} day={day} schedule={props.schedule} />)}
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
@@ -81,7 +84,8 @@ const HomePageGrid = (props) => {
       </Grid>
       <Grid container justify='flex-end' spacing={2} className={classes.grid}>
         <Grid item lg={3}>
-          <Paper className={classes.button} >new Recipe</Paper>
+          <Button className={classes.button} >new Recipe</Button>
+          <Button className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
         </Grid>
       </Grid>
     </Grid>

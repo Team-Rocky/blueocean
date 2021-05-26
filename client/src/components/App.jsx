@@ -5,12 +5,10 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 const auth = firebase.auth();
 
-import HomePageGrid from './HomePageGrid.jsx';
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
 import HomePageGrid from './HomePageGrid.jsx';
 import axios from 'axios';
-const auth = firebase.auth();
 import getUserCalendar from './helpers/getUserCalendar.js';
 import AddToCalendar from './AddToCalendar.jsx';
 
@@ -21,6 +19,24 @@ import AddToCalendar from './AddToCalendar.jsx';
 const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
+  const [searchPage, setSearch] = useState(false);
+  const [detailPage, setDetail] = useState(false);
+  const [currentRecipe, setRecipe] = useState({})
+
+  const goToDetailsPage = (recipe) => {
+    setDetail(true)
+    setSearch(false)
+    setRecipe(recipe)
+   return (
+     <div>
+       <RecipeDetailsGrid
+       recipe={currentRecipe}
+       />
+       </div>
+   )
+
+  }
+
   const [display, setDisplay] = useState('home');
   const days = {
     0: 'Sunday',
@@ -39,7 +55,6 @@ const App = (props) => {
 
 
   useEffect(() => {
-
 
     var weekList = {
       Sunday: [],
@@ -91,22 +106,50 @@ const App = (props) => {
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
-  return (
-    <div>
-      {display === 'home' ?
+  if (!searchPage && !detailPage) {
+    return (
       <div>
-        <button onClick={changeDisplay}>Shopping List</button>
-        <HomePageGrid week={week} schedule={schedule}/>
+        {display === 'home' ?
+          <div>
+            <button onClick={changeDisplay}>Shopping List</button>
+            <HomePageGrid
+              week={week}
+              schedule={schedule}
+              searchPage={searchPage}
+              setSearch={setSearch}
+            />
+          </div>
+          : null}
+        {display === 'list' ?
+          <div>
+            <button onClick={changeDisplay}>Calendar</button>
+            <AddToCalendar schedule={schedule} />
+          </div>
+          : null}
       </div>
-        : null}
-      {display === 'list' ?
+    );
+  } else if (searchPage) {
+    return (
       <div>
-        <button onClick={changeDisplay}>Calendar</button>
-        <AddToCalendar schedule={schedule}/>
+        <RecipeSearchGrid
+          searchPage={searchPage}
+          setSearch={setSearch}
+          goToDetailsPage={goToDetailsPage}
+        />
       </div>
-        : null}
-    </div>
-  );
+    )
+  } else if (detailPage) {
+    return (
+      <div>
+        <RecipeDetailsGrid
+          detailPage={detailPage}
+          setDetail={setDetail}
+          setSearch={setSearch}
+          recipe={currentRecipe}
+        />
+      </div>
+    )
+  }
 };
 
 export default App;

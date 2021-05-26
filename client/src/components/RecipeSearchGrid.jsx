@@ -12,6 +12,7 @@ import {
   AppBar,
   TextField,
 } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import SearchBar from './SearchBar.jsx'
 import axios from 'axios';
 
@@ -46,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
     height: 'auto',
     overflow: 'scroll',
   },
+  card: {
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+    borderBottom: '1px solid black',
+    height: '200',
+  }
 }))
 
 
@@ -82,10 +89,19 @@ const RecipeSearchGrid = (props) => {
     const { description, name, ingredientLines } = recipes[index];
     //console.log('IT IS RUNNING')
     return (
-      <Grid item xl={6} key={name}>
+      <Grid item className={classes.card} xl={6}
+        key={name}
+        value={recipes[index]}>
         <CardContent>
-          <Typography>{`${name}`}</Typography>
-          <Typography>{`${ingredientLines}`}</Typography>
+          <Typography>{name}</Typography>
+          <Typography>{description}</Typography>
+          <br />
+          <Typography>{ingredientLines}</Typography>
+          <button style={{ margin: '5px' }}
+            value={recipes[index]}
+            onClick={() =>props.goToDetailsPage(recipes[index])}
+          >more info</button>
+          <Button variant="outlined" color="primary" style={{ margin: '5px' }}>Schedule Meal</Button>
         </CardContent>
       </Grid>
     );
@@ -93,7 +109,7 @@ const RecipeSearchGrid = (props) => {
 
   return (
     <Grid container justify-content='center' alignItems='center' direction='column' spacing={2} className={classes.grid}>
-      <Grid item className={classes.title}>
+      <Grid item className={classes.title} onClick={() => { props.setSearch(false) }}>
         Back to HomePage
       </Grid>
       <Grid item className={classes.search} >
