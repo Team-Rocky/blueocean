@@ -61,6 +61,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '100%',
   },
+  button: {
+    margin: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
 }));
 
 const HomePageGrid = (props) => {
@@ -114,20 +121,36 @@ const HomePageGrid = (props) => {
           />
         </Paper>
       </Grid>
-      <Grid container justify="flex-end" spacing={2} className={classes.grid}>
-        <Grid item lg={3}>
-          <Paper>
-            <AddRecipe getBoard={props.getBoard} userId={props.userId} />
-          </Paper>
-          <Button
-            className={classes.button}
-            onClick={() => {
-              props.setSearch(true);
-            }}
-          >
-            Browse
-          </Button>
-        </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        spacing={2}
+        className={classes.button}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={props.changeDisplay}
+        >
+          Shopping List
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={() => {
+            props.setSearch(true);
+          }}
+        >
+          Browse
+        </Button>
+        <AddRecipe
+          getBoard={props.getBoard}
+          userId={props.userId}
+          userId={props.userId}
+        />
       </Grid>
     </Grid>
   );
