@@ -23,32 +23,32 @@ describe('Users: CRUD', () => {
     await db.close();
   });
 
-  it('should insert a doc into collection', async () => {
-    const users = db.collection('Users');
+  // it('should insert a doc into collection', async () => {
+  //   const users = db.collection('Users');
 
-    const mockUser = { _id: 'some-user-id', name: 'John' };
-    await users.insertOne(mockUser);
+  //   const mockUser = { _id: 'some-user-id', name: 'John' };
+  //   await users.insertOne(mockUser);
 
-    const insertedUser = await users.findOne({ _id: 'some-user-id' });
-    expect(insertedUser).toEqual(mockUser);
-  });
+  //   const insertedUser = await users.findOne({ _id: 'some-user-id' });
+  //   expect(insertedUser).toEqual(mockUser);
+  // });
 
-  it('should update a doc in the collection', async () => {
-    const users = db.collection('Users');
+  // it('should update a doc in the collection', async () => {
+  //   const users = db.collection('Users');
 
-    const updatedName = { name: 'Walter' };
-    await users.findOneAndUpdate(
-      { _id: 'some-user-id' },
-      { $set: updatedName }
-    );
+  //   const updatedName = { name: 'Walter' };
+  //   await users.findOneAndUpdate(
+  //     { _id: 'some-user-id' },
+  //     { $set: updatedName }
+  //   );
 
-    const insertedUser = await users.findOne({ _id: 'some-user-id' });
-    expect(insertedUser.name).toEqual('Walter');
-  });
+  //   const insertedUser = await users.findOne({ _id: 'some-user-id' });
+  //   expect(insertedUser.name).toEqual('Walter');
+  // });
 
   it('should delete a previous doc in the collection', async () => {
     const users = db.collection('Users');
-    await users.deleteMany({ _id: 'some-user-id' });
+    await users.deleteMany({ email: 'brandon.galloway2@gmail.com' });
     const deletedUser = await users.findOne({ _id: 'some-user-id' });
     expect(deletedUser).toEqual(null);
   });

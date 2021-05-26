@@ -16,6 +16,7 @@ const App = (props) => {
   const [user] = useAuthState(auth);
   const [schedule, setSchedule] = useState([]);
   const [display, setDisplay] = useState('home');
+  const [userInfo, setUserInfo] = useState({});
   const days = {
     0: 'Sunday',
     1: 'Monday',
@@ -51,22 +52,49 @@ const App = (props) => {
       'Friday',
       'Saturday',
     ];
-    axios
-      .get('/api/recipes/calendar/60a8479474e6921f4fea1189')
-      .then((response) => {
-        console.log('got response; ', response.data);
-        for (var i = 0; i < response.data.length; i++) {
-          var weekday = new Date(response.data[i].date).getDay();
-          weekList[weekdays[weekday]].push(response.data[i]);
-        }
-        setWeek(weekList);
-      })
-      .catch((err) => {
-        console.log('err getting calendar entries!: ', err);
-      });
+    const newUser = {
+      name: user && user.displayName,
+      email: user && user.email,
+      friends: [],
+      date: new Date(),
+    };
+
+    user &&
+      axios
+        .get(`/api/users/${user.email}/userInfo`)
+        .then((res) => {
+          if (!res.data.length) {
+            console.log("in user doesn't exist");
+            axios.post('/api/users', newUser).then((response) => {
+              console.log('NEW USER ADDED TO DATABASE');
+              setUserInfo(response.data[0]);
+              return response.data[0];
+            });
+          } else {
+            setUserInfo(res.data[0]);
+            return res.data[0];
+          }
+        })
+        .then((userInfo) => {
+          console.log(userInfo);
+          axios
+            .get(`/api/recipes/calendar/${userInfo._id}`)
+            .then((response) => {
+              console.log('USERINFO', userInfo);
+              console.log('got response; ', response.data);
+              for (var i = 0; i < response.data.length; i++) {
+                var weekday = new Date(response.data[i].date).getDay();
+                weekList[weekdays[weekday]].push(response.data[i]);
+              }
+              setWeek(weekList);
+            })
+            .catch((err) => {
+              console.log('err getting calendar entries!: ', err);
+            });
+        });
 
     if (user !== null) {
-      getUserCalendar('JackPeepin@chefslist.com').then((data) => {
+      getUserCalendar(user.email).then((data) => {
         const mappedToDay = {
           Sunday: [],
           Monday: [],
