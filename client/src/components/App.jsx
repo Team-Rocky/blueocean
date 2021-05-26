@@ -52,7 +52,7 @@ const App = (props) => {
       prevSunday.setDate(date.getDate() - 8);
     }
     else {
-      prevSunday.setDate(date.getDate() - day);
+      prevSunday.setDate(date.getDate() - day - 1);
     }
     return prevSunday.toUTCString();
   };
@@ -60,7 +60,7 @@ const App = (props) => {
   const updateCalendar = (id) => {
     var sunday = getPreviousSunday()
     var today = new Date()
-    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 6))).toUTCString()
+    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toUTCString()
 
     // if (new Date(monday) < new Date(today) && new Date(sunday) > new Date(today))
     if (id !== undefined) {
