@@ -3,8 +3,11 @@ import styled from 'styled-components';
 
 const Meal = (props) => {
   let mealMinutes = new Date(props.meal.date).getMinutes();
+  let mealHours = new Date(props.meal.date).getHours();
+  mealHours < 10 ? mealHours = '0' + mealHours : mealHours;
   mealMinutes < 10 ? mealMinutes = '0' + mealMinutes : mealMinutes;
-  const mealTime = `${new Date(props.meal.date).getHours()}:${mealMinutes}`;
+  const mealTime = `${mealHours}:${mealMinutes}`;
+
   const startTimeSec = (new Date(props.meal.date) - (props.meal.cookTime*60*1000));
   const startTime = `${new Date(startTimeSec).getHours()}:${new Date(startTimeSec).getMinutes()}`;
 
