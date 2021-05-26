@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ClickAwayListener, Grid, Paper, Modal } from '@material-ui/core';
 import AddRecipe from './AddRecipe.jsx'
-import RecipeList from './recipeList.jsx';
+import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import AddToCalendar from './AddToCalendar.jsx';
