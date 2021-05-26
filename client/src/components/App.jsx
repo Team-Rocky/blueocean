@@ -18,6 +18,7 @@ import AddToCalendar from './AddToCalendar.jsx';
 
 const App = (props) => {
   const [user] = useAuthState(auth);
+  const [userId, setUserId] = useState('')
   const [schedule, setSchedule] = useState([]);
   const [display, setDisplay] = useState('home');
   const days = {
@@ -37,35 +38,6 @@ const App = (props) => {
 
 
   useEffect(() => {
-
-
-    var weekList = {
-      Sunday: [],
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: []
-    }
-
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    axios.get('/api/recipes/calendar/60a8479474e6921f4fea1189')
-      .then((response) => {
-        console.log('got response; ', response.data)
-        for (var i = 0; i < response.data.length; i++) {
-          var weekday = new Date(response.data[i].date).getDay()
-          weekList[weekdays[weekday]].push(response.data[i])
-        }
-        setWeek(weekList)
-
-
-      })
-      .catch((err) => {
-        console.log('err getting calendar entries!: ', err)
-      })
-
-
     if (user !== null) {
       getUserCalendar('JackPeepin@chefslist.com').then(data => {
         const mappedToDay = {
@@ -83,18 +55,20 @@ const App = (props) => {
           mappedToDay[day].push(meal);
         });
         setSchedule(mappedToDay);
+        setUserId(data[0].userId)
       });
     }
   }, [user]);
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
+
   return (
     <div>
       {display === 'home' ?
       <div>
         <button onClick={changeDisplay}>Shopping List</button>
-        <HomePageGrid week={week} schedule={schedule}/>
+        <HomePageGrid week={week} schedule={schedule} userId={userId}/>
       </div>
         : null}
       {display === 'list' ?

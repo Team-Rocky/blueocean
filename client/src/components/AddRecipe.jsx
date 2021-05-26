@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import firebase from 'firebase';
+import 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Paper, Button, Modal, TextField } from '@material-ui/core';
 import styled from 'styled-components'
+import SubmittedForm from './SubmittedForm.jsx'
+const axios = require('axios');
+const auth = firebase.auth();
 
 
   function rand() {
@@ -35,13 +41,14 @@ const useStyles = makeStyles(theme => ({
 
 const AddRecipe = (props) => {
 
+   const [user] = useAuthState(auth);
    const [IngredientList, setIngredientList] = useState([{Ingredient: ""}])
    const [RecipeName, setRecipeName] = useState("");
    const [TotalTime, setTotalTime] = useState("");
    const [Directions, setDirections] = useState("");
    const [Yield, setYield] = useState("");
    const [Private, setPrivate] = useState(false);
-
+   const [Submitted, setSubmitted] = useState(false);
 
 
    const handleInputChange = (e, index) => {
@@ -82,18 +89,28 @@ const AddRecipe = (props) => {
     })
 
     result = {
+      userId: props.userId,
+      userName: user.displayName,
       name: RecipeName,
       private: Private,
       IngredientLines: Ingredients,
       description: Directions,
-      totalTime: TotalTime,
-      yield: Yield,
+      popularity: 0,
+      totalTime: Number(TotalTime),
+      yield: Number(Yield),
       photo: [],
       date_created: Date.now()
     }
 
-    handleClose();
-    console.log(result)
+    axios.post('/api/recipes', result)
+      .then(() => {
+        console.log(result)
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
 
     event.preventDefault();
   }
@@ -107,6 +124,7 @@ const AddRecipe = (props) => {
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
+        setSubmitted(false);
         setOpen(true);
     };
 
@@ -128,21 +146,28 @@ const AddRecipe = (props) => {
                 open={open}
                 onClose={handleClose}
             >
+              {Submitted ? <FormStyle  style={modalStyle} className={classes.paper} onSubmit={handleSubmit}>
+                <SubmittedForm/>
+                </FormStyle>:
                 <FormStyle  style={modalStyle} className={classes.paper} onSubmit={handleSubmit}>
                   <RecipeStyle>
                   <RecipeLabel>Recipe</RecipeLabel>
                   <TextField  variant="outlined"  id="recipeName" onChange={HandleRecipeName}/>
                   </RecipeStyle>
                 <BoxStyle>
-                  <Ingredients> Ingredient:
+                  <Ingredients>
+                  <IngredientLabel>
+                    <Ingredientpic src="https://img.icons8.com/wired/60/000000/ingredients.png"/>
+                    Ingredients:
+                  </IngredientLabel>
                     {IngredientList.map ((x, i) => {
                       return (
-                        <Box display="flex" key={i}>
+                        <Box display="flex" alignItems="flex-end" key={i}>
                           <div>
                           <TextField required name="Ingredient" value={x.Ingredient} onChange={e => handleInputChange(e, i)}/>
                           </div>
                           <div>
-                            {IngredientList.length - 1 === i && <button onClick={handleAddClick}>+</button>}
+                            {IngredientList.length - 1 === i && <AddButton onClick={handleAddClick}>+</AddButton>}
                           </div>
                         </Box>
                       )
@@ -166,7 +191,8 @@ const AddRecipe = (props) => {
                   </Preparation>
                 </BoxStyle>
                     <ButtonStyled type="submit">Submit</ButtonStyled>
-                </FormStyle >
+                </FormStyle > }
+
             </Modal>
         </div>
 
@@ -178,12 +204,23 @@ const FormStyle = styled.form`
   flex-direction: column;
   align-items: center;
 `
+const IngredientLabel = styled.div`
+  display: flex;
+  font-family: 'Amatic SC', cursive;
+  font-size: 20px;
+`
+
+const Ingredientpic = styled.img`
+  margin-right: 0.5em;
+  width: 30px;
+`
 
 const RecipeStyle = styled.div`
   display: flex;
   justify-content: center;
   font-family: 'Pattaya', sans-serif;
   font-size: 20px;
+  align-items: center;
 `
 
 const RecipeLabel = styled.h2`
@@ -210,6 +247,7 @@ const Preparation = styled.div`
   padding: 1em;
   width: 50%;
   padding-bottom: 0px;
+  font-family: 'Amatic SC', cursive;
 `
 const PrepTime = styled.label`
   display: flex;
@@ -224,6 +262,10 @@ const InputDirection = styled.input`
 
 const BoxStyle = styled.div `
   display: flex;
+`
+
+const AddButton = styled.button`
+  margin-left: 0.5em;
 `
 
 const ButtonStyled = styled.button`
