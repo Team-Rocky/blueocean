@@ -54,12 +54,17 @@ const App = (props) => {
     else {
       prevSunday.setDate(date.getDate() - day);
     }
-    return prevSunday.setHours(0,0,0,0);
+    return prevSunday.toLocaleString();
   };
 
   const updateCalendar = (id) => {
-    const sunday = getPreviousSunday();
-    const saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toLocaleString();
+    var sunday = new Date(new Date(getPreviousSunday()).setHours(0, 0, 0, 0)).toLocaleString()
+    console.log('sunday: ', sunday)
+    var currentDate = new Date()
+    ///var today = currentDate.setHours(0, 0, 0, 0)
+    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toLocaleString()
+    console.log('saturday: ', saturday)
+
 
     if (id !== undefined) {
       getUserCalendar(id).then((data) => {
@@ -97,7 +102,7 @@ const App = (props) => {
         setTopTen(response.data);
       })
       .catch((err) => {
-        console.log('err in axios get recipe leaderboarda');
+        console.log('err in axios get recipe leaderboards');
       });
   };
 
@@ -165,9 +170,12 @@ const App = (props) => {
       <div>
         <RecipeSearchGrid
           searchPage={searchPage}
+          detailPage={detailPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
           user={user}
+          userId={userInfo._id}
+          updateCalendar={updateCalendar}
         />
       </div>
     );
@@ -175,7 +183,10 @@ const App = (props) => {
     return (
       <div>
         <RecipeDetailsGrid
+          searchPage={searchPage}
           detailPage={detailPage}
+          userId={userInfo._id}
+          updateCalendar={updateCalendar}
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}
