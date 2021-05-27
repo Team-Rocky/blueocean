@@ -50,20 +50,21 @@ const Meal = (props) => {
 };
 
 const StyledMeal = styled.li`
-  text-align: left;
+  text-align: center;
   margin: 0;
   padding: 0;
   font-size: 1em;
 `;
 const StyledSpan = styled.span`
-  text-align: left;
+  text-align: center;
   margin: 0;
   padding: 0;
   font-size: .5em;
   font-weight: bold;
 `;
 const StyledHead = styled.h5`
-  text-align: left;
+  text-align: center;
+  color: goldenrod;
   margin: 0;
   padding: 0;
 `;
