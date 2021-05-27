@@ -4,18 +4,18 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import axios from 'axios';
 
 const deleteEntry = (id, callback, userId) => {
-console.log('this is the recipe id! ', id)
+  console.log('this is the recipe id! ', id)
   axios.delete(`api/recipes/calendar/${id}`)
-  .then((response) => {
-    // rerender
-    console.log('this is callbacj:', callback)
+    .then((response) => {
+      // rerender
+      console.log('this is callbacj:', callback)
 
-   callback(userId)
+      callback(userId)
 
-  })
-  .catch((err) => {
-    console.log('err in axios.delete: ', err)
-  })
+    })
+    .catch((err) => {
+      console.log('err in axios.delete: ', err)
+    })
 }
 
 const Meal = (props) => {
@@ -25,7 +25,7 @@ const Meal = (props) => {
   mealMinutes < 10 ? mealMinutes = '0' + mealMinutes : mealMinutes;
   const mealTime = `${mealHours}:${mealMinutes}`;
 
-  const startTimeSec = (new Date(props.meal.date) - (props.meal.cookTime*60*1000));
+  const startTimeSec = (new Date(props.meal.date) - (props.meal.cookTime * 60 * 1000));
   let startTimeHr = new Date(startTimeSec).getHours();
   let startTimeMin = new Date(startTimeSec).getMinutes();
   startTimeHr < 10 ? startTimeHr = '0' + startTimeHr : startTimeHr;
@@ -33,27 +33,32 @@ const Meal = (props) => {
   const startTime = `${startTimeHr}:${startTimeMin}`;
 
   return (
-    <StyledMeal style={{listStyle: 'none'}}>
+    <StyledMeal style={{ listStyle: 'none' }}>
       <StyledHead>{props.meal.recipeName}</StyledHead>
       <StyledSpan>Meal Time: {mealTime}
-      </StyledSpan><br/>
-      <StyledSpan>Cook Time: {props.meal.cookTime} min</StyledSpan><br/>
-      <StyledSpan style={{color: 'red'}}>Start At: {startTime}
-      </StyledSpan><br/>
-      <HighlightOffIcon onClick ={() => {
+      </StyledSpan><br />
+      <StyledSpan>Cook Time: {props.meal.cookTime} min</StyledSpan><br />
+      <StyledSpan style={{ color: 'red' }}>Start At: {startTime}
+      </StyledSpan><br />
+      <HighlightOffIcon style={{ marginRight: '80%', position: 'inherit'}} onClick={() => {
         deleteEntry(props.meal._id, props.updateCalendar, props.meal.userId)
       }
 
-      }/>
+      } />
     </StyledMeal>
   );
 };
 
 const StyledMeal = styled.li`
+
+border: 1px solid thistle;
+border-radius: 2px;
   text-align: center;
-  margin: 0;
-  padding: 0;
+  margin-bottom: 5px;
+  padding: 3px;
   font-size: 1em;
+  box-shadow: 2px 2px 1px .5px thistle;
+  position: relative;
 `;
 const StyledSpan = styled.span`
   text-align: center;
