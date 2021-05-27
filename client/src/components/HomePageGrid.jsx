@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, createMuiTheme} from '@material-ui/core/styles';
+import { ThemeProvider, makeStyles, createMuiTheme} from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddRecipe from './AddRecipe.jsx';
@@ -8,20 +8,24 @@ import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
 import picture from './vege-bg.png'
-// require('./helpers/pushNotifications.js');
+require('./helpers/pushNotifications.js');
 
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#d8bfd8'
+    },
+    secondary: {
+      main: '#f50057'
     }
   }
-})
+});
 
 const useStyles = makeStyles((theme) => ({
-  /*
-
-  */
+  button: {
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
+  },
   grid: {
     width: '100%',
     margin: '0px',
@@ -31,16 +35,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     textAlign: 'center',
     alignContent: 'center',
-    color: theme.palette.text.secondary,
-    border: '1px',
-    background: 'lightGrey',
-  },
-  button: {
-    padding: theme.spacing(1),
-    margin: theme.spacing(1),
-    textAlign: 'center',
-    alignContent: 'center',
-    justify: 'right',
     color: theme.palette.text.secondary,
     border: '1px',
     background: 'lightGrey',
@@ -72,14 +66,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '100%',
   },
-  button: {
-    margin: theme.spacing(1),
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    textAlign: 'center',
-    color: 'white',
-  },
 }));
 
 const HomePageGrid = (props) => {
@@ -99,7 +85,7 @@ const HomePageGrid = (props) => {
     'Saturday',
   ];
   return (
-
+    <ThemeProvider theme={theme}>
     <Grid container justify="center" spacing={2} className={classes.grid}>
       <Grid container justify="center" spacing={2}>
         <Grid item xs={12} lg={12}>
@@ -151,11 +137,8 @@ const HomePageGrid = (props) => {
         </Button>
         <Button
           variant="contained"
-          color="primary"
-          className={classes.button}
-          onClick={() => {
-            props.setSearch(true);
-          }}
+          color="secondary"
+          onClick={() => { props.setSearch(true); }}
         >
           Browse
         </Button>
@@ -166,7 +149,29 @@ const HomePageGrid = (props) => {
         />
       </Grid>
     </Grid>
+    </ThemeProvider>
   );
 };
 
 export default HomePageGrid;
+
+/*
+  button: {
+    padding: theme.spacing(1),
+    margin: theme.spacing(1),
+    textAlign: 'center',
+    alignContent: 'center',
+    justify: 'right',
+    color: theme.palette.text.secondary,
+    border: '1px',
+    background: 'lightGrey',
+  },
+  button: {
+    margin: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: 'white',
+  },
+*/
