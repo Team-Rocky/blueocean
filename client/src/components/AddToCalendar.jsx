@@ -56,9 +56,9 @@ const AddToCalendar = (props) => {
 const List = styled.div`
   border-radius: 0.5em;
   margin: 0;
-  padding: 0.2em;
   color: white;
-  width: 25%;
+  width: 55%;
+  text-align: center;
   background-color: #20b2aa;
 `
 
