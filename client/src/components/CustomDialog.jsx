@@ -18,7 +18,7 @@ const styles = (theme) => ({
     padding: '5px',
     borderRadius: '0',
     color: 'black',
-    fontFamily: 'Pattaya',
+    fontFamily: 'Architects Daughter',
     fontSize: '150%'
 
   },
