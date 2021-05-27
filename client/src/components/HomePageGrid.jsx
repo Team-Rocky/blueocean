@@ -102,7 +102,7 @@ const HomePageGrid = (props) => {
       <Grid item lg={9} xs={12}>
         <Paper className={classes.calendar}>
           {days.map((day, index) => (
-            <Day key={index} day={day} schedule={props.schedule} />
+            <Day updateCalendar={props.updateCalendar} key={index} day={day} schedule={props.schedule} />
           ))}
         </Paper>
       </Grid>
