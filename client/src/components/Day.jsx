@@ -27,6 +27,7 @@ const StyledDay = styled.div`
   text-align: left;
   margin: 0;
   padding: 0;
+  overflow-y: scroll;
 `;
 const StyledList = styled.ul`
   text-align: left;
