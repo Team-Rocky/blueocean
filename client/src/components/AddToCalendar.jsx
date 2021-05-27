@@ -111,7 +111,7 @@ const CalButton = styled.button`
   textAlign: 'center';
   alignContent: 'center';
   justify: 'right';
-  background-color: #3f51b5;
+  background-color: thistle;
   color: #fff;
   border: '1px';
   border-radius: 30px;
