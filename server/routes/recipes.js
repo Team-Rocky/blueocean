@@ -6,36 +6,41 @@ const dbFunctions = require('../controllers/helpers');
 const router = express.Router();
 
 // /api/recipes/
-router.route('/:id').get((req, res) => {
-  // get all public recipes
-  const userId = { userId: req.params.id };
-  const { filter } = req.query || 'time';
-  const limit = Number(req.query.limit) || 10;
-  dbFunctions.getAllRecipeByFilter(userId, filter, limit, (err, results) => {
-    if (err) {
-      res.json(err);
-    }
-    res.json(results);
-  });
-  // res.send('GET to /api/recipes/ successful!');
-});
-
 router
-  .route('/')
-  .post((req, res) => {
-    dbFunctions.newRecipe(req.body, (err, result) => {
-      console.log('here');
+  .route('/:id')
+  .get((req, res) => {
+    // get all public recipes
+    const userId = { userId: req.params.id };
+    const { filter } = req.query || 'time';
+    const limit = Number(req.query.limit) || 10;
+    dbFunctions.getAllRecipeByFilter(userId, filter, limit, (err, results) => {
       if (err) {
         res.json(err);
-      } else {
-        res.json(result);
       }
+      res.json(results);
     });
+    // res.send('GET to /api/recipes/ successful!');
   })
   .delete((req, res) => {
     // delete recipe from db
-    res.send('DELETE to /api/recipes/ successful!');
+    dbFunctions.delete({ _id: req.params.id }, (err, results) => {
+      if (err) {
+        res.json(err);
+      }
+      res.json(results);
+    });
   });
+
+router.route('/').post((req, res) => {
+  dbFunctions.newRecipe(req.body, (err, result) => {
+    console.log('here');
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 router.route('/recipe/:recipeId/update-pop').put((req, res) => {
   dbFunctions.incrementPopularity(req.params, (err, results) => {
@@ -60,8 +65,6 @@ router.route('/recipe/:recipeID').get((req, res) => {
 });
 
 router.route('/calendar').post((req, res) => {
-  console.log('in post to calendar! req.body: ', req.body);
-
   dbFunctions.addCalendarEntry(req.body, (err) => {
     if (err) {
       console.log('err in .post to calendar: ', err);
@@ -72,9 +75,17 @@ router.route('/calendar').post((req, res) => {
   });
 });
 
+router.route('/calendar/:id').delete((req, res) => {
+  dbFunctions.deleteCalenderRecipe({ _id: req.params.id }, (err, data) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(data);
+  });
+});
+
 router.route('/calendar/:userId').get((req, res) => {
   // gets all the calendar entries for that user
-  console.log('in calendar get by user id!: ', req.params);
   var body = { userId: req.params.userId };
   dbFunctions.getCalendarEntries(body, (err, data) => {
     if (err) {
@@ -84,6 +95,8 @@ router.route('/calendar/:userId').get((req, res) => {
     }
   });
 });
+
+router.route('/calendar/clear').delete((req, res) => {});
 
 /*
 const axios = require('axios');
