@@ -158,8 +158,7 @@ const App = (props) => {
         ) : null}
         {display === 'list' ? (
           <div>
-            <AddToCalendar schedule={schedule} />
-            <button onClick={changeDisplay}>Calendar</button>
+            <AddToCalendar schedule={schedule} changeDisplay={changeDisplay}/>
           </div>
         ) : null}
       </div>

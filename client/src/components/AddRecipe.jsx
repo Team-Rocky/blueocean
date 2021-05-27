@@ -263,6 +263,7 @@ const Preparation = styled.div`
   width: 50%;
   padding-bottom: 0px;
   font-family: 'Amatic SC', cursive;
+
 `
 const PrepTime = styled.label`
   display: flex;
@@ -273,9 +274,9 @@ const PrepTime = styled.label`
 const InputDirection = styled.input`
   width: 300px;
   height: 100px;
+  border: 1px solid black;
   background-color: #a37748;
   background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
-  border: 1px solid black;
 `
 
 const BoxStyle = styled.div `
