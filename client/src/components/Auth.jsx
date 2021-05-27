@@ -3,6 +3,7 @@ import axios from 'axios';
 import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
+import styled from 'styled-components'
 
 import {
   FirebaseAuthProvider,
@@ -20,16 +21,16 @@ const Auth = () => {
 
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1em'}}>
         {user === null ? (
-          <button
+          <ButtonStyled
             onClick={() => {
               const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
               firebase.auth().signInWithPopup(googleAuthProvider);
             }}
           >
             Sign In with Google
-          </button>
+          </ButtonStyled>
         ) : (
           /* <button
           onClick={() => {
@@ -53,13 +54,13 @@ const Auth = () => {
               width="30px"
               src={user.photoURL}
             />
-            <button
+            <ButtonStyled
               onClick={() => {
                 firebase.auth().signOut();
               }}
             >
               Sign Out
-            </button>
+            </ButtonStyled>
           </div>
         )}
         <div>
@@ -74,4 +75,14 @@ const Auth = () => {
     </FirebaseAuthProvider>
   );
 };
+
+
+const ButtonStyled = styled.button`
+  background-color: revert;
+  font-family: monospace;
+  border: 1px solid black;
+  margin-top: 0.4em;
+`
+
+
 export default Auth;
