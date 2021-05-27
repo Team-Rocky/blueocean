@@ -104,4 +104,23 @@ module.exports = {
         callback(err);
       });
   },
+  deleteRecipe(id, callback) {
+    Recipes.findOneAndDelete(id, (err, docs) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, docs);
+    });
+  },
+  deleteCalenderRecipe(id, callback) {
+    CalendarEntries.findOneAndDelete(id, (err, docs) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, docs);
+    });
+  },
+  // deleteAllCalenderRecipes(callback) {
+  //   CalendarEntries.d
+  // }
 };

@@ -3,26 +3,34 @@ import Recipe from './Recipe.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import RecipeItem from './CustomDialog.jsx';
 
-
-
 const RecipeList = (props) => {
   // const classes = useStyles()
 
-
-
   if (props.topTen !== undefined) {
-
-    return (<div>
-      {props.topTen.map((recipe, index) => {
-        return <RecipeItem userId={props.userId} recipe={recipe} key={index} />
-      })}
-    </div>)
+    return (
+      <div>
+        {props.topTen.length ? (
+          props.topTen.map((recipe, index) => {
+            return (
+              <RecipeItem
+                userId={props.userId}
+                recipe={recipe}
+                key={index}
+                updateCalendar={props.updateCalendar}
+              />
+            );
+          })
+        ) : (
+          <div>No recipes 😭</div>
+        )}
+      </div>
+    );
   } else {
     return null;
   }
 
   // return(<div>LISTTTT</div>)
-}
+};
 
 export default RecipeList;
 
@@ -39,7 +47,6 @@ export default RecipeList;
 //   })
 
 // })
-
 
 // for Recipe.jsx
 

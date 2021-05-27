@@ -9,13 +9,22 @@ const AddToCalendar = (props) => {
   };
   days.forEach((day => {
     if (ingredients[day] === undefined) {
-      ingredients[day] = [];
+      ingredients[day] = {};
       props.schedule[day].forEach((meal,index) => {
-        ingredients[day].push(meal.ingredientList);
+        // ingredients[day].push(meal.ingredientList);
+        meal.ingredientList.forEach((ingredient) => {
+          if (ingredients[day][ingredient] === undefined) {
+            ingredients[day][ingredient] = {item: '', count: 0}
+            ingredients[day][ingredient].item = ingredient;
+            ingredients[day][ingredient].count = 1;
+          } else {
+            ingredients[day][ingredient].count++
+          }
+        });
       });
     }
   }));
-
+// console.log(ingredients)
   return (
     <GroceryList>
 
@@ -33,8 +42,9 @@ const AddToCalendar = (props) => {
             <DailyList key={index} style={{listStyle: 'none'}}>
               <Day>{day}</Day>
               <ul>
-                {ingredients[day].map((ingredients, index) => ingredients.map((ingredient, index) =>
-                <li key={index}>{ingredient}</li>))}
+                {Object.keys(ingredients[day]).map((item, index)=> <li key={index}>
+                  {item} x{ingredients[day][item].count.toString()}
+                </li>)}
               </ul>
             </DailyList>
         ))}

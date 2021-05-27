@@ -17,21 +17,18 @@ const App = (props) => {
   const [schedule, setSchedule] = useState([]);
   const [searchPage, setSearch] = useState(false);
   const [detailPage, setDetail] = useState(false);
-  const [currentRecipe, setRecipe] = useState({})
+  const [currentRecipe, setRecipe] = useState({});
 
   const goToDetailsPage = (recipe) => {
-    setDetail(true)
-    setSearch(false)
-    setRecipe(recipe)
+    setDetail(true);
+    setSearch(false);
+    setRecipe(recipe);
     return (
       <div>
-        <RecipeDetailsGrid
-          recipe={currentRecipe}
-        />
+        <RecipeDetailsGrid recipe={currentRecipe} />
       </div>
-    )
-
-  }
+    );
+  };
 
   const [display, setDisplay] = useState('home');
   const [userInfo, setUserInfo] = useState({});
@@ -44,12 +41,67 @@ const App = (props) => {
     5: 'Friday',
     6: 'Saturday',
   };
-  // const [week, setWeek] = useState({})
-  const [topTen, setTopTen] = useState([])
-  // To use auth for child components
-  // user.displayName = name
-  // user.photoURL = profile pic
-  // user.email = user email
+
+  const [topTen, setTopTen] = useState([]);
+
+  const getPreviousSunday = () => {
+    var date = new Date();
+    var day = date.getDay();
+    var prevSunday = new Date();
+    if (date.getDay() === 0) {
+      prevSunday.setDate(date.getDate() - 8);
+    }
+    else {
+      prevSunday.setDate(date.getDate() - day - 1);
+    }
+    return prevSunday.toLocaleString();
+  };
+
+  const updateCalendar = (id) => {
+    var sunday = getPreviousSunday()
+    var today = new Date()
+    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toLocaleString()
+
+
+    if (id !== undefined) {
+      getUserCalendar(id).then((data) => {
+        const mappedToDay = {
+          Sunday: [],
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+          Saturday: [],
+        };
+        data.forEach((meal) => {
+          const date = new Date(meal.date).getDay();
+          const day = days[date];
+          if (day[date] !== undefined) {
+            if (new Date(meal.date) > new Date(sunday)
+                 && new Date(meal.date) < new Date(saturday)) {
+              console.log('its the correct week')
+              mappedToDay[day].push(meal);
+            }
+          }
+        });
+        setSchedule(mappedToDay);
+      });
+    }
+  };
+
+  const getBoard = (id, val) => {
+    val = val || 'time';
+    axios
+      .get(`/api/recipes/${id}?filter=${val}`)
+      .then((response) => {
+        console.log('got leaderboard data: ', response.data);
+        setTopTen(response.data);
+      })
+      .catch((err) => {
+        console.log('err in axios get recipe leaderboarda');
+      });
+  };
 
   useEffect(() => {
     const newUser = {
@@ -61,10 +113,10 @@ const App = (props) => {
 
     user &&
       axios
+        // .get(`/api/users/girlfiery@chefslist.com/userInfo`)
         .get(`/api/users/${user.email}/userInfo`)
         .then((res) => {
           if (!res.data.length) {
-            console.log("in user doesn't exist");
             axios.post('/api/users', newUser).then((response) => {
               console.log('NEW USER ADDED TO DATABASE');
               setUserInfo(response.data[0]);
@@ -76,60 +128,37 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          axios.get(`/api/recipes/${userInfo._id}`)
-            .then((response) => {
-              console.log('got leaderboard data: ', response.data)
-              setTopTen(response.data)
-            })
-            .catch((err) => {
-              console.log('err in axios get recipe leaderboarda')
-            })
-          if (user !== null) {
-            getUserCalendar(userInfo._id).then((data) => {
-              const mappedToDay = {
-                Sunday: [],
-                Monday: [],
-                Tuesday: [],
-                Wednesday: [],
-                Thursday: [],
-                Friday: [],
-                Saturday: [],
-              };
-              data.forEach((meal) => {
-                const date = new Date(meal.date).getDay();
-                const day = days[date];
-                console.log(day, typeof(day), date);
-                mappedToDay[day].push(meal);
-              });
-              setSchedule(mappedToDay);
-            });
-          }
+          getBoard(userInfo._id)
+          updateCalendar(userInfo._id);
         });
   }, [user]);
-  console.log('current user: ', userInfo._id)
+
   const changeDisplay = () => {
     display === 'home' ? setDisplay('list') : setDisplay('home');
   };
   if (!searchPage && !detailPage) {
     return (
       <div>
-        {display === 'home' ?
+        {display === 'home' ? (
           <div>
             <HomePageGrid
+              getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
-              topTen={topTen} schedule={schedule} userId={userInfo._id}
+              topTen={topTen}
+              userId={userInfo._id}
+              updateCalendar={updateCalendar}
+              changeDisplay={changeDisplay}
             />
-            <button onClick={changeDisplay}>Shopping List</button>
           </div>
-          : null}
-        {display === 'list' ?
+        ) : null}
+        {display === 'list' ? (
           <div>
-            <button onClick={changeDisplay}>Calendar</button>
             <AddToCalendar schedule={schedule} />
+            <button onClick={changeDisplay}>Calendar</button>
           </div>
-          : null}
+        ) : null}
       </div>
     );
   } else if (searchPage) {
@@ -139,9 +168,10 @@ const App = (props) => {
           searchPage={searchPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
+          user={user}
         />
       </div>
-    )
+    );
   } else if (detailPage) {
     return (
       <div>
@@ -150,9 +180,10 @@ const App = (props) => {
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}
+          user={user}
         />
       </div>
-    )
+    );
   }
 };
 

@@ -99,12 +99,11 @@ const AddRecipe = (props) => {
       totalTime: Number(TotalTime),
       yield: Number(Yield),
       photo: [],
-      date_created: Date.now()
-    }
+      date_created: Date.now(),
+    };
 
     axios.post('/api/recipes', result)
       .then(() => {
-        console.log(result)
         setSubmitted(true);
       })
       .catch((error) => {
@@ -150,7 +149,10 @@ const AddRecipe = (props) => {
                 <Exit onClick={handleClose}>+</Exit>
                 <SubmittedForm/>
                 </FormStyle>:
-                <FormStyle autoComplete="off" style={modalStyle} className={classes.paper} onSubmit={handleSubmit}>
+                <FormStyle autoComplete="off" style={modalStyle} className={classes.paper} onSubmit={() => {
+                  handleSubmit()
+                  props.getBoard()
+                }}>
                   <Exit onClick={handleClose}>+</Exit>
                   <RecipeStyle>
                   <RecipeLabel>Recipe</RecipeLabel>
