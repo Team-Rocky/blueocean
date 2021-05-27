@@ -92,6 +92,8 @@ const DailyList = styled.li`
   border: 1px solid black;
   margin: 1em;
   height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border-radius: 0.3em;
   border-style: none;
 `
