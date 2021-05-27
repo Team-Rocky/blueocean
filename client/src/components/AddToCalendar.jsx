@@ -84,7 +84,6 @@ const Day = styled.div`
   text-align: center;
   padding-top: 0.5em;
   color: #dc911e;
-
 `
 
 const DailyList = styled.li`
