@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SearchBar({ value, setValue, inputValue, setInputValue, recipeNames, getRecipeNames, setRecipes, recipes }) {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <Autocomplete
@@ -46,7 +45,7 @@ export default function SearchBar({ value, setValue, inputValue, setInputValue, 
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search" variant="outlined" />}
       />
-      <Button variant="contained" size="medium">
+      <Button variant="outlined" color="primary" size="medium">
         Search
         </Button>
     </div>

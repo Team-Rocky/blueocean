@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import AddRecipe from './AddRecipe.jsx'
+import AddRecipe from './AddRecipe.jsx';
 import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     background: 'lightGrey',
     height: '450px',
-    overflow: 'scroll'
+    overflow: 'scroll',
   },
   header: {
     display: 'flex',
@@ -61,13 +61,31 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '100%',
   },
+  button: {
+    margin: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
 }));
 
 const HomePageGrid = (props) => {
+  const handleFilterChange = (e) => {
+    props.getBoard(props.userId, e.target.value);
+  };
   const classes = useStyles();
   const [clicked, setClicked] = useState(false);
 
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   return (
     <Grid container justify="center" spacing={2} className={classes.grid}>
       <Grid container justify="center" spacing={2}>
@@ -84,18 +102,55 @@ const HomePageGrid = (props) => {
       <Grid item lg={9} xs={12}>
         <Paper className={classes.calendar}>
           {days.map((day, index) => (
-            <Day key={index} day={day} schedule={props.schedule} />
+            <Day updateCalendar={props.updateCalendar} key={index} day={day} schedule={props.schedule} />
           ))}
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}><RecipeList topTen={props.topTen} userId={props.userId} updateCalendar={props.updateCalendar}/></Paper>
+        <Paper className={classes.leaderboard}>
+          <span>Filter by: </span>
+          <select onChange={handleFilterChange} name="filter">
+            <option value="time">Recent</option>
+            <option value="popular">Popularity</option>
+            <option value="myRecipes">My Recipes</option>
+          </select>
+          <RecipeList
+            topTen={props.topTen}
+            userId={props.userId}
+            updateCalendar={props.updateCalendar}
+          />
+        </Paper>
       </Grid>
-      <Grid container justify='flex-end' spacing={2} className={classes.grid}>
-        <Grid item lg={3}>
-          <Paper><AddRecipe getBoard={props.getBoard} userId={props.userId} /></Paper>
-          <Button className={classes.button} onClick={() => { props.setSearch(true) }}>Browse</Button>
-        </Grid>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+        spacing={2}
+        className={classes.button}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={props.changeDisplay}
+        >
+          Shopping List
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          onClick={() => {
+            props.setSearch(true);
+          }}
+        >
+          Browse
+        </Button>
+        <AddRecipe
+          getBoard={props.getBoard}
+          userId={props.userId}
+          userId={props.userId}
+        />
       </Grid>
     </Grid>
   );

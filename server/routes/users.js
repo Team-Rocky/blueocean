@@ -15,6 +15,7 @@ router.route('/:email').get((req, res) => {
     }
     // eslint-disable-next-line no-underscore-dangle
     const { filter } = req.query || 'time';
+    console.log();
     const limit = Number(req.query.limit) || 10;
     if (!result.length) {
       res.send('Does not Exist');
