@@ -90,6 +90,7 @@ const Day = styled.div`
 const DailyList = styled.li`
   background-color: white;
   border: 1px solid black;
+  overflow: scroll;
   margin: 1em;
   height: 300px;
   overflow-y: scroll;
