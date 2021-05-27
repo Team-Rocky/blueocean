@@ -80,15 +80,9 @@ const ScheduleMeal = (props) => {
     let meal2 = meal;
     meal2.date = mealTime;
     ax.post('/api/recipes/calendar/', meal2)
-      .then(() => {
-        props.updateCalendar(props.userId);
-      })
-      .then(() => {
-        handleClose();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      .then(() => { props.updateCalendar(props.userId); })
+      .then(() => { handleClose(); })
+      .catch((err) => { console.error(err); });
   };
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
