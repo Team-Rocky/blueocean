@@ -76,7 +76,7 @@ router.route('/calendar').post((req, res) => {
 });
 
 router.route('/calendar/:id').delete((req, res) => {
-  db.deleteCalenderRecipe({ _id: req.params.id }, (err, data) => {
+  dbFunctions.deleteCalenderRecipe({ _id: req.params.id }, (err, data) => {
     if (err) {
       res.json(err);
     }

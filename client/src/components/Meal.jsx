@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import axios from 'axios';
 
-const deleteEntry = (id) => {
+const deleteEntry = (id, callback, userId) => {
 console.log('this is the recipe id! ', id)
   axios.delete(`api/recipes/calendar/${id}`)
-  .then(() => {
+  .then((response) => {
     // rerender
-    console.log('deleted!')
-    props.updateCalendar()
+    console.log('this is callbacj:', callback)
+
+   callback(userId)
 
   })
   .catch((err) => {
@@ -37,7 +38,7 @@ const Meal = (props) => {
       <StyledSpan style={{color: 'red'}}>Start At: {startTime}
       </StyledSpan><br/>
       <HighlightOffIcon onClick ={() => {
-        deleteEntry(props.meal.recipeId)
+        deleteEntry(props.meal._id, props.updateCalendar, props.meal.userId)
       }
 
       }/>
