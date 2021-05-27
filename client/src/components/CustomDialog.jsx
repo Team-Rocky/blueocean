@@ -7,6 +7,7 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import { Paper } from '@material-ui/core';
+import styled from 'styled-components';
 import axios from 'axios';
 
 import ScheduleMeal from './ScheduleMeal.jsx';
