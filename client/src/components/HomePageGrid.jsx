@@ -10,13 +10,6 @@ import myPic from './../assets/set-and-forget.svg';
 import picture from './vege-bg.png'
 // require('./helpers/pushNotifications.js');
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#d8bfd8'
-    }
-  }
-})
 
 const useStyles = makeStyles((theme) => ({
   /*
