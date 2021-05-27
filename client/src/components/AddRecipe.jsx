@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: '#a37748',
   },
   paper: {
       position: 'absolute',
