@@ -74,13 +74,13 @@ const App = (props) => {
   const getBoard = (id, val) => {
     val = val || 'time'
     axios.get(`/api/recipes/${id}?filter=${val}`)
-    .then((response) => {
-      console.log('got leaderboard data: ', response.data)
-      setTopTen(response.data)
-    })
-    .catch((err) => {
-      console.log('err in axios get recipe leaderboarda')
-    })
+      .then((response) => {
+        console.log('got leaderboard data: ', response.data)
+        setTopTen(response.data)
+      })
+      .catch((err) => {
+        console.log('err in axios get recipe leaderboarda')
+      })
   }
 
   useEffect(() => {
@@ -125,7 +125,7 @@ const App = (props) => {
               data.forEach((meal) => {
                 const date = new Date(meal.date).getDay();
                 const day = days[date];
-                console.log(day, typeof(day), date);
+                console.log(day, typeof (day), date);
                 mappedToDay[day].push(meal);
               });
               setSchedule(mappedToDay);
@@ -145,7 +145,7 @@ const App = (props) => {
         {display === 'home' ?
           <div>
             <HomePageGrid
-            getBoard={getBoard}
+              getBoard={getBoard}
               schedule={schedule}
               searchPage={searchPage}
               setSearch={setSearch}
@@ -170,9 +170,12 @@ const App = (props) => {
       <div>
         <RecipeSearchGrid
           searchPage={searchPage}
+          detailPage={detailPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
           user={user}
+          userId={userInfo._id}
+          updateCalendar={updateCalendar}
         />
       </div>
     )
@@ -180,7 +183,10 @@ const App = (props) => {
     return (
       <div>
         <RecipeDetailsGrid
+          searchPage={searchPage}
           detailPage={detailPage}
+          userId={userInfo._id}
+          updateCalendar={updateCalendar}
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}

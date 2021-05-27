@@ -41,16 +41,16 @@ const ScheduleMeal = (props) => {
     recipeName: props.recipe.name,
     ingredientList: props.recipe.ingredientLines,
   };
-/*
-  let recipe2 = {
-    userId: 'id_43598385',
-    recipeId: String,
-    ingredientList: ['5 tomatoes', '2 hands of bananas', '1 carrot, minced', '3 gerbils'],
-    cookTime: 90,
-    yield: 4,
-    photo: ['https://files.catbox.moe/emshh9.jpg'],
-  };
-*/
+  /*
+    let recipe2 = {
+      userId: 'id_43598385',
+      recipeId: String,
+      ingredientList: ['5 tomatoes', '2 hands of bananas', '1 carrot, minced', '3 gerbils'],
+      cookTime: 90,
+      yield: 4,
+      photo: ['https://files.catbox.moe/emshh9.jpg'],
+    };
+  */
   /*
   userId: String,
   userName: String,
@@ -88,11 +88,11 @@ const ScheduleMeal = (props) => {
 
   const handleSchedule = (e) => {
 
-    let year = date_time.date.slice(0,4);
-    let month = date_time.date.slice(5,7);
+    let year = date_time.date.slice(0, 4);
+    let month = date_time.date.slice(5, 7);
     month = (Number(month) - 1).toString();
     let day = date_time.date.slice(8);
-    let hour = date_time.time.slice(0,2);
+    let hour = date_time.time.slice(0, 2);
     let minute = date_time.time.slice(3);
     let mealTime = new Date(year, month, day, hour, minute);
     console.log(mealTime)
@@ -167,7 +167,9 @@ const ScheduleMeal = (props) => {
                 color="primary"
                 onClick={() => {
                   handleSchedule()
-                  props.handleClose()
+                  if (!props.detailPage && !props.searchPage) {
+                    props.handleClose()
+                  }
                 }}
               >
                 schedule
