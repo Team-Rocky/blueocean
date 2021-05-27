@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import firebase from 'firebase';
+import { Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import 'firebase/auth';
 import 'firebase/firestore';
 import styled from 'styled-components'
@@ -16,8 +19,21 @@ import config from '../../../config.js';
 firebase.initializeApp(config);
 const auth = firebase.auth();
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: 'white',
+  },
+}));
+
+
 const Auth = () => {
   const [user] = useAuthState(auth);
+  const classes = useStyles();
 
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
