@@ -8,6 +8,7 @@ import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
 import picture from './vege-bg.png'
+import Select from '@material-ui/core/Select';
 // require('./helpers/pushNotifications.js');
 
 const theme = createMuiTheme({
@@ -125,11 +126,11 @@ const HomePageGrid = (props) => {
         <Paper className={classes.leaderboard} >
           <span><h3 style={{fontFamily: 'Pattaya'}}>Recipes:</h3></span>
           <span>Filter by: </span>
-          <select onChange={handleFilterChange} name="filter">
+          <Select onChange={handleFilterChange} name="filter">
             <option value="time">Recent</option>
             <option value="popular">Popularity</option>
             <option value="myRecipes">My Recipes</option>
-          </select>
+          </Select>
           <RecipeList
             topTen={props.topTen}
             userId={props.userId}

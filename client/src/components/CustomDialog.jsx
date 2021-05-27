@@ -34,8 +34,6 @@ const styles = (theme) => ({
   }
 });
 
-
-
 const DialogTitle = withStyles(styles)((props) => {
   const cl = styles()
   const { children, classes, onClose, ...other } = props;
@@ -67,27 +65,13 @@ export default function RecipeItem(props) {
   const cl = styles()
   const [open, setOpen] = React.useState(false);
 
-
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const postCalendarEntry = (obj) => {
-
-  //   var entry = {
-  //     userId: obj.userId,
-  //     recipeId: obj._id,
-  //     date: new Date() + 3,
-  //     cookTime: obj.totalTime,
-  //     ingredientList: obj.ingredientLines,
-  //     recipeName: obj.name
-  //   }
-  //   console.log('this is entry: ', entry)
-  //   // axios.post(axios.post('/api/recipes/calendar', entry))
-  // }
 
   return (
     <div>
@@ -100,12 +84,6 @@ export default function RecipeItem(props) {
         </DialogTitle>
         <img src={props.recipe.photo[0] ? props.recipe.photo[0] : 'https://pbs.twimg.com/media/D-DX-LDXkAEbaML.png'} />
         <DialogContent style={cl.box} dividers>
-
-          {/* <Typography gutterBottom>
-            {props.recipe.ingredientLines.map((line, index) => {
-              return (<div key={index}>{line}</div>)
-            })}
-          </Typography> */}
           <div style={{fontFamily: 'Cambria'}}>
             {props.recipe.ingredientLines.map((line, index) => {
               return (<div key={index}>{line}</div>)
@@ -114,11 +92,6 @@ export default function RecipeItem(props) {
           <Typography style={{fontFamily: 'Architects Daughter'}} gutterBottom>
             {props.recipe.description}
           </Typography>
-          {/* <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-            scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-            auctor fringilla.
-          </Typography> */}
         </DialogContent>
         <DialogActions style={cl.box} >
           <ScheduleMeal handleClose={handleClose} recipe={props.recipe} userId={props.userId} updateCalendar={props.updateCalendar}/>
