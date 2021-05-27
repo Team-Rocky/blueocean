@@ -104,13 +104,12 @@ const AddRecipe = (props) => {
 
     axios.post('/api/recipes', result)
       .then(() => {
+        props.getBoard()
         setSubmitted(true);
       })
       .catch((error) => {
         console.log(error)
       })
-
-
     event.preventDefault();
   }
 
@@ -149,9 +148,8 @@ const AddRecipe = (props) => {
                 <Exit onClick={handleClose}>+</Exit>
                 <SubmittedForm/>
                 </FormStyle>:
-                <FormStyle autoComplete="off" style={modalStyle} className={classes.paper} onSubmit={() => {
-                  handleSubmit()
-                  props.getBoard()
+                <FormStyle autoComplete="off" style={modalStyle} className={classes.paper} onSubmit={(event) => {
+                  handleSubmit(event)
                 }}>
                   <Exit onClick={handleClose}>+</Exit>
                   <RecipeStyle>
