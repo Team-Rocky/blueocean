@@ -58,7 +58,7 @@ const App = (props) => {
 
   const updateCalendar = (id) => {
     var sunday = new Date(new Date(getPreviousSunday()).setHours(0, 0, 0, 0)).toLocaleString()
-    console.log('sunday: ', sunday)
+
     var currentDate = new Date()
     ///var today = currentDate.setHours(0, 0, 0, 0)
     var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toLocaleString()
