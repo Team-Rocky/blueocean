@@ -2,7 +2,11 @@ import React from 'react';
 import Meal from './Meal.jsx';
 import styled from 'styled-components';
 
+
+
+
 const Day = (props) => {
+
   let meals = props.schedule[props.day];
   if (meals !== undefined) {
     meals = meals.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -13,9 +17,15 @@ const Day = (props) => {
       {props.schedule[props.day] === undefined
         ? null
         : <StyledList>
-        {meals.map((meal, index)=> <Meal key={index} meal={meal}/>)}
+        {meals.map((meal, index)=>
+        <div key = {index}>
+      <Meal updateCalendar={props.updateCalendar} key={index} meal={meal}/>
+
+      </div>
+      )}
       </StyledList>
       }
+
     </StyledDay>
   )
 };
