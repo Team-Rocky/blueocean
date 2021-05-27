@@ -3,7 +3,6 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';

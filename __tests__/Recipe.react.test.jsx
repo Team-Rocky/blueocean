@@ -7,4 +7,6 @@ test('component does something when clicked', () => {
   let recipeSnap = testRecipe.toJSON()
   expect(recipeSnap).toMatchSnapshot();
 
+  recipeSnap.onClick()
+
 })
