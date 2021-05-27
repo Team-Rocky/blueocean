@@ -90,15 +90,15 @@ export default function RecipeItem(props) {
   // }
 
   return (
-    <div >
+    <div>
       <Button variant="outlined" fullWidth={true} style={cl.item} onClick={handleClickOpen}>
-        {props.recipe.name}
+        {props.searchPage === true ? 'More Info' : props.recipe.name}
       </Button>
       <Dialog  onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle style={cl.box} id="customized-dialog-title" onClose={handleClose}>
           {props.recipe.name}
         </DialogTitle>
-        <img src={props.recipe.photo[0]} />
+        <img src={props.recipe.photo[0] ? props.recipe.photo[0] : 'https://pbs.twimg.com/media/D-DX-LDXkAEbaML.png'} />
         <DialogContent style={cl.box} dividers>
 
           {/* <Typography gutterBottom>

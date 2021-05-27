@@ -45,9 +45,6 @@ export default function SearchBar({ value, setValue, inputValue, setInputValue, 
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search" variant="outlined" />}
       />
-      <Button variant="outlined" color="primary" size="medium">
-        Search
-        </Button>
     </div>
   );
 }
