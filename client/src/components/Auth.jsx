@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import firebase from 'firebase';
+import { Grid, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import 'firebase/auth';
 import 'firebase/firestore';
 
@@ -15,21 +18,36 @@ import config from '../../../config.js';
 firebase.initializeApp(config);
 const auth = firebase.auth();
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    textAlign: 'center',
+    color: 'white',
+  },
+}));
+
+
 const Auth = () => {
   const [user] = useAuthState(auth);
+  const classes = useStyles();
 
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         {user === null ? (
-          <button
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => {
               const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
               firebase.auth().signInWithPopup(googleAuthProvider);
             }}
           >
             Sign In with Google
-          </button>
+          </Button>
         ) : (
           /* <button
           onClick={() => {
@@ -53,13 +71,15 @@ const Auth = () => {
               width="30px"
               src={user.photoURL}
             />
-            <button
+            <Button
+              variant="contained"
+              color="primary"
               onClick={() => {
                 firebase.auth().signOut();
               }}
             >
               Sign Out
-            </button>
+            </Button>
           </div>
         )}
         <div>

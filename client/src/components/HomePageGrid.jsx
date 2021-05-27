@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     border: '1px',
     background: 'lightGrey',
   },
-  button: {
+  button1: {
     padding: theme.spacing(1),
     margin: theme.spacing(1),
     textAlign: 'center',
