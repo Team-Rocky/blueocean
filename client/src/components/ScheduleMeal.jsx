@@ -70,11 +70,12 @@ const ScheduleMeal = (props) => {
   };
 
   const handleSchedule = (e) => {
-    let year = date_time.date.slice(0,4);
-    let month = date_time.date.slice(5,7);
+
+    let year = date_time.date.slice(0, 4);
+    let month = date_time.date.slice(5, 7);
     month = (Number(month) - 1).toString();
     let day = date_time.date.slice(8);
-    let hour = date_time.time.slice(0,2);
+    let hour = date_time.time.slice(0, 2);
     let minute = date_time.time.slice(3);
     let mealTime = new Date(year, month, day, hour, minute);
     let meal2 = meal;
@@ -139,7 +140,9 @@ const ScheduleMeal = (props) => {
                 color="primary"
                 onClick={() => {
                   handleSchedule()
-                  props.handleClose()
+                  if (!props.detailPage && !props.searchPage) {
+                    props.handleClose()
+                  }
                 }}
               >
                 schedule

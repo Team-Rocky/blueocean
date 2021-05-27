@@ -45,9 +45,9 @@ const App = (props) => {
   const [topTen, setTopTen] = useState([]);
 
   const getPreviousSunday = () => {
-    var date = new Date();
-    var day = date.getDay();
-    var prevSunday = new Date();
+    const date = new Date();
+    const day = date.getDay();
+    let prevSunday = new Date();
     if (date.getDay() === 0) {
       prevSunday.setDate(date.getDate() - 8);
     }
@@ -102,7 +102,7 @@ const App = (props) => {
         setTopTen(response.data);
       })
       .catch((err) => {
-        console.log('err in axios get recipe leaderboarda');
+        console.log('err in axios get recipe leaderboards');
       });
   };
 
@@ -113,6 +113,7 @@ const App = (props) => {
       friends: [],
       date: new Date(),
     };
+    !user && setSchedule([])
 
     user &&
       axios
@@ -169,9 +170,12 @@ const App = (props) => {
       <div>
         <RecipeSearchGrid
           searchPage={searchPage}
+          detailPage={detailPage}
           setSearch={setSearch}
           goToDetailsPage={goToDetailsPage}
           user={user}
+          userId={userInfo._id}
+          updateCalendar={updateCalendar}
         />
       </div>
     );
@@ -179,7 +183,10 @@ const App = (props) => {
     return (
       <div>
         <RecipeDetailsGrid
+          searchPage={searchPage}
           detailPage={detailPage}
+          userId={userInfo._id}
+          updateCalendar={updateCalendar}
           setDetail={setDetail}
           setSearch={setSearch}
           recipe={currentRecipe}

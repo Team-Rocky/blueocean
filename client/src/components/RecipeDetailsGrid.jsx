@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import ScheduleMeal from './ScheduleMeal.jsx';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +73,14 @@ const RecipeDetailsGrid = (props) => {
         )}
       </Grid>
       <Grid item className={classes.button} lg={5} xs={12}>
-        <Button variant="outlined" color="primary" style={{ margin: '5px' }}>Schedule Meal</Button>
+      <ScheduleMeal
+          recipe={props.recipe}
+          user={props.user}
+          userId={props.userId}
+          updateCalendar={props.updateCalendar}
+          searchPage={props.searchPage}
+          detailPage={props.detailPage}
+          />
         <Button variant="outlined" color="primary" onClick={() => { props.setSearch(true); props.setDetail(false)}}>Back</Button>
       </Grid>
     </Grid >
