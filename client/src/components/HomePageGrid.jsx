@@ -7,6 +7,7 @@ import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
+import axios from 'axios';
 // require('./helpers/pushNotifications.js');
 
 const useStyles = makeStyles((theme) => ({
@@ -77,6 +78,12 @@ const HomePageGrid = (props) => {
   const classes = useStyles();
   const [clicked, setClicked] = useState(false);
 
+  const clearCalenderAndRefresh = () => {
+    axios.delete(`/api/recipes/calendar/clear/${props.userId}`).then(() => {
+      props.updateCalendar(props.userId);
+    });
+  };
+
   const days = [
     'Sunday',
     'Monday',
@@ -102,7 +109,12 @@ const HomePageGrid = (props) => {
       <Grid item lg={9} xs={12}>
         <Paper className={classes.calendar}>
           {days.map((day, index) => (
-            <Day updateCalendar={props.updateCalendar} key={index} day={day} schedule={props.schedule} />
+            <Day
+              updateCalendar={props.updateCalendar}
+              key={index}
+              day={day}
+              schedule={props.schedule}
+            />
           ))}
         </Paper>
       </Grid>
@@ -135,6 +147,14 @@ const HomePageGrid = (props) => {
           onClick={props.changeDisplay}
         >
           Shopping List
+        </Button>
+        <Button
+          onClick={clearCalenderAndRefresh}
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
+          Clear Calender
         </Button>
         <Button
           variant="contained"
