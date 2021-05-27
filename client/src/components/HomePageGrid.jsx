@@ -47,10 +47,11 @@ const useStyles = makeStyles((theme) => ({
     border: 'solid black',
   },
   leaderboard: {
-    padding: theme.spacing(2),
+    padding: '1px',
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    background: 'lightGrey',
+    backgroundColor: '#a37748',
+    backgroundImage: 'url("https://www.transparenttextures.com/patterns/cardboard.png")',
     height: '450px',
     overflow: 'scroll',
   },

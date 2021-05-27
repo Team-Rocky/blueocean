@@ -3,12 +3,18 @@ import Recipe from './Recipe.jsx';
 import { makeStyles } from '@material-ui/core/styles';
 import RecipeItem from './CustomDialog.jsx';
 
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    margin: '10px'
+  }
+}));
+
 const RecipeList = (props) => {
-  // const classes = useStyles()
+   const classes = useStyles()
 
   if (props.topTen !== undefined) {
     return (
-      <div>
+      <div className={classes.grid}>
         {props.topTen.length ? (
           props.topTen.map((recipe, index) => {
             return (

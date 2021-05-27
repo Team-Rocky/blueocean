@@ -19,7 +19,6 @@ console.log('this is the recipe id! ', id)
 }
 
 const Meal = (props) => {
-  console.log('in meal, this is props: ', props)
   let mealMinutes = new Date(props.meal.date).getMinutes();
   let mealHours = new Date(props.meal.date).getHours();
   mealHours < 10 ? mealHours = '0' + mealHours : mealHours;
