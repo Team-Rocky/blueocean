@@ -54,15 +54,15 @@ const App = (props) => {
     else {
       prevSunday.setDate(date.getDate() - day - 1);
     }
-    return prevSunday.toUTCString();
+    return prevSunday.toLocaleString();
   };
 
   const updateCalendar = (id) => {
     var sunday = getPreviousSunday()
     var today = new Date()
-    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toUTCString()
+    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toLocaleString()
 
-    // if (new Date(monday) < new Date(today) && new Date(sunday) > new Date(today))
+
     if (id !== undefined) {
       getUserCalendar(id).then((data) => {
         const mappedToDay = {
