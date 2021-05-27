@@ -37,6 +37,7 @@ const DayStyle = styled.h2`
 `
 
 const StyledDay = styled.div`
+
   border: 1px solid black;
   overflow: hidden;
   background-color: rgba(255,255,255, 0.97);
@@ -47,7 +48,7 @@ const StyledDay = styled.div`
 `;
 const StyledList = styled.ul`
   text-align: center;
-  margin: 0;
+  margin: 5px;
   padding: 0;
 `;
 export default Day;

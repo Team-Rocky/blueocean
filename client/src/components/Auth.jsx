@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import 'firebase/auth';
 import 'firebase/firestore';
+import styled from 'styled-components'
 
 import {
   FirebaseAuthProvider,
@@ -36,18 +37,16 @@ const Auth = () => {
 
   return (
     <FirebaseAuthProvider {...config} firebase={firebase}>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1em'}}>
         {user === null ? (
-          <Button
-            variant="contained"
-            color="primary"
+          <ButtonStyled
             onClick={() => {
               const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
               firebase.auth().signInWithPopup(googleAuthProvider);
             }}
           >
             Sign In with Google
-          </Button>
+          </ButtonStyled>
         ) : (
           /* <button
           onClick={() => {
@@ -71,15 +70,13 @@ const Auth = () => {
               width="30px"
               src={user.photoURL}
             />
-            <Button
-              variant="contained"
-              color="primary"
+            <ButtonStyled
               onClick={() => {
                 firebase.auth().signOut();
               }}
             >
               Sign Out
-            </Button>
+            </ButtonStyled>
           </div>
         )}
         <div>
@@ -94,4 +91,14 @@ const Auth = () => {
     </FirebaseAuthProvider>
   );
 };
+
+
+const ButtonStyled = styled.button`
+  background-color: revert;
+  font-family: monospace;
+  border: 1px solid black;
+  margin-top: 0.4em;
+`
+
+
 export default Auth;
