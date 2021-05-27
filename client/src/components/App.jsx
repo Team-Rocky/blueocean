@@ -45,9 +45,9 @@ const App = (props) => {
   const [topTen, setTopTen] = useState([]);
 
   const getPreviousSunday = () => {
-    var date = new Date();
-    var day = date.getDay();
-    var prevSunday = new Date();
+    const date = new Date();
+    const day = date.getDay();
+    let prevSunday = new Date();
     if (date.getDay() === 0) {
       prevSunday.setDate(date.getDate() - 8);
     }
@@ -113,6 +113,7 @@ const App = (props) => {
       friends: [],
       date: new Date(),
     };
+    !user && setSchedule([])
 
     user &&
       axios
