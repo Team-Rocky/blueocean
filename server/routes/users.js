@@ -12,8 +12,9 @@ const dbFunctions = require('../controllers/helpers');
 router.route('/:email').get((req, res) => {
   // will return all the public recipes
   const email = req.params.email;
+  const filter = req.query.filter || 'time';
   try {
-    client.get(email, async (error, meals) => {
+    client.get(filter, async (error, meals) => {
       if (meals) {
         res.json(JSON.parse(meals));
       } else {
@@ -22,7 +23,6 @@ router.route('/:email').get((req, res) => {
             res.json(err);
           }
           // eslint-disable-next-line no-underscore-dangle
-          const { filter } = req.query || 'time';
           console.log();
           const limit = Number(req.query.limit) || 10;
           if (!result.length) {
@@ -37,7 +37,7 @@ router.route('/:email').get((req, res) => {
               if (resErr) {
                 res.json(resErr);
               }
-              client.setex(email, 1440, JSON.stringify(recipeResults));
+              client.setex(filter, 1440, JSON.stringify(recipeResults));
               res.json(recipeResults);
             }
           );
