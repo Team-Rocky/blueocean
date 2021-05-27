@@ -13,7 +13,7 @@ const Day = (props) => {
   }
   return (
     <StyledDay className="day">
-      <h2 style={{borderBottom: 'solid black'}}>{props.day}</h2>
+      <DayStyle style={{borderBottom: 'solid black'}}>{props.day}</DayStyle>
       {props.schedule[props.day] === undefined
         ? null
         : <StyledList>
@@ -30,17 +30,23 @@ const Day = (props) => {
   )
 };
 
+
+const DayStyle = styled.h2`
+  text-align: center;
+  color: darkorchid;
+`
+
 const StyledDay = styled.div`
-  border: solid black;
+  border: 1px solid black;
   overflow: hidden;
-  background-color: white;
+  background-color: rgba(255,255,255, 0.97);
   text-align: left;
-  margin: 0;
+  margin: 0.1em;
   padding: 0;
   overflow-y: scroll;
 `;
 const StyledList = styled.ul`
-  text-align: left;
+  text-align: center;
   margin: 0;
   padding: 0;
 `;
