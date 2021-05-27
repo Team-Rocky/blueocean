@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
       position: 'absolute',
       width: 600,
-      backgroundColor: theme.palette.background.paper,
+      'background-color':' #a37748',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
   },
@@ -216,6 +216,8 @@ const IngredientLabel = styled.div`
   display: flex;
   font-family: 'Amatic SC', cursive;
   font-size: 20px;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 
 const Exit = styled.div`
@@ -224,6 +226,8 @@ const Exit = styled.div`
   padding: 0;
   transform: rotate(45deg);
   cursor: pointer;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 
 const Ingredientpic = styled.img`
@@ -237,15 +241,21 @@ const RecipeStyle = styled.div`
   font-family: 'Pattaya', sans-serif;
   font-size: 20px;
   align-items: center;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 
 const RecipeLabel = styled.h2`
   padding-right: 1em;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 const Ingredients = styled.div`
   border: 1px solid black;
   width: 50%;
   padding: 1em;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 
 const InputStyle = styled.input`
@@ -264,12 +274,16 @@ const Preparation = styled.div`
   width: 50%;
   padding-bottom: 0px;
   font-family: 'Amatic SC', cursive;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 const PrepTime = styled.label`
   display: flex;
   width: 300px;
   margin-right: 1em;
   margin-bottom: 1em;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 const InputDirection = styled.input`
   width: 300px;
@@ -281,6 +295,8 @@ const InputDirection = styled.input`
 
 const BoxStyle = styled.div `
   display: flex;
+  background-color: #a37748;
+  background-image: url("https://www.transparenttextures.com/patterns/cardboard.png");
 `
 
 const AddButton = styled.button`

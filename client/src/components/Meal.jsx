@@ -27,7 +27,11 @@ const Meal = (props) => {
   const mealTime = `${mealHours}:${mealMinutes}`;
 
   const startTimeSec = (new Date(props.meal.date) - (props.meal.cookTime*60*1000));
-  const startTime = `${new Date(startTimeSec).getHours()}:${new Date(startTimeSec).getMinutes()}`;
+  let startTimeHr = new Date(startTimeSec).getHours();
+  let startTimeMin = new Date(startTimeSec).getMinutes();
+  startTimeHr < 10 ? startTimeHr = '0' + startTimeHr : startTimeHr;
+  startTimeMin < 10 ? startTimeMin = '0' + startTimeMin : startTimeMin;
+  const startTime = `${startTimeHr}:${startTimeMin}`;
 
   return (
     <StyledMeal style={{listStyle: 'none'}}>
@@ -47,20 +51,21 @@ const Meal = (props) => {
 };
 
 const StyledMeal = styled.li`
-  text-align: left;
+  text-align: center;
   margin: 0;
   padding: 0;
   font-size: 1em;
 `;
 const StyledSpan = styled.span`
-  text-align: left;
+  text-align: center;
   margin: 0;
   padding: 0;
   font-size: .5em;
   font-weight: bold;
 `;
 const StyledHead = styled.h5`
-  text-align: left;
+  text-align: center;
+  color: goldenrod;
   margin: 0;
   padding: 0;
 `;

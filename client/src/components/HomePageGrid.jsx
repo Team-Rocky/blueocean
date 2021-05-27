@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme} from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddRecipe from './AddRecipe.jsx';
@@ -7,7 +7,16 @@ import RecipeList from './RecipeList.jsx';
 import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
+import picture from './vege-bg.png'
 // require('./helpers/pushNotifications.js');
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#d8bfd8'
+    }
+  }
+})
 
 const useStyles = makeStyles((theme) => ({
   /*
@@ -42,9 +51,11 @@ const useStyles = makeStyles((theme) => ({
     'grid-template-columns': '14% 14% 14% 14% 14% 14% 14%',
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    background: 'lightGrey',
+    backgroundColor: 'thistle',
     height: '450px',
     border: 'solid black',
+    backgroundImage: `url(${picture})`,
+    backgroundSize: "contain",
   },
   leaderboard: {
     padding: theme.spacing(2),
@@ -67,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     textAlign: 'center',
+    color: 'white',
   },
 }));
 
@@ -87,6 +99,7 @@ const HomePageGrid = (props) => {
     'Saturday',
   ];
   return (
+
     <Grid container justify="center" spacing={2} className={classes.grid}>
       <Grid container justify="center" spacing={2}>
         <Grid item xs={12} lg={12}>
