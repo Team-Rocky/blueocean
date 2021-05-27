@@ -58,12 +58,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "contain",
   },
   leaderboard: {
-    padding: '1px',
+    border: '3px solid black',
+    height: '500px',
+    //padding: '1px',
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    backgroundColor: '#a37748',
-    backgroundImage: 'url("https://www.transparenttextures.com/patterns/cardboard.png")',
-    height: '450px',
+    backgroundColor: 'thistle',
+    backgroundImage: "url('./vege-bg.png')",
     overflow: 'scroll',
   },
   header: {
@@ -121,7 +122,8 @@ const HomePageGrid = (props) => {
         </Paper>
       </Grid>
       <Grid item lg={3} xs={12}>
-        <Paper className={classes.leaderboard}>
+        <Paper className={classes.leaderboard} >
+          <span><h3 style={{fontFamily: 'Pattaya'}}>Recipes:</h3></span>
           <span>Filter by: </span>
           <select onChange={handleFilterChange} name="filter">
             <option value="time">Recent</option>

@@ -18,7 +18,7 @@ const styles = (theme) => ({
     padding: '5px',
     borderRadius: '0',
     color: 'black',
-    fontFamily: 'Architects Daughter',
+    fontFamily: "'Amatic SC', cursive",
     fontSize: '150%'
 
   },
@@ -26,6 +26,7 @@ const styles = (theme) => ({
   box: {
     backgroundColor: '#a37748',
     backgroundImage: 'url("https://www.transparenttextures.com/patterns/cardboard.png")',
+
   },
 
   button: {
@@ -105,12 +106,12 @@ export default function RecipeItem(props) {
               return (<div key={index}>{line}</div>)
             })}
           </Typography> */}
-          <div style={cl.box}>
+          <div style={{fontFamily: 'Cambria'}}>
             {props.recipe.ingredientLines.map((line, index) => {
               return (<div key={index}>{line}</div>)
             })}
           </div>
-          <Typography gutterBottom>
+          <Typography style={{fontFamily: 'Architects Daughter'}} gutterBottom>
             {props.recipe.description}
           </Typography>
           {/* <Typography gutterBottom>
