@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Paper, Button, Modal, TextField } from '@material-ui/core';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const AddToCalendar = (props) => {
   const days = Object.keys(props.schedule);
@@ -35,7 +35,7 @@ const AddToCalendar = (props) => {
         <img src="https://img.icons8.com/fluent/48/000000/group-of-vegetables.png"/>
         </div>
         <List>List</List>
-
+        <CalButton onClick={props.changeDisplay}>Back To Calendar</CalButton>
         </ListLabel>
       <Weekly>
         {days.map((day, index) => (
@@ -103,6 +103,16 @@ const Weekly = styled.ul`
   padding: 0;
   margin: 0;
 
+`
+const CalButton = styled.button`
+  margin-top: 1em;
+  textAlign: 'center';
+  alignContent: 'center';
+  justify: 'right';
+  background-color: #3f51b5;
+  color: #fff;
+  border: '1px';
+  border-radius: 30px;
 `
 
 export default AddToCalendar;
