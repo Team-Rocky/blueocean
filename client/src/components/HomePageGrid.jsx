@@ -53,10 +53,11 @@ const useStyles = makeStyles((theme) => ({
   leaderboard: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
-    background: 'lightGrey',
+    color: 'theme.palette.text.secondary',
+    background: 'wheat',
     height: '450px',
     overflow: 'scroll',
+    border: '2px solid black'
   },
   header: {
     display: 'flex',
