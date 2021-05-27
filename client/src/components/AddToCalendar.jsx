@@ -90,11 +90,13 @@ const GroceryList = styled.div`
 const Day = styled.div`
   text-align: center;
   padding-top: 0.5em;
-  color: #dc911e;
+  background-color: #20b2aa;
+  color: wheat;
+  font-family: 'Fredoka One';
 `
 
 const DailyList = styled.li`
-  background-color: white;
+  background-color: antiquewhite;
   border: 1px solid black;
   overflow: scroll;
   margin: 1em;
