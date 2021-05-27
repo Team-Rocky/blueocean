@@ -9,13 +9,9 @@ import Auth from './Auth.jsx';
 import Day from './Day.jsx';
 import myPic from './../assets/set-and-forget.svg';
 import picture from './vege-bg.png'
-<<<<<<< HEAD
-import Select from '@material-ui/core/Select';
-// require('./helpers/pushNotifications.js');
-=======
 import pj from './pjpic.png';
+import Select from '@material-ui/core/Select';
 require('./helpers/pushNotifications.js');
->>>>>>> main
 
 const theme = createMuiTheme({
   palette: {
@@ -59,15 +55,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "contain",
   },
   leaderboard: {
-<<<<<<< HEAD
-    border: '3px solid black',
-    height: '500px',
-    //padding: '1px',
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    backgroundColor: 'thistle',
-    backgroundImage: "url('./vege-bg.png')",
-=======
     padding: theme.spacing(2),
     backgroundImage: `url(${pj})`,
     textAlign: 'center',
@@ -77,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: '100px',
     background: 'wheat',
     height: '450px',
->>>>>>> main
     overflow: 'scroll',
     border: '2px solid black'
   },
