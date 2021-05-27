@@ -1,5 +1,8 @@
 // Users ROUTEs ============================================================ //
 const express = require('express');
+const redis = require('redis');
+
+const client = redis.createClient(6379);
 
 const router = express.Router();
 
@@ -7,32 +10,43 @@ const dbFunctions = require('../controllers/helpers');
 
 // serverhost/api/users/username1
 router.route('/:email').get((req, res) => {
-  // console.log('in route.get!!!!!', req.params);
-  // get relevant user data (friends list, user's recipes, userID...)
-  dbFunctions.getUser(req.params, (err, result) => {
-    if (err) {
-      res.json(err);
-    }
-    // eslint-disable-next-line no-underscore-dangle
-    const { filter } = req.query || 'time';
-    console.log();
-    const limit = Number(req.query.limit) || 10;
-    if (!result.length) {
-      res.send('Does not Exist');
-      return;
-    }
-    dbFunctions.getAllRecipeByFilter(
-      { userId: result[0]._id },
-      filter,
-      limit,
-      (resErr, recipeResults) => {
-        if (resErr) {
-          res.json(resErr);
-        }
-        res.json(recipeResults);
+  // will return all the public recipes
+  const email = req.params.email;
+  try {
+    client.get(email, async (error, meals) => {
+      if (meals) {
+        res.json(JSON.parse(meals));
+      } else {
+        dbFunctions.getUser(req.params, (err, result) => {
+          if (err) {
+            res.json(err);
+          }
+          // eslint-disable-next-line no-underscore-dangle
+          const { filter } = req.query || 'time';
+          console.log();
+          const limit = Number(req.query.limit) || 10;
+          if (!result.length) {
+            res.send('Does not Exist');
+            return;
+          }
+          dbFunctions.getAllRecipeByFilter(
+            { userId: result[0]._id },
+            filter,
+            limit,
+            (resErr, recipeResults) => {
+              if (resErr) {
+                res.json(resErr);
+              }
+              client.setex(email, 1440, JSON.stringify(recipeResults));
+              res.json(recipeResults);
+            }
+          );
+        });
       }
-    );
-  });
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router
