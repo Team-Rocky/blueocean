@@ -27,7 +27,11 @@ const Meal = (props) => {
   const mealTime = `${mealHours}:${mealMinutes}`;
 
   const startTimeSec = (new Date(props.meal.date) - (props.meal.cookTime*60*1000));
-  const startTime = `${new Date(startTimeSec).getHours()}:${new Date(startTimeSec).getMinutes()}`;
+  let startTimeHr = new Date(startTimeSec).getHours();
+  let startTimeMin = new Date(startTimeSec).getMinutes();
+  startTimeHr < 10 ? startTimeHr = '0' + startTimeHr : startTimeHr;
+  startTimeMin < 10 ? startTimeMin = '0' + startTimeMin : startTimeMin;
+  const startTime = `${startTimeHr}:${startTimeMin}`;
 
   return (
     <StyledMeal style={{listStyle: 'none'}}>
