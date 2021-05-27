@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SearchBar from './SearchBar.jsx'
+import ScheduleMeal from './ScheduleMeal.jsx';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -100,7 +101,15 @@ const RecipeSearchGrid = (props) => {
             value={recipes[index]}
             onClick={() =>props.goToDetailsPage(recipes[index])}
           >more info</Button>
-          <Button variant="outlined" color="primary" style={{ margin: '5px' }}>Schedule Meal</Button>
+          {/* <Button variant="outlined" color="primary" style={{ margin: '5px' }}>Schedule Meal</Button> */}
+          <ScheduleMeal
+          recipe={recipes[index]}
+          user={props.user}
+          userId={props.userId}
+          updateCalendar={props.updateCalendar}
+          searchPage={props.searchPage}
+          detailPage={props.detailPage}
+          />
         </CardContent>
       </Grid>
     );
