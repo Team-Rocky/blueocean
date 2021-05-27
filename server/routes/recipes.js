@@ -96,7 +96,14 @@ router.route('/calendar/:userId').get((req, res) => {
   });
 });
 
-router.route('/calendar/clear').delete((req, res) => {});
+router.route('/calendar/clear/:userId').delete((req, res) => {
+  dbFunctions.deleteAllCalenderRecipes(req.params, (err, data) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(data);
+  });
+});
 
 /*
 const axios = require('axios');

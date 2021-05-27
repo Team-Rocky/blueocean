@@ -120,7 +120,12 @@ module.exports = {
       callback(null, docs);
     });
   },
-  // deleteAllCalenderRecipes(callback) {
-  //   CalendarEntries.d
-  // }
+  deleteAllCalenderRecipes(id, callback) {
+    CalendarEntries.remove(id, (err, docs) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, docs);
+    });
+  },
 };
