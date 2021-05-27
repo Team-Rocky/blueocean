@@ -16,43 +16,52 @@ import Button from '@material-ui/core/Button';
 import SearchBar from './SearchBar.jsx'
 import ScheduleMeal from './ScheduleMeal.jsx';
 import axios from 'axios';
+import RecipeItem from './CustomDialog.jsx';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
     width: '100%',
     margin: '0px',
+    backgroundImage: `url("https://www.transparenttextures.com/patterns/little-pluses.png")`,
   },
   title: {
     padding: theme.spacing(1),
     margin: theme.spacing(2),
+    fontFamily: 'Architects Daughter,cursive',
+    cursor: 'pointer',
     width: '30%',
     textAlign: 'center',
-    color: theme.palette.text.secondary,
-    background: 'lightGrey',
+    color: theme.palette.text.primary,
+    background: '#e6e6fa',
   },
   search: {
     padding: theme.spacing(1),
     margin: theme.spacing(1),
-    width: '35%',
+    width: '300px',
     textAlign: 'center',
-    color: theme.palette.text.secondary,
-    background: 'lightGrey',
+    color: theme.palette.text.primary,
+    // background: 'white',
   },
   recipes: {
     padding: theme.spacing(1),
     margin: theme.spacing(2),
-    width: '70%',
-    textAlign: 'center',
+    width: '60%',
+    // textAlign: 'center',
     color: theme.palette.text.secondary,
-    background: 'lightGrey',
+    background: '#e6e6fa',
     height: 'auto',
     overflow: 'scroll',
   },
   card: {
-    textAlign: 'left',
-    width: '60%',
-    color: theme.palette.text.secondary,
-    borderBottom: '1px solid black',
+    margin: theme.spacing(1),
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    background: 'white',
+    backgroundImage: `url("https://www.transparenttextures.com/patterns/little-pluses.png")`,
+    color: theme.palette.text.primary,
+    border: '1px solid black',
     height: '200',
   }
 }))
@@ -95,20 +104,24 @@ const RecipeSearchGrid = (props) => {
         key={name + index}
         value={recipes[index]}>
         <CardContent>
-          <Typography variant="h4">{name}</Typography>
-          <Typography>{description}</Typography>
-          <Button variant="outlined" color="primary" style={{ margin: '5px' }}
-            value={recipes[index]}
-            onClick={() =>props.goToDetailsPage(recipes[index])}
-          >more info</Button>
+          <Typography style={{ fontFamily: 'Pattaya, sans-serif' }} variant="h4">{name}</Typography>
+          <Typography style={{ fontFamily: 'cambria , cursive' }}>{description}</Typography>
+          <RecipeItem
+            userId={props.userId}
+            searchPage={props.searchPage}
+            recipe={recipes[index]}
+            key={index}
+            updateCalendar={props.updateCalendar}
+            user={props.user}
+          />
           {/* <Button variant="outlined" color="primary" style={{ margin: '5px' }}>Schedule Meal</Button> */}
           <ScheduleMeal
-          recipe={recipes[index]}
-          user={props.user}
-          userId={props.userId}
-          updateCalendar={props.updateCalendar}
-          searchPage={props.searchPage}
-          detailPage={props.detailPage}
+            recipe={recipes[index]}
+            user={props.user}
+            userId={props.userId}
+            updateCalendar={props.updateCalendar}
+            searchPage={props.searchPage}
+            detailPage={props.detailPage}
           />
         </CardContent>
       </Grid>
@@ -132,7 +145,7 @@ const RecipeSearchGrid = (props) => {
           setRecipes={setRecipes}
         />
       </Grid>
-      <Grid container className={classes.recipes}>
+      <Grid container alignItems='center' className={classes.recipes}>
         {Object.keys(recipes).map(
           (recipeData, i) =>
             (recipes[recipeData].name).toLowerCase().includes(inputValue.toLowerCase()) && renderRecipe(i)
