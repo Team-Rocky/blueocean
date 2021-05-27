@@ -41,17 +41,24 @@ const AddToCalendar = (props) => {
         {days.map((day, index) => (
             <DailyList key={index} style={{listStyle: 'none'}}>
               <Day>{day}</Day>
-              <ul>
-                {Object.keys(ingredients[day]).map((item, index)=> <li key={index}>
+              <ShoppingList>
+                {Object.keys(ingredients[day]).map((item, index)=> <ListSpace key={index}>
                   {item} x{ingredients[day][item].count.toString()}
-                </li>)}
-              </ul>
+                </ListSpace>)}
+              </ShoppingList>
             </DailyList>
         ))}
       </Weekly>
     </GroceryList >
   );
 };
+
+const ShoppingList = styled.ul`
+  margin: 1em;
+`
+const ListSpace = styled.li`
+  margin-bottom: 0.3em;
+`
 
 const List = styled.div`
   border-radius: 0.5em;
