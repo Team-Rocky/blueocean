@@ -104,14 +104,12 @@ const AddRecipe = (props) => {
 
     axios.post('/api/recipes', result)
       .then(() => {
-        props.getBoard()
+        props.getBoard();
         setSubmitted(true);
       })
       .catch((error) => {
         console.log(error)
       })
-
-
     event.preventDefault();
   }
 

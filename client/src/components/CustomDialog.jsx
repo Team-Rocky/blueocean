@@ -25,8 +25,10 @@ const styles = (theme) => ({
   },
 
   box: {
-    backgroundColor: '#a37748',
+    backgroundColor: 'wheat',
     backgroundImage: 'url("https://www.transparenttextures.com/patterns/cardboard.png")',
+    fontFamily: "Pattaya",
+    color: 'black'
 
   },
 
@@ -40,7 +42,7 @@ const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
+      <Typography style={cl.box} variant="h6">{children}</Typography>
       {onClose ? (
         <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
         </IconButton>
@@ -87,7 +89,7 @@ export default function RecipeItem(props) {
         <DialogContent style={cl.box} dividers>
           <div style={{fontFamily: 'Cambria'}}>
             {props.recipe.ingredientLines.map((line, index) => {
-              return (<div key={index}>{line}</div>)
+              return (<div style={{fontFamily: 'Helvetica'}} key={index}>{line}</div>)
             })}
           </div>
           <Typography style={{fontFamily: 'Architects Daughter'}} gutterBottom>
