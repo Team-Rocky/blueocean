@@ -55,6 +55,14 @@ This is an example of how to list things you need to use the software and how to
    const API_KEY = 'ENTER YOUR API';
    ```
 
+   <!-- Firebae Setup -->
+   1. Create firebase account and create a new project
+   2. In project settings select config and copy your app config
+   3. Create config.js and paste your firebase config
+   4. Gitignore config.js
+   5. In firebase under sign-in methods, choose Google Authentication
+   6. Export config from config.js and import config into files using Auth.
+
 
 
 <!-- USAGE EXAMPLES -->
@@ -65,7 +73,9 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 
-
+<!-- API USAGE -->
+API Routes and Mongo Schema setup
+https://docs.google.com/document/d/15YZd_PZaXBtqnHqv1-0PO6uAbcINl_q_OgL6_PhdU3s/edit
 <!-- ROADMAP -->
 ## Roadmap
 
