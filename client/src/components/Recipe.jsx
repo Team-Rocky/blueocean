@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
 recipe: {
   border: '1px solid black',
   margin: '10px',
-  padding: '15px'
+  padding: '15px',
+
 }
 }))
 

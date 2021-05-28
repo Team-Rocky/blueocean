@@ -3,7 +3,6 @@ import Auth from './Auth.jsx';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
 import RecipeDetailsGrid from './RecipeDetailsGrid.jsx';
 import HomePageGrid from './HomePageGrid.jsx';
 import RecipeSearchGrid from './RecipeSearchGrid.jsx';
@@ -60,7 +59,7 @@ const App = (props) => {
     var sunday = new Date(
       new Date(getPreviousSunday()).setHours(0, 0, 0, 0)
     ).toLocaleString();
-    console.log('sunday: ', sunday);
+
     var currentDate = new Date();
     ///var today = currentDate.setHours(0, 0, 0, 0)
     var saturday = new Date(
@@ -164,8 +163,7 @@ const App = (props) => {
         ) : null}
         {display === 'list' ? (
           <div>
-            <AddToCalendar schedule={schedule} />
-            <button onClick={changeDisplay}>Calendar</button>
+            <AddToCalendar schedule={schedule} changeDisplay={changeDisplay} />
           </div>
         ) : null}
       </div>
