@@ -3,6 +3,8 @@ const express = require('express');
 
 const dbFunctions = require('../controllers/helpers');
 
+const client = require('../../redis');
+
 const router = express.Router();
 
 // /api/recipes/
@@ -23,7 +25,16 @@ router
   })
   .delete((req, res) => {
     // delete recipe from db
-    dbFunctions.delete({ _id: req.params.id }, (err, results) => {
+    client.del(`time`, (err, reply) => {
+      console.log(reply);
+    });
+    client.del(`popularity`, (err, reply) => {
+      console.log(reply);
+    });
+    client.del(`myRecipes`, (err, reply) => {
+      console.log(reply);
+    });
+    dbFunctions.deleteRecipe({ _id: req.params.id }, (err, results) => {
       if (err) {
         res.json(err);
       }
@@ -32,6 +43,15 @@ router
   });
 
 router.route('/').post((req, res) => {
+  client.del(`time`, (err, reply) => {
+    console.log(reply);
+  });
+  client.del(`popularity`, (err, reply) => {
+    console.log(reply);
+  });
+  client.del(`myRecipes`, (err, reply) => {
+    console.log(reply);
+  });
   dbFunctions.newRecipe(req.body, (err, result) => {
     console.log('here');
     if (err) {
@@ -65,12 +85,17 @@ router.route('/recipe/:recipeID').get((req, res) => {
 });
 
 router.route('/calendar').post((req, res) => {
+  client.del(`calendar${req.body.userId}`, (err, reply) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(reply);
+  });
   dbFunctions.addCalendarEntry(req.body, (err) => {
     if (err) {
       console.log('err in .post to calendar: ', err);
       res.json(err);
     }
-    console.log('got positive respose!');
     res.send('posted!');
   });
 });
@@ -80,6 +105,9 @@ router.route('/calendar/:id').delete((req, res) => {
     if (err) {
       res.json(err);
     }
+    client.del(`calendar${req.params.id}`, (err, reply) => {
+      console.log(reply);
+    });
     res.json(data);
   });
 });
@@ -87,16 +115,31 @@ router.route('/calendar/:id').delete((req, res) => {
 router.route('/calendar/:userId').get((req, res) => {
   // gets all the calendar entries for that user
   var body = { userId: req.params.userId };
-  dbFunctions.getCalendarEntries(body, (err, data) => {
-    if (err) {
-      console.log('err in .get all calendar entries: ', err);
-    } else {
-      res.send(data);
-    }
-  });
+  const cacheId = `calendar${req.params.userId}`;
+  try {
+    client.get(cacheId, async (err, cacheResult) => {
+      if (cacheResult) {
+        res.json(JSON.parse(cacheResult));
+      } else {
+        dbFunctions.getCalendarEntries(body, (err, data) => {
+          if (err) {
+            console.log('err in .get all calendar entries: ', err);
+          } else {
+            client.setex(cacheId, 1440, JSON.stringify(data));
+            res.send(data);
+          }
+        });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.route('/calendar/clear/:userId').delete((req, res) => {
+  client.del(`calendar${req.params.id}`, (err, reply) => {
+    console.log(reply);
+  });
   dbFunctions.deleteAllCalenderRecipes(req.params, (err, data) => {
     if (err) {
       res.json(err);

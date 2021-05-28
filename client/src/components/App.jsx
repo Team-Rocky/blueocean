@@ -50,24 +50,27 @@ const App = (props) => {
     let prevSunday = new Date();
     if (date.getDay() === 0) {
       prevSunday.setDate(date.getDate() - 8);
-    }
-    else {
+    } else {
       prevSunday.setDate(date.getDate() - day);
     }
     return prevSunday.toLocaleString();
   };
 
   const updateCalendar = (id) => {
-    var sunday = new Date(new Date(getPreviousSunday()).setHours(0, 0, 0, 0)).toLocaleString()
-    console.log('sunday: ', sunday)
-    var currentDate = new Date()
+    var sunday = new Date(
+      new Date(getPreviousSunday()).setHours(0, 0, 0, 0)
+    ).toLocaleString();
+    console.log('sunday: ', sunday);
+    var currentDate = new Date();
     ///var today = currentDate.setHours(0, 0, 0, 0)
-    var saturday = new Date((new Date(sunday).setDate(new Date(sunday).getDate() + 7))).toLocaleString()
-    console.log('saturday: ', saturday)
-
+    var saturday = new Date(
+      new Date(sunday).setDate(new Date(sunday).getDate() + 7)
+    ).toLocaleString();
+    console.log('saturday: ', saturday);
 
     if (id !== undefined) {
       getUserCalendar(id).then((data) => {
+        console.log(data);
         const mappedToDay = {
           Sunday: [],
           Monday: [],
@@ -81,9 +84,11 @@ const App = (props) => {
           const date = new Date(meal.date).getDay();
           const day = days[date];
           if (day[date] !== undefined) {
-            if (new Date(meal.date) > new Date(sunday)
-                 && new Date(meal.date) < new Date(saturday)) {
-              console.log('its the correct week')
+            if (
+              new Date(meal.date) > new Date(sunday) &&
+              new Date(meal.date) < new Date(saturday)
+            ) {
+              console.log('its the correct week');
               mappedToDay[day].push(meal);
             }
           }
@@ -113,7 +118,7 @@ const App = (props) => {
       friends: [],
       date: new Date(),
     };
-    !user && setSchedule([])
+    !user && setSchedule([]);
 
     user &&
       axios
@@ -132,7 +137,7 @@ const App = (props) => {
           }
         })
         .then((userInfo) => {
-          getBoard(userInfo._id)
+          getBoard(userInfo._id);
           updateCalendar(userInfo._id);
         });
   }, [user]);

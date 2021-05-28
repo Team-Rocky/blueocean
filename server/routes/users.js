@@ -1,10 +1,9 @@
 // Users ROUTEs ============================================================ //
 const express = require('express');
-const redis = require('redis');
-
-const client = redis.createClient(6379);
 
 const router = express.Router();
+
+const client = require('../../redis');
 
 const dbFunctions = require('../controllers/helpers');
 
