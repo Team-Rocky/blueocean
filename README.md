@@ -67,7 +67,8 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+![Demo of website](https://media.giphy.com/media/fnkc4ssvyIpI6FleTU/giphy.gif)
+
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
