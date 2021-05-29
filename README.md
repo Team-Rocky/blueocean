@@ -4,7 +4,7 @@
 
 ## About The Project
 
-![Set and Forget Screen Shot]("/client/public/src/assets/set-and-forget-ss.png")
+![Set and Forget Screen Shot]("/Users/brandongalloway/Desktop/hr/blue-ocean/blueocean/client/src/assets/set-and-forget.svg")
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
@@ -40,7 +40,7 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 
 ### Installation
 
-## Make a Mongo Cluster and DB
+#### Make a Mongo Cluster and DB
 
 1. [Create a cluster](https://codeforgeek.com/mongodb-atlas-node-js/) on Mongo Atlas
 2. Obtain your Mongo URI link
@@ -48,7 +48,7 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 4. Paste your Mongo URI into your .env file in this format:
    MONGOURI=your-unique-mongo-uri-for-your-cluster
 
-## Setup authentication with firebase
+#### Setup authentication with firebase
 
 1. Create firebase account and create a new project
 2. In project settings select config and copy your app config
@@ -57,7 +57,7 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 5. In firebase under sign-in methods, choose Google Authentication
 6. Export config from config.js and import config into files using Auth.
 
-## Install the dependencies and start the application
+#### Install the dependencies and start the application
 
 - Make sure you have [node](https://nodejs.org/en/) installed
 - Run 'npm install' to install the dependencies
