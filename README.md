@@ -4,7 +4,7 @@
 
 ## About The Project
 
-![Set and Forget Screen Shot]('./client/public/set-and-forget-ss.png')
+![Set and Forget Screen Shot]('/client/public/set-and-forget-ss.png')
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
