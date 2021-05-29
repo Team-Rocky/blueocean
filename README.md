@@ -3,8 +3,9 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-![Set and Forget Screen Shot]("/client/public/src/assets/set-and-forget-ss.png")
+<p>
+    <img src="client/public/src/assets/set-and-forget-ss.png" width="220" height="240" alt="Set and Forget Screen Shot"/>
+</p>
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
