@@ -44,9 +44,9 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 
 1. [Create a cluster](https://codeforgeek.com/mongodb-atlas-node-js/) on Mongo Atlas
 2. Obtain your Mongo URI link
-3. touch .env
+3. ```touch .env``` on the root of your repo
 4. Paste your Mongo URI into your .env file in this format:
-   MONGOURI=your-unique-mongo-uri-for-your-cluster
+   ```MONGOURI=<replace-with-your-unique-mongo-uri-for-your-cluster>```
 
 #### Setup authentication with firebase
 
@@ -60,8 +60,8 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 #### Install the dependencies and start the application
 
 - Make sure you have [node](https://nodejs.org/en/) installed
-- Run 'npm install' to install the dependencies
-- Run 'npm start' in one terminal and 'npm run build' in another terminal
+- Run ```npm install``` to install the dependencies
+- Run ```npm start``` in one terminal and ```npm run build``` in another terminal
 
 <!-- USAGE EXAMPLES -->
 
