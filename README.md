@@ -1,11 +1,10 @@
-# blueocean
+# Set & Forget: A Meal Planning Application
 
-<!-- ABOUT THE PROJECT -->
+<p>
+    <img src="https://i.ibb.co/mNZ15hj/set-and-forget-ss.png" alt="Set and Forget Screen Shot"/>
+</p>
 
 ## About The Project
-<p>
-    <img src="client/public/src/assets/set-and-forget-ss.png" width="220" height="240" alt="Set and Forget Screen Shot"/>
-</p>
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
