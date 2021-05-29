@@ -38,6 +38,8 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 
 ### Prerequisites
 
+- Node to access NPM
+
 ### Installation
 
 ## Make a Mongo Cluster and DB
@@ -69,21 +71,12 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 
 ![Demo of website](https://media.giphy.com/media/fnkc4ssvyIpI6FleTU/giphy.gif)
 
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<!-- API USAGE -->
+# API Documentation
 
 API Routes and Mongo Schema setup
 https://docs.google.com/document/d/15YZd_PZaXBtqnHqv1-0PO6uAbcINl_q_OgL6_PhdU3s/edit
 
 <!-- ROADMAP -->
-
-## Roadmap
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
-
-<!-- CONTRIBUTING -->
 
 ## Contributing
 
@@ -105,6 +98,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/Team-Rocky/blueocean](https://github.com/Team-Rocky/blueocean)
