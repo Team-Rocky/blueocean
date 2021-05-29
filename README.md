@@ -3,7 +3,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://setandforget.xyz)
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
@@ -41,10 +41,10 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a free API Key at https://firebase.google.com
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/jcalebmi/blueocean.git
    ```
 3. Install NPM packages
    ```sh
@@ -70,17 +70,11 @@ This is an example of how to list things you need to use the software and how to
 
 ![Demo of website](https://media.giphy.com/media/fnkc4ssvyIpI6FleTU/giphy.gif)
 
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-<!-- API USAGE -->
 API Routes and Mongo Schema setup
-https://docs.google.com/document/d/15YZd_PZaXBtqnHqv1-0PO6uAbcINl_q_OgL6_PhdU3s/edit
+_For more examples, please refer to the [Documentation](https://docs.google.com/document/d/15YZd_PZaXBtqnHqv1-0PO6uAbcINl_q_OgL6_PhdU3s/edit)_
+
 <!-- ROADMAP -->
 ## Roadmap
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
 
 
 
@@ -107,6 +101,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Caleb Iuliano - calebiuliano@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/jcalebmi/blueocean](https://github.com/jcalebm/blueOcean)
