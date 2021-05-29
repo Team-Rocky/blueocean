@@ -4,11 +4,10 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Set and Forget Screen Shot]['./client/public/set-and-forget-ss']](https://www.setandforget.xyz/)
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
-<<<<<<< HEAD
 Here's why:
 
 - Your time should be focused on creating something amazing. A project that solves a problem and helps others
@@ -19,7 +18,6 @@ Here's why:
 * A dynamic calendar lets you add and remove meals and shows you when you need to start preparing each meal
 * A shopping list is generated from a given week with all the ingredients you will need to buy
 * A database stores your recipes and lets you browse all of the public recipes created by other users of the app
-  > > > > > > > main
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have have contributed to expanding this template!
 
