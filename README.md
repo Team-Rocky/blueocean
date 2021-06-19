@@ -1,13 +1,20 @@
-# blueocean
+# Set & Forget: A Meal Planning Application
 
-<!-- ABOUT THE PROJECT -->
+<p>
+    <img src="https://i.ibb.co/mNZ15hj/set-and-forget-ss.png" alt="Set and Forget Screen Shot"/>
+</p>
+
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 This is an app to optimize organization for chefs, restaurant managers, and anyone who enjoys cooking!
 
-Functionalities:
+Here's why:
+
+- Your time should be focused on creating something amazing. A project that solves a problem and helps others
+- You shouldn't be doing the same tasks over and over like creating a README from scratch
+- ## You should element DRY principles to the rest of your life :smile:
+  Functionalities:
+
 * A dynamic calendar lets you add and remove meals and shows you when you need to start preparing each meal
 * A shopping list is generated from a given week with all the ingredients you will need to buy
 * A database stores your recipes and lets you browse all of the public recipes created by other users of the app
@@ -18,73 +25,57 @@ This app is a capstone project created for the Hack Reactor Software Engineering
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
-
-
+- [React](https://reactjs.org/)
+- [Express](https://expressjs.com/)
+- [Material UI](https://material-ui.com/)
+- [Redis](https://redis.io/)
 
 <!-- GETTING STARTED -->
-## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+## Getting Started
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+- Node to access NPM
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ```
+#### Make a Mongo Cluster and DB
 
-   <!-- Firebae Setup -->
-   1. Create firebase account and create a new project
-   2. In project settings select config and copy your app config
-   3. Create config.js and paste your firebase config
-   4. Gitignore config.js
-   5. In firebase under sign-in methods, choose Google Authentication
-   6. Export config from config.js and import config into files using Auth.
+1. [Create a cluster](https://codeforgeek.com/mongodb-atlas-node-js/) on Mongo Atlas
+2. Obtain your Mongo URI link
+3. touch .env
+4. Paste your Mongo URI into your .env file in this format:
+   MONGOURI=your-unique-mongo-uri-for-your-cluster
 
+#### Setup authentication with firebase
 
+1. Create firebase account and create a new project
+2. In project settings select config and copy your app config
+3. Create config.js and paste your firebase config
+4. gitignore config.js
+5. In firebase under sign-in methods, choose Google Authentication
+6. Export config from config.js and import config into files using Auth.
+
+#### Install the dependencies and start the application
+
+- Make sure you have [node](https://nodejs.org/en/) installed
+- Run 'npm install' to install the dependencies
+- Run 'npm start' in one terminal and 'npm run build' in another terminal
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 ![Demo of website](https://media.giphy.com/media/fnkc4ssvyIpI6FleTU/giphy.gif)
 
+# API Documentation
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-<!-- API USAGE -->
 API Routes and Mongo Schema setup
 https://docs.google.com/document/d/15YZd_PZaXBtqnHqv1-0PO6uAbcINl_q_OgL6_PhdU3s/edit
+
 <!-- ROADMAP -->
-## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -95,18 +86,14 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
-
 <!-- CONTACT -->
+
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/Team-Rocky/blueocean](https://github.com/Team-Rocky/blueocean)
